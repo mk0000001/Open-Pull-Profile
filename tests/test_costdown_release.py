@@ -36,6 +36,8 @@ class CostdownRelease(unittest.TestCase):
                 self.assertEqual(hashlib.sha256(data).hexdigest(),row['STEP_sha256'])
                 self.assertTrue(row['native_reopened_from_disk'])
                 self.assertLess(row['STEP_volume_relative_difference'],1e-7)
+                self.assertEqual(row['screened_pull_positions_mm'],list(range(0,101,10)))
+                self.assertEqual(row['moving_vs_column_collar_overlap'],[])
 
     def test_screening_does_not_become_a_rating(self):
         r=json.loads((OUT/'SCREENING.json').read_text(encoding='utf-8'))

@@ -54,17 +54,19 @@ def build(root,hybrid=True):
             # Two continuous guide bosses reserved for optional M8 reinforcement.
             for xx in (x-27,x+27):
                 boss=cyl(8,195,xx,0,z).cut(cyl(4.5,197,xx,0,z-1));sh=sh.fuse(boss)
-            for zz in (z+15,z+180):sh=sh.cut(cyl(3.3,82,x-41,0,zz,V(1,0,0)))
+            for zz in (z+15,z+180):
+                for xx in (x-12,x+12):sh=sh.cut(cyl(3.3,62,xx,-31,zz,V(0,1,0)))
             add('Column'+side+'Module'+str(n+1),sh,'PrintedFrame',
                 '80x60x195 shell6mm; M8 guide bores; ideal continuous-column calculations exclude joint compliance')
         for n in range(1,4):
             z=60+195*n
-            ring=box(94,74,60,x-47,-37,z-30).cut(box(80.4,60.4,62,x-40.2,-30.2,z-31))
-            for zz in (z-15,z+15):ring=ring.cut(cyl(3.3,96,x-48,0,zz,V(1,0,0)))
+            ring=box(88,74,60,x-44,-37,z-30).cut(box(80.4,60.4,62,x-40.2,-30.2,z-31))
+            for zz in (z-15,z+15):
+                for xx in (x-12,x+12):ring=ring.cut(cyl(3.3,76,xx,-38,zz,V(0,1,0)))
             for face,y0 in [('Front',-38),('Back',0)]:
-                sh=ring.common(box(96,38,62,x-48,y0,z-31))
+                sh=ring.common(box(90,38,62,x-45,y0,z-31))
                 add('Splice'+side+str(n)+face,sh,'PrintedFrame',
-                    'Split locating collar; M6 bolts and metal anti-crush sleeves required; preload unqualified')
+                    'Split88mm locating collar;4M6 bolts alongY at columnX+-12 avoid M8rods and moving beam; metal anti-crush sleeves required, preload unqualified')
     if not hybrid:
         # Split hollow beams preserve original screw/sensor planes; centre splice detail is open.
         for name,z,depth,h,length in [('FixedBottom',60,60,80,260),('FixedTop',640,60,80,260),('Moving',453,80,40,250)]:
