@@ -51,7 +51,8 @@ Files: profile/BOM.csv, profile/SOURCING.ko.md, profile/CUT_LIST.csv, profile/RE
 - [x] 각 구매품의 수량·필수 옵션·후보 URL·가격 상태를 기록한다. 미확정 링크는 구매 확정으로 표기하지 않는다.
 - [x] 해시/원본 보존/메타데이터 검사를 실행한다.
 - [x] 전체 변경의 별도 검토와 필요한 수정을 마친다.
-- [ ] 실제 포크에 브랜치를 게시하고 v0.1.0-design 태그를 만든다. 원격 SHA와 태그 일치를 확인한다.
+- [x] 실제 포크에 단계별 브랜치를 게시하고 원격 트리 일치를 확인한다.
+- [ ] GitHub Release에서 v0.1.0-design 태그를 고정하고 원격 SHA 일치를 확인한다. 이 단계의 완료 기록은 해당 Release와 Git refs를 기준으로 한다.
 
 ## Execution record
 

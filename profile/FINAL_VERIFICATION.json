@@ -1,0 +1,15 @@
+{
+  "version": "0.1.0-design",
+  "native_reopened_from_disk": true,
+  "native_parts": 58,
+  "step_leaf_shapes": 76,
+  "step_shapes_valid": true,
+  "relative_volume_difference": 1.6320709980833935e-14,
+  "assembly_bounds_mm": [510.0, 415.0, 1067.0],
+  "assembly_ready": false,
+  "physical_load_rating": false,
+  "ci_verified_commit": "3b42c55279079bae95baae74779d05abfe0cae67",
+  "ci_run_url": "https://github.com/mk0000001/Open-Pull-Profile/actions/runs/40086259943",
+  "ci_conclusion": "success",
+  "scope": "Digital geometry, file roundtrip, artifact consistency and documented purchasing interfaces; not a physical acceptance test"
+}

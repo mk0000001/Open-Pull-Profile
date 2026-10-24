@@ -18,6 +18,7 @@ CNC Kitchen [Open-Pull](https://github.com/CNCKitchen/Open-Pull)을 기반으로
 - [프로파일 절단 목록](CUT_LIST.csv) / [판재 블랭크 목록](PLATE_LIST.csv)
 - [설계 기준](../docs/superpowers/specs/2026-10-24-profile-frame-design.md)
 - [기하 검증 결과](VALIDATION.json) / [개발 기록](DEVELOPMENT_LOG.md)
+- [파일 재열기·STEP 교환·CI 확인](FINAL_VERIFICATION.json)
 
 전체 외형 약 **510×415×1067mm**. 4080 기둥 900mm×2, 4080 가로보 420mm×4, 4040 발 400mm×2. 연구 목표는 2kN, 로드셀 후보는 500kgf지만 **장비 정격이 아니다**. 원본 큰 시편은 위치 참조로 표시했고, 첫 재료 비교에는 단면이 작은 시편을 제안한다. 예: 5×2mm에서 응력60MPa라면 하중600N.
 

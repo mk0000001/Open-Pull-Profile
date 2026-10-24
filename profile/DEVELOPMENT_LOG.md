@@ -19,3 +19,6 @@
 - User requested a full purchase/assembly audit after login. Manufacturer comparison found the actual3Nm example has10mm shaft/113mm body versus CAD8mm/112mm; actual HGH15CA mounting height28mm versus32mm envelope. ASSEMBLY_AUDIT.ko.md therefore records procurement/assembly HOLD; physical capacity remains unvalidated.
 - Direct domestic option checks:4080 801-900mm selected28710KRW;401-500mm band adds15870 to base80 so15950KRW calculated. CAS SBA-500L selected198000KRW. No cart/checkout/supplier messages executed.
 - Ruling: do not silently turn verified manufacturer examples into selected Ali/domestic purchases — exact vendor links and mating drawings are still missing — the present release remains a concept with a concrete no-build verdict.
+- Published four milestones at GitHub; master/profile branch head3b42c55279079bae95baae74779d05abfe0cae67. Git trees were compared byte-for-byte against local design commits. Original local history retained as codex/local-history-20261024.
+- GitHub Actions run40086259943 succeeded on the published head. Native CAD was independently closed/reopened and STEP imported into another document:58 native parts,76 STEP leaf shapes valid, relative volume difference1.6321e-14; bounds510x415x1067mm.
+- Final report keeps assembly_ready=false. CI success is not treated as hardware assembly or strength approval.
