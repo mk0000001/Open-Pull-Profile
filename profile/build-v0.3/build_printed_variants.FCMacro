@@ -106,6 +106,6 @@ def build(root,hybrid=True):
         'max_column_module_mm':[80,60,195],'physical_test_performed':False,'load_rating_validated':False,
         'assembly_ready':False,'analysis_type':'analytical screening, not FEA or joint qualification',
         'primary_open_issues':['beam/column fasteners and splice design','bearing reaction details','creep, buckling and printed joint proof tests']}
-    (out/(tag+'-VALIDATION.json')).write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
+    (out/(tag+'-VALIDATION.json')).write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')
     doc.save();print(json.dumps(report))
     return doc

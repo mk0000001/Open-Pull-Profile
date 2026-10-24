@@ -36,5 +36,5 @@ if __name__=='__main__':
         'exclusions':['joint slip','centre beam butt joints','hole stress concentration','layer anisotropy',
                       'creep','eccentric load','bearing/coupling/grip deformation','rod end-transfer and bracing qualification'],
         'sensitivity':[screen(E) for E in (800,1000,1500)]}
-    (OUT/'SCREENING.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')
+    (OUT/'SCREENING.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8',newline='\n')
     print(json.dumps(result,indent=2))

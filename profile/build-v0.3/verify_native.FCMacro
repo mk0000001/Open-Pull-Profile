@@ -38,6 +38,6 @@ def verify(root):
         rows.append(row);App.closeDocument(tmp.Name)
     result={'version':'0.3.0-costdown-layout','variants':rows,'physical_load_rating':False,
             'scope':'saved native and exchange solid validity/volume, original motors, module bed size; NOT full mating or motion collision audit'}
-    (out/'ROUNDTRIP.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')
+    (out/'ROUNDTRIP.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8',newline='\n')
     App.setActiveDocument(doc.Name);Gui.activeDocument().activeView().viewAxonometric();Gui.activeDocument().activeView().fitAll()
     print(json.dumps(result,indent=2));return result

@@ -140,8 +140,8 @@ def build(root):
         'new_printed_PETG_kg_at_1_27':sum(o.Shape.Volume for o in doc.PrintedCandidates.Group)*1.27/1e6,
         'assembly_ready':False,'load_rating_validated':False,'physical_test_performed':False,
         'source_step_reused':True,'profile_section_exact':False,'open_interfaces':cfg['open_interfaces']}
-    (out/'VALIDATION.json').write_text(json.dumps(report,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
-    (out/'PART_INDEX.json').write_text(json.dumps(index,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+    (out/'VALIDATION.json').write_text(json.dumps(report,indent=2,ensure_ascii=False)+'\n',encoding='utf-8',newline='\n')
+    (out/'PART_INDEX.json').write_text(json.dumps(index,indent=2,ensure_ascii=False)+'\n',encoding='utf-8',newline='\n')
     App.closeDocument(src.Name)
     print(json.dumps(report,ensure_ascii=False))
     return doc

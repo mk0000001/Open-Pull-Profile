@@ -38,5 +38,5 @@ if __name__=='__main__':
            'excludes':'Force calibration, physical proof tests, labour and failed prints; adapter design not complete'}],
         'unresolved_costs':['supplier final freight/taxes','coupling upgrade if unrated part rejected','final shaft and sensor machining quote','calibration/proof-loading services','labour and electricity'],
         'AliExpress_status':'Manufacturer-authorised seller and live Korea checkout not verified; no Ali listing is represented as authenticated or final-priced'}
-    (OUT/'COST_SUMMARY.json').write_text(json.dumps(report,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+    (OUT/'COST_SUMMARY.json').write_text(json.dumps(report,indent=2,ensure_ascii=False)+'\n',encoding='utf-8',newline='\n')
     print(json.dumps({k:report[k] for k in ('common_machine_without_load_cell_KRW','public_display_rows_KRW','allowances_KRW','sensor_options')},indent=2))
