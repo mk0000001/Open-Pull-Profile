@@ -1,0 +1,257 @@
+"""GPL-3.0. Open-Pull profile concept generator, FreeCAD 1.1.
+
+Run as a FreeCAD macro. Edit config.json, then regenerate in a new document.
+Stock sections and purchased parts are envelope approximations, not shop drawings.
+"""
+import csv
+import json
+import math
+from pathlib import Path
+import FreeCAD as App
+import FreeCADGui as Gui
+import Part
+import Import
+
+
+def belt_geometry(centres, radii):
+    """Clockwise external tangents and wrapped pitch length for 3 pulleys."""
+    normals, straight = [], 0.0
+    for i in range(3):
+        j = (i + 1) % 3
+        dx, dy = centres[j][0]-centres[i][0], centres[j][1]-centres[i][1]
+        distance = math.hypot(dx, dy)
+        angle = math.atan2(dy, dx) + math.acos((radii[i]-radii[j])/distance)
+        normals.append(angle)
+        straight += math.sqrt(distance**2 - (radii[i]-radii[j])**2)
+    wraps = [(normals[i-1]-normals[i]) % (2*math.pi) for i in range(3)]
+    return straight + sum(r*a for r, a in zip(radii, wraps)), normals, wraps
+
+
+def belt_shape(centres, radii, normals, wraps, width):
+    wires = []
+    for offset in (1.5, -1.5):
+        points = []
+        for i, (cx, cy) in enumerate(centres):
+            for j in range(25):
+                angle = normals[i-1] - wraps[i]*j/24
+                radius = radii[i]+offset
+                points.append(App.Vector(cx+radius*math.cos(angle), cy+radius*math.sin(angle), 932))
+        wires.append(Part.makePolygon(points+[points[0]]))
+    return Part.Face(wires[0]).cut(Part.Face(wires[1])).extrude(App.Vector(0,0,width))
+
+
+def stock_shape(width, height, length):
+    """Simplified two-chamber extrusion with shallow slot indications."""
+    shape = Part.makeBox(width, height, length, App.Vector(-width/2,-height/2,0))
+    chambers = 2 if height == 80 else 1
+    for k in range(chambers):
+        cy = -height/2 + 20 + 40*k
+        shape = shape.cut(Part.makeBox(width-10,30,length,App.Vector(-width/2+5,cy-15,0)))
+        for sx in (-1,1):
+            x = -width/2 if sx < 0 else width/2-2
+            shape = shape.cut(Part.makeBox(2,8,length,App.Vector(x,cy-4,0)))
+    for sy in (-1,1):
+        y = -height/2 if sy < 0 else height/2-2
+        shape = shape.cut(Part.makeBox(8,2,length,App.Vector(-4,y,0)))
+    return shape
+
+
+def build(root):
+    root = Path(root)
+    cfg = json.loads((root/'profile/config.json').read_text(encoding='utf-8'))
+    version = cfg['version']
+    out = root/'profile/cad'
+    renders = root/'profile/renders'
+    out.mkdir(parents=True,exist_ok=True)
+    renders.mkdir(parents=True,exist_ok=True)
+    ref = App.getDocument('OpenPull_Original_Reference') if 'OpenPull_Original_Reference' in App.listDocuments() else None
+    if ref is None:
+        ref = App.newDocument('OpenPull_Original_Reference')
+        Import.insert(str(root/'CAD/TestMachine/OpenPull-assembly.step'),ref.Name)
+        ref.recompute()
+    doc = App.newDocument('OpenPull_Profile_010')
+    doc.Label = 'Open-Pull Profile v'+version+' [DESIGN REVIEW]'
+    doc.addObject('App::DocumentObjectGroup','Frame').Label='01 Frame / simplified stock'
+    doc.addObject('App::DocumentObjectGroup','Drive').Label='02 Drive / vendor envelopes'
+    doc.addObject('App::DocumentObjectGroup','Moving').Label='03 Moving crosshead'
+    doc.addObject('App::DocumentObjectGroup','Testing').Label='04 CNC Kitchen grips + sensing'
+    doc.addObject('App::DocumentObjectGroup','Safety').Label='05 Guard / safety spaces'
+    silver, blue, orange = (0.72,0.76,0.80),(0.17,0.37,0.62),(0.93,0.34,0.12)
+    dark, green, red = (0.18,0.21,0.25),(0.22,0.53,0.40),(0.76,0.17,0.18)
+    def add(name,shape,group,colour,partid,description,source='Proposed layout; vendor dimensions pending'):
+        obj=doc.addObject('Part::Feature',name)
+        obj.Label=partid+' | '+description
+        obj.Shape=shape
+        obj.addProperty('App::PropertyString','PartID').PartID=partid
+        obj.addProperty('App::PropertyString','SourceNote').SourceNote=source
+        obj.addProperty('App::PropertyString','Revision').Revision=version
+        obj.addProperty('App::PropertyString','DesignStatus').DesignStatus='UNVALIDATED CONCEPT — NOT LOAD RATED'
+        obj.ViewObject.ShapeColor=colour
+        obj.ViewObject.LineColor=(0.12,0.14,0.17)
+        obj.ViewObject.DisplayMode='Flat Lines'
+        getattr(doc,group).addObject(obj)
+        return obj
+    def box(name,dx,dy,dz,x,y,z,group,colour,partid,label):
+        return add(name,Part.makeBox(dx,dy,dz,App.Vector(x,y,z)),group,colour,partid,label)
+    def cyl(radius,length,x,y,z):
+        return Part.makeCylinder(radius,length,App.Vector(x,y,z))
+    def plate(name,dx,dy,t,x,y,z,group,holes=()):
+        shape=Part.makeBox(dx,dy,t,App.Vector(x,y,z))
+        for hx,hy,r in holes:
+            shape=shape.cut(cyl(r,t+2,hx,hy,z-1))
+        return add(name,shape,group,blue,'PL-'+name,name+' / hole pattern provisional')
+    def stock(name,w,h,length,position,rotation,label):
+        shape=stock_shape(w,h,length)
+        shape.Placement=App.Placement(App.Vector(*position),rotation)
+        obj=add(name,shape,'Frame',silver,'EX-'+name,label,'Simplified envelope; use supplier section for strength checks')
+        obj.addProperty('App::PropertyLength','CutLength').CutLength=length
+        obj.addProperty('App::PropertyString','StockSection').StockSection=str(w)+'x'+str(h)
+        return obj
+    identity=App.Rotation()
+    along_x=App.Rotation(App.Vector(1,1,1),120)
+    along_y=App.Rotation(App.Vector(1,0,0),-90)
+    column_x=cfg['column_centres_mm']/2
+    screw_x=cfg['screw_centres_mm']/2
+    for tag,sx in (('Left',-1),('Right',1)):
+        stock('Column'+tag,40,80,cfg['column_length_mm'],(sx*column_x,0,80),identity,'4080 column '+str(cfg['column_length_mm']))
+        stock('Base'+tag,40,40,cfg['base_length_mm'],(sx*column_x,-200,60),along_y,'4040 base skid 400')
+        for yy in (-160,160):
+            add('Foot'+tag+str(abs(yy))+('F' if yy<0 else 'R'),cyl(18,40,sx*column_x,yy,0),'Frame',dark,'FT','Levelling foot envelope')
+    for side,cy in (('Front',-20),('Rear',20)):
+        for level,z in (('Lower',80),('Upper',800)):
+            beam=stock(level+'Beam'+side,40,80,cfg['crossmember_length_mm'],(-210,cy,z+40),along_x,'4080 crossmember 420')
+            # Required shaft clearance through the paired top beams and lower tip.
+            for x in (-screw_x,screw_x):
+                beam.Shape=beam.Shape.cut(cyl(12,82,x,0,z-1))
+    for label,z in (('Lower',80),('Upper',720)):
+        shape=Part.makeBox(500,8,160,App.Vector(-250,40,z))
+        for xx in (-230,230):
+            for zz in (z+20,z+60,z+100,z+140):
+                shape=shape.cut(Part.makeCylinder(4.5,10,App.Vector(xx,39,zz),App.Vector(0,1,0)))
+        add(label+'JointPlate',shape,'Frame',blue,'JP-'+label,'Rear joint plate 500x160x8 / bolt layout provisional')
+    holes=[(-screw_x,0,12),(screw_x,0,12)]
+    plate('BearingRoof',500,120,12,-250,-60,880,'Frame',holes)
+    plate('FloatingSupportPlate',420,100,12,-210,-50,160,'Frame',holes)
+    plate('FixedGripPlate',420,100,12,-210,-50,788,'Testing',holes+[(0,0,6.5)])
+    for tag,x in (('Left',-screw_x),('Right',screw_x)):
+        add('Screw'+tag,cyl(8,cfg['screw_nominal_length_mm'],x,0,140),'Drive',silver,'BS-'+tag,'SFU1605 nominal '+str(cfg['screw_nominal_length_mm'])+' / end machining TBD')
+        for kind,z,depth in (('BK',892,60),('BF',172,50)):
+            shape=Part.makeBox(60,depth,25,App.Vector(x-30,-depth/2,z)).cut(cyl(8.2,27,x,0,z-1))
+            add(kind+tag,shape,'Drive',dark,kind+'-'+tag,kind+'12 support envelope / actual bearing rating pending')
+        rail=Part.makeBox(15,15,cfg['rail_length_mm'],App.Vector(x/abs(x)*column_x-7.5,-55,100))
+        add('Rail'+tag,rail,'Drive',dark,'RG-'+tag,'HGR15 700 / mounting pattern TBD')
+        for k,zc in ((1,260),(2,340)):
+            rx=x/abs(x)*column_x
+            shape=Part.makeBox(34,32,60,App.Vector(rx-17,-72,zc-30))
+            shape=shape.cut(Part.makeBox(15.4,15.4,62,App.Vector(rx-7.7,-55.2,zc-31)))
+            add('GuideBlock'+('L' if x<0 else 'R')+str(k),shape,'Moving',green,'GB-'+tag+str(k),'HGH15CA envelope')
+        nut=Part.makeBox(40,40,36,App.Vector(x-20,-20,322)).cut(cyl(8.2,38,x,0,321))
+        add('Nut'+tag,nut,'Moving',green,'BN-'+tag,'SFU1605 nut housing envelope / bolt pattern TBD')
+    box('CrossheadFront',500,12,160,-250,-84,210,'Moving',blue,'CH-01','Front carriage plate 500x160x12')
+    plate('CrossheadTop',400,122,12,-200,-72,358,'Moving',holes+[(0,0,4.5)])
+    plate('CrossheadBottom',400,122,12,-200,-72,210,'Moving',holes)
+    box('CrossheadRear',400,12,136,-200,38,222,'Moving',blue,'CH-04','Crosshead rear stiffener 400x136x12')
+    add('LowerStem',cyl(4,42,0,0,358),'Moving',silver,'AD-L','M8 grip stem / connection detail pending')
+    add('UpperStem',cyl(4,14,0,0,661).fuse(cyl(10,12,0,0,675)).fuse(cyl(6,12,0,0,687)),'Testing',silver,'AD-U','M8 to M12 adapter envelope / verify both threads')
+    add('CellTopStem',cyl(6,35,0,0,765),'Testing',silver,'AD-T','M12 sensor top stem / connection TBD')
+    for name,source in (('LowerGrip','ClampingYaw1'),('UpperGrip','ClampingYaw001')):
+        shape=ref.getObject(source).Shape.copy()
+        transform=App.Placement(App.Vector(0,12,480.92),App.Rotation(App.Vector(0,0,1),-90))
+        shape.transformShape(transform.toMatrix(),True)
+        add(name,shape,'Moving' if name=='LowerGrip' else 'Testing',orange,'CK-'+name,'CNC Kitchen original grip / unvalidated load capacity',
+            'Derived from CNCKitchen/Open-Pull original STEP, baseline 55017419; GPL-3.0')
+    specimen=ref.getObject('Part__Feature020').Shape.copy()
+    specimen.transformShape(App.Placement(App.Vector(-1.5,12,480.92),App.Rotation(App.Vector(0,0,1),-90)).toMatrix(),True)
+    add('Specimen',specimen,'Testing',(0.95,0.77,0.18),'CK-SP','Original specimen reference, not the recommended small starting coupon',
+        'Original STEP specimen is 170mm long; smaller 1BA STL is preserved under CAD/')
+    cell=Part.makeBox(50,25,66,App.Vector(-25,-12.5,699))
+    cell=cell.cut(Part.makeBox(32,27,13,App.Vector(-26,-13.5,713)))
+    cell=cell.cut(Part.makeBox(32,27,13,App.Vector(-6,-13.5,738)))
+    cell=cell.cut(cyl(5.2,12,0,0,698)).cut(cyl(5.2,12,0,0,754))
+    add('LoadCell',cell,'Testing',red,'LC-01','S-type 500kgf sensor space / actual dimensions pending')
+    radii=[cfg['screw_teeth']*cfg['belt_pitch_mm']/(2*math.pi)]*2+[cfg['motor_teeth']*cfg['belt_pitch_mm']/(2*math.pi)]
+    lo,hi=60.,240.
+    for _ in range(60):
+        distance=(lo+hi)/2
+        centres=[(-screw_x,0),(screw_x,0),(0,-distance)]
+        length,normal,wrap=belt_geometry(centres,radii)
+        if length < cfg['belt_target_length_mm']: lo=distance
+        else: hi=distance
+    motor_y=-distance
+    for i,(cx,cy) in enumerate(centres):
+        pulley=cyl(radii[i]-1,19,cx,cy,930).cut(cyl(8.2 if i<2 else 4.2,21,cx,cy,929))
+        add('Pulley'+str(i),pulley,'Drive',green,'PU-'+str(i),'HTD5M '+str(cfg['screw_teeth'] if i<2 else cfg['motor_teeth'])+'T / tooth detail omitted')
+    add('TimingBelt',belt_shape(centres,radii,normal,wrap,cfg['belt_width_mm']),'Drive',dark,'BT-01','HTD5M pitch 920 x width15 / confirm stock and tension range')
+    box('Motor',57,57,112,-28.5,motor_y-28.5,810,'Drive',dark,'MO-01','NEMA23 motor envelope / torque curve TBD')
+    add('MotorShaft',cyl(4,25,0,motor_y,922),'Drive',silver,'MO-S','Motor shaft envelope')
+    plate('MotorMount',100,120,6,-50,motor_y-50,922,'Drive',[(0,motor_y,20)])
+    # Bridge from motor flange forward to the roof; slots/fasteners remain v0.2 work.
+    for xx in (-50,44):
+        box('MotorBridge'+str(abs(xx)),6,abs(motor_y)-20,42,xx,motor_y,880,'Drive',blue,'MM','Motor bracket side web / detail pending')
+    rise=cfg['column_length_mm']-800
+    guard=box('FrontGuard',500,4,610+rise,-250,-128,190,'Safety',(0.80,0.85,0.94),'PC-F','PC front guard envelope 4mm / hinge and latch TBD')
+    guard.ViewObject.Transparency=85
+    for tag,x in (('Left',-255),('Right',251)):
+        obj=box('SideGuard'+tag,4,188,610+rise,x,-128,190,'Safety',(0.80,0.85,0.94),'PC-'+tag,'PC side guard envelope 4mm')
+        obj.ViewObject.Transparency=88
+    cover=Part.makeBox(430,280,42,App.Vector(-215,-215,925)).cut(Part.makeBox(422,272,42,App.Vector(-211,-211,921)))
+    obj=add('BeltCover',cover,'Safety',(0.88,0.77,0.40),'PC-B','Belt cover envelope / mounting and guarding TBD')
+    obj.ViewObject.Transparency=80
+    box('ControlEnclosure',150,90,100,70,60,230,'Safety',dark,'EL-BOX','Control enclosure space / wiring design pending')
+    box('EStopBase',40,35,40,125,-175,90,'Safety',(0.88,0.68,0.13),'ES-01','E-stop position / hardwired circuit pending')
+    button=Part.makeCylinder(15,12,App.Vector(145,-187,110),App.Vector(0,1,0))
+    add('EStopButton',button,'Safety',red,'ES-02','Emergency stop actuator space')
+    # Raise the working area and top drive, preserving space for a 100mm pull
+    # above the lower crossmember. The column/screw lengths grow by the same rise.
+    raised=list(doc.Moving.Group)+list(doc.Testing.Group)
+    raised += [o for o in doc.Drive.Group if not o.Name.startswith(('Screw','BF'))]
+    raised += [doc.UpperBeamFront,doc.UpperBeamRear,doc.UpperJointPlate,
+               doc.BearingRoof,doc.BeltCover]
+    for obj in raised:
+        placement=obj.Placement
+        placement.Base.z += rise
+        obj.Placement=placement
+    sizing=doc.addObject('App::FeaturePython','Sizing')
+    sizing.Label='00 Design assumptions / edit JSON then regenerate'
+    for name,value in [('TargetForceN',cfg['target_force_N']),('BeltLength',length),('MotorY',motor_y),
+                       ('StepsPerMillimetre',cfg['motor_steps_per_rev']*cfg['microsteps']*cfg['screw_teeth']/cfg['motor_teeth']/cfg['screw_lead_mm']),
+                       ('RequiredMotorTorqueNm',cfg['target_force_N']*cfg['screw_lead_mm']/1000/(2*math.pi*cfg['screw_efficiency_assumed'])*cfg['motor_teeth']/cfg['screw_teeth'])]:
+        sizing.addProperty('App::PropertyFloat',name)
+        setattr(sizing,name,float(value))
+    sizing.addProperty('App::PropertyString','Status').Status=cfg['status']
+    sheet=doc.addObject('Spreadsheet::Sheet','Parameters')
+    sheet.Label='Parameters (source = config.json; regenerate after edits)'
+    for row,(key,value) in enumerate(cfg.items(),1):
+        sheet.set('A'+str(row),key); sheet.set('B'+str(row),str(value))
+    sheet.setColumnWidth('A',230); sheet.setColumnWidth('B',320)
+    doc.recompute()
+    App.setActiveDocument(doc.Name)
+    Gui.activeDocument().activeView().viewAxonometric()
+    Gui.activeDocument().activeView().fitAll()
+    doc.saveAs(str(out/('OpenPull_Profile_v'+version+'.FCStd')))
+    visible=[o for o in doc.Objects if hasattr(o,'PartID')]
+    Import.export(visible,str(out/('OpenPull_Profile_v'+version+'.step')))
+    for name,view in [('isometric','viewAxonometric'),('front','viewFront'),('right','viewRight')]:
+        getattr(Gui.activeDocument().activeView(),view)()
+        Gui.activeDocument().activeView().fitAll()
+        Gui.activeDocument().activeView().saveImage(str(renders/(name+'.png')),1400,1400,'White')
+    Gui.activeDocument().activeView().viewAxonometric()
+    Gui.activeDocument().activeView().fitAll()
+    doc.save()
+    cuts=[('EX-COL','4080',cfg['column_length_mm'],2,'Column'),
+          ('EX-BEAM','4080',cfg['crossmember_length_mm'],4,'Front/rear paired upper/lower beams; shaft relief drilling required'),
+          ('EX-BASE','4040',cfg['base_length_mm'],2,'Base skids')]
+    with (root/'profile/CUT_LIST.csv').open('w',encoding='utf-8-sig',newline='') as f:
+        writer=csv.writer(f); writer.writerow(['part_id','section_mm','cut_length_mm','quantity','notes'])
+        writer.writerows(cuts)
+    print(json.dumps({'document':doc.Name,'parts':len(visible),'belt_length_mm':length,'motor_y_mm':motor_y,'output':str(out)},indent=2))
+    return doc
+
+
+if __name__ == '__main__':
+    if '__file__' in globals():
+        repository=Path(__file__).resolve().parents[1]
+    else:
+        repository=Path(App.getUserMacroDir())
+        raise RuntimeError('Run saved macro from the repository profile directory')
+    build(repository)

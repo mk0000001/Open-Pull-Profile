@@ -1,0 +1,16 @@
+{
+  "version": "0.1.0-design",
+  "status": "GEOMETRY_CHECKS_PASSED",
+  "checked_parts": 58,
+  "invalid_shapes": [],
+  "checked_pull_positions_mm": [
+    0,
+    -100
+  ],
+  "frame_collisions": [],
+  "load_rating_validated": false,
+  "physical_test_performed": false,
+  "belt_pitch_length_mm": 920.0,
+  "motor_y_mm": -137.0488507470718,
+  "steps_per_mm_proposal": 640.0
+}

@@ -1,0 +1,23 @@
+{
+  "version": "0.1.0-design",
+  "status": "DESIGN_REVIEW_ONLY_NOT_LOAD_RATED",
+  "target_force_N": 2000,
+  "load_cell_capacity_kgf": 500,
+  "column_length_mm": 900,
+  "column_centres_mm": 460,
+  "crossmember_length_mm": 420,
+  "base_length_mm": 400,
+  "screw_centres_mm": 320,
+  "screw_nominal_length_mm": 900,
+  "screw_lead_mm": 5,
+  "rail_length_mm": 700,
+  "pull_travel_mm": 100,
+  "motor_teeth": 20,
+  "screw_teeth": 40,
+  "belt_pitch_mm": 5,
+  "belt_width_mm": 15,
+  "belt_target_length_mm": 920,
+  "motor_steps_per_rev": 200,
+  "microsteps": 8,
+  "screw_efficiency_assumed": 0.9
+}

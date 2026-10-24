@@ -1,0 +1,4 @@
+﻿part_id,section_mm,cut_length_mm,quantity,notes
+EX-COL,4080,900,2,Column
+EX-BEAM,4080,420,4,Front/rear paired upper/lower beams; shaft relief drilling required
+EX-BASE,4040,400,2,Base skids
