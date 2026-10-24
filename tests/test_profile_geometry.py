@@ -31,10 +31,13 @@ def run():
     assert abs(doc.LowerStem.Shape.BoundBox.Center.y) < 0.01
     assert abs(doc.UpperStem.Shape.BoundBox.Center.y) < 0.01
     frame = [doc.ColumnLeft, doc.ColumnRight, doc.LowerBeamFront,
-             doc.LowerBeamRear, doc.UpperBeamFront, doc.UpperBeamRear]
+             doc.LowerBeamRear, doc.UpperBeamFront, doc.UpperBeamRear,
+             doc.LowerJointPlate,doc.UpperJointPlate,doc.BearingRoof,
+             doc.FloatingSupportPlate,doc.FixedGripPlate,doc.RailLeft,doc.RailRight]
     moving = [doc.CrossheadFront, doc.CrossheadTop, doc.CrossheadBottom,
               doc.CrossheadRear, doc.LowerGrip, doc.LowerStem,
-              doc.NutLeft, doc.NutRight]
+              doc.NutLeft, doc.NutRight,doc.GuideBlockL1,doc.GuideBlockL2,
+              doc.GuideBlockR1,doc.GuideBlockR2]
     collisions = []
     for dz in (0, -100):
         for obj in moving:
@@ -53,7 +56,10 @@ def run():
     result = {'version': '0.1.0-design', 'status': 'GEOMETRY_CHECKS_PASSED',
               'checked_parts': len(visible), 'invalid_shapes': invalid,
               'checked_pull_positions_mm': [0, -100], 'frame_collisions': collisions,
+              'fixed_parts_checked': [o.Name for o in frame]+['BFLeft','BFRight'],
+              'moving_parts_checked': [o.Name for o in moving],
               'load_rating_validated': False, 'physical_test_performed': False,
+              'assembly_ready':False,'procurement_status':'HOLD_VENDOR_INTERFACE_MISMATCHES',
               'belt_pitch_length_mm': doc.Sizing.BeltLength,
               'motor_y_mm': doc.Sizing.MotorY,
               'steps_per_mm_proposal': doc.Sizing.StepsPerMillimetre}

@@ -11,6 +11,7 @@ import FreeCAD as App
 import FreeCADGui as Gui
 import Part
 import Import
+from pivy import coin
 
 
 def belt_geometry(centres, radii):
@@ -124,11 +125,12 @@ def build(root):
             for x in (-screw_x,screw_x):
                 beam.Shape=beam.Shape.cut(cyl(12,82,x,0,z-1))
     for label,z in (('Lower',80),('Upper',720)):
-        shape=Part.makeBox(500,8,160,App.Vector(-250,40,z))
+        joint_height=80 if label=='Lower' else 160
+        shape=Part.makeBox(500,8,joint_height,App.Vector(-250,40,z))
         for xx in (-230,230):
-            for zz in (z+20,z+60,z+100,z+140):
+            for zz in range(z+20,z+joint_height,40):
                 shape=shape.cut(Part.makeCylinder(4.5,10,App.Vector(xx,39,zz),App.Vector(0,1,0)))
-        add(label+'JointPlate',shape,'Frame',blue,'JP-'+label,'Rear joint plate 500x160x8 / bolt layout provisional')
+        add(label+'JointPlate',shape,'Frame',blue,'JP-'+label,'Rear joint plate 500x'+str(joint_height)+'x8 / bolt layout provisional')
     holes=[(-screw_x,0,12),(screw_x,0,12)]
     plate('BearingRoof',500,120,12,-250,-60,880,'Frame',holes)
     plate('FloatingSupportPlate',420,100,12,-210,-50,160,'Frame',holes)
@@ -198,8 +200,8 @@ def build(root):
     obj=add('BeltCover',cover,'Safety',(0.88,0.77,0.40),'PC-B','Belt cover envelope / mounting and guarding TBD')
     obj.ViewObject.Transparency=80
     box('ControlEnclosure',150,90,100,70,60,230,'Safety',dark,'EL-BOX','Control enclosure space / wiring design pending')
-    box('EStopBase',40,35,40,125,-175,90,'Safety',(0.88,0.68,0.13),'ES-01','E-stop position / hardwired circuit pending')
-    button=Part.makeCylinder(15,12,App.Vector(145,-187,110),App.Vector(0,1,0))
+    box('EStopBase',40,35,40,125,-75,90,'Safety',(0.88,0.68,0.13),'ES-01','E-stop position / hardwired circuit pending')
+    button=Part.makeCylinder(15,12,App.Vector(145,-87,110),App.Vector(0,1,0))
     add('EStopButton',button,'Safety',red,'ES-02','Emergency stop actuator space')
     # Raise the working area and top drive, preserving space for a 100mm pull
     # above the lower crossmember. The column/screw lengths grow by the same rise.
@@ -238,12 +240,15 @@ def build(root):
         'front':App.Rotation(App.Vector(1,0,0),90),
         'right':App.Rotation(App.Vector(0,0,1),90).multiply(App.Rotation(App.Vector(1,0,0),90))}
     for name,rotation in camera_rotations.items():
-        view.setCameraOrientation(rotation.Q)
+        # Direct camera-node assignment avoids saving an in-between frame from
+        # FreeCAD's animated view-orientation transition.
+        view.getCameraNode().orientation.setValue(coin.SbRotation(*rotation.Q))
         view.fitAll()
         Gui.updateGui()
         view.saveImage(str(renders/(name+'.png')),1400,1400,'White')
-    Gui.activeDocument().activeView().viewAxonometric()
-    Gui.activeDocument().activeView().fitAll()
+    view.getCameraNode().orientation.setValue(coin.SbRotation(*camera_rotations['isometric'].Q))
+    view.fitAll()
+    Gui.updateGui()
     doc.save()
     cuts=[('EX-COL','4080',cfg['column_length_mm'],2,'Column'),
           ('EX-BEAM','4080',cfg['crossmember_length_mm'],4,'Front/rear paired upper/lower beams; shaft relief drilling required'),

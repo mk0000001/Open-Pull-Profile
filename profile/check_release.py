@@ -16,7 +16,7 @@ BASELINE = '55017419fae89409b1098540212e1620b1e46d0b'
 
 
 def files_to_hash():
-    selected = [ROOT/'VERSION', ROOT/'UPSTREAM.md', ROOT/'CHANGELOG.md']
+    selected = [ROOT/name for name in ('VERSION','UPSTREAM.md','CHANGELOG.md','README.md','LICENSE','.gitattributes','.gitignore')]
     selected += list((ROOT/'docs/superpowers').rglob('*.md'))
     selected += [p for p in (ROOT/'profile').rglob('*') if p.is_file()
                  and p.suffix in {'.json','.csv','.md','.py','.FCMacro','.FCStd','.step','.png'}]
@@ -37,6 +37,7 @@ def check():
     assert validation['status'] == 'GEOMETRY_CHECKS_PASSED', 'No successful geometry evidence'
     assert validation['load_rating_validated'] is False, 'Unproven load rating claimed'
     assert validation['physical_test_performed'] is False, 'Physical test status incorrect'
+    assert validation['assembly_ready'] is cfg['assembly_ready'] is False, 'Unproven assembly-ready claim'
     assert validation['checked_pull_positions_mm'] == [0,-cfg['pull_travel_mm']], 'Travel evidence mismatch'
     native = ROOT/('profile/cad/OpenPull_Profile_v'+version+'.FCStd')
     step = native.with_suffix('.step')

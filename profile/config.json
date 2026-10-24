@@ -1,6 +1,8 @@
 {
   "version": "0.1.0-design",
   "status": "DESIGN_REVIEW_ONLY_NOT_LOAD_RATED",
+  "assembly_ready": false,
+  "procurement_status": "HOLD_VENDOR_INTERFACE_MISMATCHES",
   "target_force_N": 2000,
   "load_cell_capacity_kgf": 500,
   "column_length_mm": 900,

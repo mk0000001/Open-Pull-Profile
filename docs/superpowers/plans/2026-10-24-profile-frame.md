@@ -29,9 +29,9 @@
 
 Files: VERSION, UPSTREAM.md, CHANGELOG.md, docs/superpowers/specs/2026-10-24-profile-frame-design.md
 
-- [ ] 원본 SHA·라이선스·원본 파일을 확인한다.
-- [ ] 설계 검토자를 통해 중요한 누락을 확인한다.
-- [ ] 전용 브랜치에 설계 기준을 커밋한다.
+- [x] 원본 SHA·라이선스·원본 파일을 확인한다.
+- [x] 설계 검토자를 통해 중요한 누락을 확인한다.
+- [x] 전용 브랜치에 설계 기준을 커밋한다.
 
 ## Task 2: 재현 가능한 CAD
 
@@ -39,18 +39,18 @@ Files: profile/config.json, profile/build_profile.FCMacro, profile/cad/, profile
 
 Interfaces: config.json을 읽는 build(root) → document, 산출물 생성. 검증은 FCStd를 열어 실제 형상과 이동 여유를 확인한다.
 
-- [ ] CAD 산출물과 실제 기하를 확인하는 검증을 먼저 작성하고 미생성 상태의 실패를 확인한다.
-- [ ] FreeCAD 원본 STEP 참조와 프로파일 조립체를 생성한다.
-- [ ] 실형상 유효성·프레임 간섭·100mm 인장 이동 여유를 검사하고 정면/사시도를 확인한다.
-- [ ] FCStd/STEP/설정/매크로와 검증 결과를 함께 커밋한다.
+- [x] CAD 산출물과 실제 기하를 확인하는 검증을 먼저 작성하고 미생성 상태의 실패를 확인한다.
+- [x] FreeCAD 원본 STEP 참조와 프로파일 조립체를 생성한다.
+- [x] 실형상 유효성·프레임 간섭·100mm 인장 이동 여유를 검사하고 정면/사시도를 확인한다.
+- [x] FCStd/STEP/설정/매크로와 검증 결과를 함께 커밋한다.
 
 ## Task 3: 소싱·인수·게시
 
 Files: profile/BOM.csv, profile/SOURCING.ko.md, profile/CUT_LIST.csv, profile/README.ko.md, profile/VALIDATION.json, profile/MANIFEST.sha256, .github/workflows/profile-checks.yml
 
-- [ ] 각 구매품의 수량·필수 옵션·후보 URL·가격 상태를 기록한다. 미확정 링크는 구매 확정으로 표기하지 않는다.
-- [ ] 해시/원본 보존/메타데이터 검사를 실행한다.
-- [ ] 전체 변경의 별도 검토와 필요한 수정을 마친다.
+- [x] 각 구매품의 수량·필수 옵션·후보 URL·가격 상태를 기록한다. 미확정 링크는 구매 확정으로 표기하지 않는다.
+- [x] 해시/원본 보존/메타데이터 검사를 실행한다.
+- [x] 전체 변경의 별도 검토와 필요한 수정을 마친다.
 - [ ] 실제 포크에 브랜치를 게시하고 v0.1.0-design 태그를 만든다. 원격 SHA와 태그 일치를 확인한다.
 
 ## Execution record

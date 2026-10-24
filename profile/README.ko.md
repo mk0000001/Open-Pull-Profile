@@ -2,6 +2,8 @@
 
 **출력 인장 시편 비교용 · 구매/제작 전 검토 CAD · 실물 내하중 미검증**
 
+**전체 검증 판정: 현재 도면 그대로 발주·조립 보류.** [실제 구매 옵션과 치수 불일치 검증](ASSEMBLY_AUDIT.ko.md)에 근거와 다음 수정 사항을 정리했다.
+
 CNC Kitchen [Open-Pull](https://github.com/CNCKitchen/Open-Pull)을 기반으로 목재 프레임을 4080 알루미늄 프로파일로 재설계했다. 원본 STEP의 상·하 그립 형상을 실제로 가져오고, 두 나사 구동·로드셀 측정 방식을 계승했다. 원본 Arduino/CAD/문서는 보존돼 있다. 새 구동은 SFU1605 두 개와 단일 NEMA23의 벨트 동기화를 제안한다.
 
 ![프로파일 검토 조립체](renders/isometric.png)
@@ -12,6 +14,7 @@ CNC Kitchen [Open-Pull](https://github.com/CNCKitchen/Open-Pull)을 기반으로
 - [STEP](cad/OpenPull_Profile_v0.1.0-design.step)
 - [정면](renders/front.png) / [측면](renders/right.png)
 - [구매 후보·가격 상태](SOURCING.ko.md) / [부품표 CSV](BOM.csv)
+- [발주·조립 가능성 검증](ASSEMBLY_AUDIT.ko.md)
 - [프로파일 절단 목록](CUT_LIST.csv) / [판재 블랭크 목록](PLATE_LIST.csv)
 - [설계 기준](../docs/superpowers/specs/2026-10-24-profile-frame-design.md)
 - [기하 검증 결과](VALIDATION.json) / [개발 기록](DEVELOPMENT_LOG.md)

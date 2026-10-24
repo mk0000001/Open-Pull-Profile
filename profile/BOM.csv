@@ -10,7 +10,7 @@ DR,Driver,DM542 class matched to motor,1,pcs,Coupang,https://www.coupang.com/vp/
 PU20,Motor pulley,HTD5M 20T width15 bore8 candidate,1,pcs,Coupang,https://www.coupang.com/vp/products/8677758567,INDEX_ONLY,Overseas purchasing agent listing; dimensions pending
 PU40,Screw pulleys,HTD5M 40T width15 actual shaft bore TBD,2,pcs,AliExpress,https://www.aliexpress.com/w/wholesale-HTD5M-40T-15mm-pulley.html,SEARCH_ONLY,Match exact machined screw drive end
 BT,Timing belt,920-5M-15 closed loop,1,pcs,AliExpress,https://www.aliexpress.com/w/wholesale-920-5M-15-timing-belt.html,SEARCH_ONLY,Tensioner and stock length availability pending
-LC,Load cell,S-type tension500kgf with datasheet,1,pcs,Coupang,https://www.coupang.com/vp/products/9246574572,INDEX_ONLY,500kg option price and thread unconfirmed; CAS alternative in sourcing note
+LC,Load cell,CAS SBA-500L tension500kgf candidate,1,pcs,Domestic,https://cas-mall.com/goods/goods_view.php?goodsNo=1000000249,PRICE_OPTION_VERIFIED_INTERFACE_PENDING,500L option198000KRW; M12x1.75 accessory family; body and adapters pending
 ADC,Load cell ADC,HX711 module selectable80SPS preferred,1,pcs,Coupang,https://www.coupang.com/vp/products/8941551676,PAGE_SEEN_STALE_DELIVERY,Displayed880KRW not a verified current quote
 MCU,Controller,Nano ATmega328P or later validated controller,1,pcs,Coupang,https://www.coupang.com/np/search?q=Arduino%20Nano%20ATmega328P,SEARCH_ONLY,Original firmware unvalidated for new mechanics
 PSU,Power supply,24V supply sized for selected motor driver plus regulated5V,1,set,Coupang,https://www.coupang.com/np/search?q=24V%2010A%20SMPS,SEARCH_ONLY,Fuse earth enclosed terminals and AC work required

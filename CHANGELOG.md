@@ -6,3 +6,4 @@
 - Add 4080 profile-frame concept for printed tensile specimens, with original grip geometry and two synchronized SFU1605 screws.
 - Add FreeCAD source, native model, STEP, renders, sourcing candidates and verification evidence.
 - Design-review version only; no physical load rating, finalized machining drawings, new motor firmware or purchase approval.
+- Assembly audit: HOLD procurement; verified domestic 4080 option pricing and CAS SBA-500L selection, found motor shaft/length and guide mounting-height mismatches against manufacturer data.

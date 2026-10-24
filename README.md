@@ -1,5 +1,7 @@
 > **Profile-frame fork — v0.1.0-design:** [FreeCAD redesign and Korean build review](profile/README.ko.md). Design review only; not physically load-rated. Original CNC Kitchen source directories remain preserved. See [provenance](UPSTREAM.md) and [changes](CHANGELOG.md).
 
+> **Assembly audit: HOLD procurement/assembly.** [Verified buying options and concrete interface mismatches](profile/ASSEMBLY_AUDIT.ko.md). The current layout passes its documented geometry checks but is not ready for fabrication.
+
 __WORK IN PROGRESS__
 # Open-Pull
 These are all the files you need, to build your own DIY Universal test machine.
