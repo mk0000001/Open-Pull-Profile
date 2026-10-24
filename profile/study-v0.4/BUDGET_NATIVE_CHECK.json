@@ -1,0 +1,31 @@
+{
+  "status": "SELECTED_PACKAGING_CHECKS_PASS",
+  "reference_solids": 142,
+  "coupon_alternatives": [
+    {
+      "name": "PETG_custom_150x5x2",
+      "section_mm2": 9.999999999990905,
+      "parallel_length_mm": 60,
+      "standard_geometry_verified": false
+    },
+    {
+      "name": "Engineering_custom_150x2x2",
+      "section_mm2": 3.999999999996362,
+      "parallel_length_mm": 50,
+      "standard_geometry_verified": false
+    }
+  ],
+  "both_grip_openings_mm": [
+    1.9999999999973923,
+    1.9999999999973923
+  ],
+  "assembly_ready": false,
+  "minimum_2kN_validated": false,
+  "ISO_conformance": false,
+  "open_interfaces": [
+    "quoted replacement motor and sensor differ from source solids",
+    "jaw knobs/stems not remated after 2mm specimen adjustment",
+    "no complete collision or thread/fastener/preload check",
+    "2kN load path and bearing axial retention unverified"
+  ]
+}

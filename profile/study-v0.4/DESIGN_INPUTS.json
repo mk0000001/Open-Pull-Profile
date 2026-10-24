@@ -1,0 +1,69 @@
+{
+  "version": "0.4.0-engineering-feasibility",
+  "scope": "room-temperature printed FFF tensile specimens",
+  "temperature_C": 23,
+  "budget_target_KRW": 600000,
+  "working_force_target_N": 10000,
+  "structural_screening_force_N": 15000,
+  "full_size_nominal_section_mm2": 40,
+  "bounded_max_strength_MPa": 250,
+  "envelope_note": "250MPa only at nominal40mm2; check strength times ACTUAL measured section against10kN. It is not an unbounded material guarantee.",
+  "physical_force_test_performed": false,
+  "ISO_conformance_established": false,
+  "assembly_ready": false,
+  "nominal_coupon": {
+    "overall_length_mm": 170,
+    "parallel_length_mm": 80,
+    "gauge_width_mm": 10,
+    "shoulder_width_mm": 20,
+    "thickness_mm": 4,
+    "transition_radius_mm": 24,
+    "gauge_marks_mm": [
+      75,
+      50
+    ],
+    "grip_inner_spacing_mm": 115,
+    "authority": "nominal A1-like reference; radius is a design choice, not a verified current standard table",
+    "current_standard_master_verified": false
+  },
+  "mt02_reconstruction": {
+    "columns_4080_mm": [
+      590,
+      590
+    ],
+    "feet_4080_mm": [
+      400,
+      400
+    ],
+    "top_4080_mm": 400,
+    "bottom_4080_mm": 320,
+    "crosshead_4080_mm": 300,
+    "screw_spacing_mm": 244,
+    "screw_type": "SFU1605x500 nominal, source end drawing not frozen",
+    "column_centres_mm": 360,
+    "authority": "reconstructed functional arrangement from thesis; not authentic source CAD",
+    "grid_deviation": "top end-hole centres chosen+-180 to align40mm columns; published figure368mm end pattern differs by4mm per side; resolve before fabrication"
+  },
+  "engineering_extension": {
+    "columns_SHS80x40x4_mm": [
+      800,
+      800
+    ],
+    "column_centres_mm": 400,
+    "beams_SHS80x80x5_mm": [
+      440,
+      360,
+      340
+    ],
+    "screw_spacing_mm": 280,
+    "proposed_screws": "20mm nominal ball screws,5mm lead; exact rated nut/end drawing unselected",
+    "fixed_axial_capacity_requirement_per_axis_N": 10000,
+    "drive_required_continuous_output_torque_per_axis_Nm_at_eta_0_9": 4.421,
+    "load_cell_requirement": "rated10kN or2t(~19.6kN), not1t(~9.81kN)",
+    "load_cell_candidate": "CAS SBA-2:77x108x25.4mm,maxcover33mm,M18x1.5,threaddepthnotpublished,10Vrecommendedexcitation",
+    "authority": "independent requirements/layout study, not fabrication or load-rated design"
+  },
+  "budget_strict_ceiling_KRW": 800000,
+  "printing_costs_excluded": true,
+  "budget_note": "Current budget supersedes historical500000 research; purchased hardware/fabrication/freight/taxes included, printing material/electricity/labour excluded."
+}

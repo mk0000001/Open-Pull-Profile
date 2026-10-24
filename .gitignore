@@ -6,3 +6,4 @@ __pycache__/
 .superpowers/
 profile/cad/*.log
 profile/build-v0.3/cad/*.step
+profile/study-v0.4/**/*.step

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0-engineering-feasibility — 2026-10-25
+
+- Compare UTM V2 and MT02 source BOM, actual demonstrated load, drawing conflicts and domestic/direct manufacturer prices.
+- Apply revised600k recommended / strict800k budget excluding printing costs:589084/789084KRW planning totals with freight, tax, fabrication allocations and contingency.
+- Save UTM-derived PETG/custom engineering coupon packaging, MT02 reconstructed layout and independent10kN steel-frame/metal-grip/measurement study. Preserve hardware attribution/license boundaries.
+- Audit current ISO editions, moisture/orientation and tensile TDS requirements; keep formal2kN/ISO/assembly claims unestablished.
+- Preserve all original and frozen v0.1-v0.3 artifacts.
+
 ## 0.3.0-costdown-layout — 2026-10-24
 
 - Return to original two geared NEMA17/TR10x2 drives and actual upstream component solids; remove dependence on the prior single-motor belt concept.

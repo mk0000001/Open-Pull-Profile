@@ -1,0 +1,49 @@
+{
+  "version": "0.4.0-engineering-feasibility",
+  "models": [
+    {
+      "native_path": "cad/MT02_source_derived_layout.FCStd",
+      "native_sha256": "2c86621d5aca89f4b38390fe97a8ec5bba69cdfb2765e175a420dae377ae48c0",
+      "step_member": "MT02_source_derived_layout.step",
+      "step_sha256": "a22c0d1062e0d9578d8700d2f0202f7177e321eae18dfa10002f96641d103720",
+      "native_reopened_from_disk": true,
+      "step_shapes_valid": true,
+      "native_part_objects": 56,
+      "step_solids": 56,
+      "native_volume_mm3": 4503013.175904702,
+      "step_volume_mm3": 4503013.164563406,
+      "volume_relative_difference": 2.518601588168939e-09,
+      "volume_relative_tolerance": 1e-08
+    },
+    {
+      "native_path": "cad/Engineering_10kN_room_temperature_study.FCStd",
+      "native_sha256": "3582d4769600142b02e12e566dd7916e3c5f2212d061ea97eeda20d6315a8611",
+      "step_member": "Engineering_10kN_room_temperature_study.step",
+      "step_sha256": "f63930e91d2e12cc7e08795be85f1c7066c24486c15d96dee1e970eb7a73631e",
+      "native_reopened_from_disk": true,
+      "step_shapes_valid": true,
+      "native_part_objects": 54,
+      "step_solids": 54,
+      "native_volume_mm3": 6915455.854169194,
+      "step_volume_mm3": 6915455.8531718,
+      "volume_relative_difference": 1.4422670219564995e-10,
+      "volume_relative_tolerance": 1e-08
+    },
+    {
+      "native_path": "utm-derived/UTM_V2_budget_fixture_study.FCStd",
+      "native_sha256": "675e9447fdb942327752d096c6d8a2e0a8720e5de757d62fe3f0bc14d3b9d237",
+      "step_member": "UTM_V2_budget_fixture_study.step",
+      "step_sha256": "de3d0b22d193e720af1ff47766bafe531e305a5df020db1d9c6467f71484c3a5",
+      "native_reopened_from_disk": true,
+      "step_shapes_valid": true,
+      "native_part_objects": 143,
+      "step_solids": 143,
+      "native_volume_mm3": 2473166.8355352576,
+      "step_volume_mm3": 2473177.351419353,
+      "volume_relative_difference": 4.2519913918631095e-06,
+      "volume_relative_tolerance": 1e-05
+    }
+  ],
+  "physical_load_verified": false,
+  "scope": "native reopen, solid validity and STEP aggregate volume only; no load-path, full assembly, purchasing or ISO verification"
+}

@@ -1,0 +1,33 @@
+"""Reopen and STEP-volume pairing for three studies, not load verification."""
+from pathlib import Path
+import hashlib,json
+import FreeCAD as App
+import Part
+
+def run(root):
+    out=Path(root)/'profile/study-v0.4';records=[]
+    for rel in ['cad/MT02_source_derived_layout.FCStd','cad/Engineering_10kN_room_temperature_study.FCStd','utm-derived/UTM_V2_budget_fixture_study.FCStd']:
+        p=out/rel
+        existing=next((d for d in App.listDocuments().values() if d.FileName and Path(d.FileName)==p),None)
+        if existing:App.closeDocument(existing.Name)
+        doc=App.openDocument(str(p))
+        objs=[o for o in doc.Objects if o.TypeId=='Part::Feature' and o.Shape.Solids]
+        if 'utm-derived/' in rel:objs=[o for o in objs if o.Name!='Engineering_custom_150x2x2']
+        assert all(o.Shape.isValid() for o in objs)
+        native_volume=sum(o.Shape.Volume for o in objs)
+        step=p.with_suffix('.step');sh=Part.Shape();sh.read(str(step))
+        assert sh.isValid() and sh.Solids
+        diff=abs(sh.Volume-native_volume)/native_volume
+        # Imported vendor spline geometry has a small mass-integration drift
+        # on STEP re-export. Do not describe this as bit-exact geometry.
+        tolerance=1e-5 if 'utm-derived/' in rel else 1e-8
+        assert diff<tolerance,(rel,diff)
+        records.append(dict(native_path=rel,native_sha256=hashlib.sha256(p.read_bytes()).hexdigest(),
+            step_member=p.stem+'.step',step_sha256=hashlib.sha256(step.read_bytes()).hexdigest(),
+            native_reopened_from_disk=True,step_shapes_valid=True,native_part_objects=len(objs),step_solids=len(sh.Solids),
+            native_volume_mm3=native_volume,step_volume_mm3=sh.Volume,volume_relative_difference=diff,
+            volume_relative_tolerance=tolerance))
+    report={'version':'0.4.0-engineering-feasibility','models':records,'physical_load_verified':False,
+        'scope':'native reopen, solid validity and STEP aggregate volume only; no load-path, full assembly, purchasing or ISO verification'}
+    (out/'EXCHANGE_CHECK.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')
+    print(json.dumps(report));return report

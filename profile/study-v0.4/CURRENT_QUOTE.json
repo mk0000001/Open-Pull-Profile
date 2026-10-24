@@ -1,0 +1,305 @@
+{
+  "version": "0.4.0-engineering-feasibility",
+  "as_of": "2026-10-25",
+  "currency": "KRW",
+  "recommended_budget_KRW": 600000,
+  "strict_ceiling_KRW": 800000,
+  "printing_costs_excluded": true,
+  "public_price_lines": [
+    {
+      "id": "motor",
+      "quantity": 1,
+      "selection": "STEPPERONLINE17HS19-1684S-PG100",
+      "amount_krw": 45276,
+      "source": "https://www.stepperonline.co.kr/nema-17-%EC%8A%A4%ED%85%8C%ED%8D%BC-%EB%AA%A8%ED%84%B0-%EB%B0%94%EC%9D%B4%ED%8F%B4%EB%9D%BC-l-48mm-w-%EA%B8%B0%EC%96%B4%EB%B9%84-100-1-%EC%9C%A0%EC%84%B1-%EA%B8%B0%EC%96%B4%EB%B0%95%EC%8A%A4-17hs19-1684s-pg100",
+      "vat": "Unverified; displayed KRW45275.22 rounded up; freight/import extras reserved separately.",
+      "fit": "Substitute, not original42HS6015A4. 3Nm continuous/5Nm momentary; axial50N;99.548:1;8mm D-shaft. CAD fit unverified.",
+      "status": "public_price_reference_not_checkout",
+      "observed": "2026-10-25"
+    },
+    {
+      "id": "rail_one_block",
+      "quantity": 1,
+      "selection": "Nasspop714 P0000BBM000H,300mm+MGN12H",
+      "amount_krw": 23500,
+      "source": "https://nasspop.com/product/detail.html?product_no=714&item_code=P0000BBM000H",
+      "vat": "Seller public consumer display used; no separateVAT shown; checkout unverified.",
+      "fit": "Non-HIWIN, no published load/moment rating. JSON-LD exact300mm option verified.",
+      "status": "public_price_reference_not_checkout",
+      "observed": "2026-10-25"
+    },
+    {
+      "id": "extra_block",
+      "quantity": 1,
+      "selection": "Nasspop678 MGN12H block only",
+      "amount_krw": 11000,
+      "source": "https://nasspop.com/product/detail.html?product_no=678",
+      "vat": "Seller public consumer display used; checkout unverified.",
+      "fit": "Actual block/rail fit and clearance unverified.",
+      "status": "public_price_reference_not_checkout",
+      "observed": "2026-10-25"
+    },
+    {
+      "id": "lead_screw",
+      "quantity": 1,
+      "selection": "Nasspop838 P0000BGG000I,T12 lead8x1000mm",
+      "amount_krw": 18000,
+      "source": "https://nasspop.com/product/detail.html?product_no=838&item_code=P0000BGG000I",
+      "vat": "Seller public consumer display used; checkout unverified.",
+      "fit": "Buy1000mm andcutto400mm; no bearing journal machining assumed. Notlead7.",
+      "status": "public_price_reference_not_checkout",
+      "observed": "2026-10-25"
+    },
+    {
+      "id": "nut_and_cut",
+      "quantity": 1,
+      "selection": "Nasspop838 P0000BGG000F lead8nut2400 +P0000BGG000V cut1000",
+      "amount_krw": 3400,
+      "source": "https://nasspop.com/product/detail.html?product_no=838",
+      "vat": "Seller public consumer display used; checkout unverified.",
+      "fit": "Flange holes and bearing/collar interface dimensions unverified.",
+      "status": "public_price_reference_not_checkout",
+      "observed": "2026-10-25"
+    },
+    {
+      "id": "angular_bearings",
+      "quantity": 2,
+      "selection": "NACHI7201,NavimroK11504922,12x32x10mm,30deg",
+      "amount_krw": 28578,
+      "source": "https://www.navimro.com/p/K11504922/",
+      "vat": "12990exVAT/14289incVAT perbearing; liveopen supersedes oldersearchcache13189.",
+      "fit": "Ordinary single bearings; matched preload pair not asserted.",
+      "status": "public_price_reference_not_checkout",
+      "observed": "2026-10-25"
+    },
+    {
+      "id": "load_cell",
+      "quantity": 1,
+      "selection": "VCTEC13582,S500kg,P0000UCJ",
+      "amount_krw": 69740,
+      "source": "https://vctec.co.kr/product/detail.html?product_no=13582",
+      "vat": "63400exVAT*1.1;3500freight separately reserved.",
+      "fit": "Brand,thread,dimensions,calibration certificate andstock unverified;10V recommendedexcitation versusHX711 mustbechecked.",
+      "status": "public_price_reference_not_checkout",
+      "observed": "2026-10-25"
+    },
+    {
+      "id": "nano",
+      "quantity": 1,
+      "selection": "SZH-EK025 NanoCH340+USB",
+      "amount_krw": 6050,
+      "source": "https://www.devicemart.co.kr/goods/brand?category_code=00050001&code=1224",
+      "vat": "5500exVAT*1.1.",
+      "fit": "OriginalPCBpinout andUSBdiode path check pending.",
+      "status": "public_price_reference_not_checkout",
+      "observed": "2026-10-25"
+    },
+    {
+      "id": "oled",
+      "quantity": 1,
+      "selection": "VLT-OL023 SSD1306,128x64I2C",
+      "amount_krw": 6490,
+      "source": "https://www.devicemart.co.kr/goods/view?no=15960990",
+      "vat": "5900exVAT*1.1.",
+      "fit": "Pin order check pending.",
+      "status": "public_price_reference_not_checkout",
+      "observed": "2026-10-25"
+    },
+    {
+      "id": "driver",
+      "quantity": 1,
+      "selection": "SMG A4988RED,1327610,heatsink included",
+      "amount_krw": 1980,
+      "source": "https://www.devicemart.co.kr/goods/view?no=1327610",
+      "vat": "1800exVAT/1980incVAT.",
+      "fit": "Sellerallows hardware/chip revisions;current andthermal validation pending.",
+      "status": "public_price_reference_not_checkout",
+      "observed": "2026-10-25"
+    },
+    {
+      "id": "psu",
+      "quantity": 1,
+      "selection": "ComsP5301,24V3A,1329320,ACcordincluded",
+      "amount_krw": 26070,
+      "source": "https://www.devicemart.co.kr/goods/view?no=1329320",
+      "vat": "23700exVAT/26070incVAT.",
+      "fit": "Singlemotor powercandidate;connector andpower margin unverified.",
+      "status": "public_price_reference_not_checkout",
+      "observed": "2026-10-25"
+    }
+  ],
+  "base_allowances": [
+    {
+      "id": "profile_2060_eu550",
+      "amount_krw": 20000,
+      "note": "ExactEUslot section andprice notverified.",
+      "status": "allowance_not_quoted"
+    },
+    {
+      "id": "bearing6001_and_collars2",
+      "amount_krw": 13000,
+      "note": "Exactbrand andaxialretention rating notverified.",
+      "status": "allowance_not_quoted"
+    },
+    {
+      "id": "rigid_coupler8to12_d25l40",
+      "amount_krw": 15000,
+      "note": "Exactrateditem notverified;no2kNguarantee.",
+      "status": "allowance_not_quoted"
+    },
+    {
+      "id": "all_fasteners_and_tnuts",
+      "amount_krw": 35000,
+      "note": "IncludesmissingM5x90/M12lownuts;actualcellthreadpending.",
+      "status": "allowance_not_quoted"
+    },
+    {
+      "id": "grip_surface_adhesive",
+      "amount_krw": 5000,
+      "note": "Consumables.",
+      "status": "allowance_not_quoted"
+    },
+    {
+      "id": "attiny85_and_dip8",
+      "amount_krw": 6000,
+      "note": "Currentunitprice/minimumorderunverified;candidateDeviceMart1341738.",
+      "status": "allowance_not_quoted"
+    },
+    {
+      "id": "custom_red_hx711_pcb",
+      "amount_krw": 20000,
+      "note": "Fabricationquantity/freightunverified.",
+      "status": "allowance_not_quoted"
+    },
+    {
+      "id": "red_or_xfw_hx711",
+      "amount_krw": 5000,
+      "note": "ActualPCBpinoutand80SPSunverified;nogenericgreen substitution.",
+      "status": "allowance_not_quoted"
+    },
+    {
+      "id": "regulator_switches_passives_wiring",
+      "amount_krw": 15000,
+      "note": "Exactschematiccountsandheatsinkpending.",
+      "status": "allowance_not_quoted"
+    },
+    {
+      "id": "power_cut_fuse_limit2",
+      "amount_krw": 15000,
+      "note": "Exactcircuit/ratingpending;notcertifiedsafetyrelaycost.",
+      "status": "allowance_not_quoted"
+    },
+    {
+      "id": "guard_and_mount",
+      "amount_krw": 20000,
+      "note": "Exactcoverageandthicknesspending.",
+      "status": "allowance_not_quoted"
+    },
+    {
+      "id": "domestic_shipping",
+      "amount_krw": 25000,
+      "note": "Splitfreightreserve;VCTEC3500,Nasspopsplit,Navimro,electronics.",
+      "status": "allowance_not_quoted"
+    },
+    {
+      "id": "international_motor_shipping",
+      "amount_krw": 25000,
+      "note": "NoKoreanaddresscheckoutverified.",
+      "status": "allowance_not_quoted"
+    },
+    {
+      "id": "import_tax_payment_fee_vat_uncertainty",
+      "amount_krw": 10000,
+      "note": "Budgetreserve,notlegalcustomstaxcalculation.",
+      "status": "allowance_not_quoted"
+    }
+  ],
+  "public_price_subtotal_krw": 240084,
+  "base_allowances_subtotal_krw": 229000,
+  "scenarios": [
+    {
+      "id": "recommended_600k",
+      "budget_limit_krw": 600000,
+      "screw_lead_mm": 8,
+      "total_krw": 589084,
+      "headroom_krw": 10916,
+      "additional_allowances": [
+        {
+          "id": "stop_limit_wiring_extra",
+          "amount_krw": 20000,
+          "status": "allocation_not_supplier_quote"
+        },
+        {
+          "id": "axial_support_retention_extra",
+          "amount_krw": 30000,
+          "status": "allocation_not_supplier_quote"
+        },
+        {
+          "id": "local_metal_reinforcement_extra",
+          "amount_krw": 20000,
+          "status": "allocation_not_supplier_quote"
+        },
+        {
+          "id": "contingency",
+          "amount_krw": 50000,
+          "status": "allocation_not_supplier_quote"
+        }
+      ],
+      "minimum_2kN_validated": false,
+      "is_purchase_ready_quote": false,
+      "target": "~1kN comparative prototype candidate",
+      "lead2_option": null
+    },
+    {
+      "id": "reinforced_under800k",
+      "budget_limit_krw": 800000,
+      "screw_lead_mm": 2,
+      "total_krw": 789084,
+      "headroom_krw": 10916,
+      "additional_allowances": [
+        {
+          "id": "stop_limit_wiring_extra",
+          "amount_krw": 20000,
+          "status": "allocation_not_supplier_quote"
+        },
+        {
+          "id": "axial_support_machining_extra",
+          "amount_krw": 80000,
+          "status": "allocation_not_supplier_quote"
+        },
+        {
+          "id": "grip_sensor_reaction_metal_extra",
+          "amount_krw": 120000,
+          "status": "allocation_not_supplier_quote"
+        },
+        {
+          "id": "contingency",
+          "amount_krw": 100000,
+          "status": "allocation_not_supplier_quote"
+        }
+      ],
+      "minimum_2kN_validated": false,
+      "is_purchase_ready_quote": false,
+      "target": "2kN development target, not established",
+      "lead2_option": {
+        "url": "https://nasspop.com/product/detail.html?product_no=838",
+        "screw_sku": "P0000BGG000G",
+        "nut_sku": "P0000BGG000D",
+        "cut_sku": "P0000BGG000V",
+        "price_delta_if_selected_initially_krw": 0,
+        "interface_verified": false
+      }
+    }
+  ],
+  "unpriced_exclusions": [
+    "accredited force and extension calibration",
+    "new calibrated force reference instrument",
+    "ISO9513 verified extensometer",
+    "paid general assembly labour",
+    "owned printer and PC"
+  ],
+  "quoted_fabrication": false,
+  "shipping_checkout_verified": false,
+  "ali_selected_seller_and_checkout_verified": false,
+  "constraint": "Do not omit required load-path reinforcement when actual quotes exceed allocations.2kN physical validation and ISO conformance remain open."
+}

@@ -1,0 +1,218 @@
+"""GPL-3.0. Independent feasibility CAD, not fabrication authority or ISO approval."""
+import math
+import json
+from pathlib import Path
+import FreeCAD as App
+import FreeCADGui as Gui
+import Part
+import Import
+import MeshPart
+V=App.Vector
+
+def dogbone(length=170,parallel=80,narrow=10,wide=20,radius=24,thickness=4):
+    # Exact circular shoulder arcs; chosen nominal radius, NOT a current ISO master.
+    p=parallel/2;dy=(wide-narrow)/2;dx=math.sqrt(2*radius*dy-dy*dy)
+    def point(x,y):return V(x,y,0)
+    def arc(xsign):
+        a=-math.pi/2;b=math.atan2(dy-radius,dx)
+        start=point(xsign*p,narrow/2)
+        middle=point(xsign*(p+radius*math.cos((a+b)/2)),narrow/2+radius+radius*math.sin((a+b)/2))
+        end=point(xsign*(p+dx),wide/2)
+        return Part.Arc(start,middle,end).toShape()
+    left=arc(-1);left.reverse()
+    top=[Part.makeLine(point(-length/2,wide/2),point(-p-dx,wide/2)),left,
+         Part.makeLine(point(-p,narrow/2),point(p,narrow/2)),arc(1),
+         Part.makeLine(point(p+dx,wide/2),point(length/2,wide/2))]
+    mirror=App.Matrix();mirror.A22=-1
+    bottom=[]
+    for edge in reversed(top):
+        e=edge.transformGeometry(mirror);e.reverse();bottom.append(e)
+    wire=Part.Wire(top+[Part.makeLine(point(length/2,wide/2),point(length/2,-wide/2))]+bottom+
+                   [Part.makeLine(point(-length/2,-wide/2),point(-length/2,wide/2))])
+    return Part.Face(wire).extrude(V(0,0,thickness))
+
+def build(root,engineering=True):
+    root=Path(root);out=root/'profile/study-v0.4'
+    for p in ('cad','renders','print-candidates'):(out/p).mkdir(parents=True,exist_ok=True)
+    tag='Engineering_10kN_room_temperature_study' if engineering else 'MT02_source_derived_layout'
+    name=tag
+    if name in App.listDocuments():App.closeDocument(name)
+    doc=App.newDocument(name)
+    doc.Label='10kN 상온 엔지니어링 확장 검토' if engineering else 'MT02 논문 기반 재구성 / 원본 CAD 아님'
+    for g in ('Frame','Drive','Testing','Optical','PrintCandidates'):doc.addObject('App::DocumentObjectGroup',g)
+    records=[]
+    def add(n,s,g,material,note,moving=False):
+        o=doc.addObject('Part::Feature',n);o.Shape=s
+        for k,val in [('PartID',n),('Revision','0.4.0-engineering-feasibility'),('MaterialPlan',material),('SourceNote',note),
+            ('Status','UNVALIDATED design study; no ISO conformance or fabrication release')]:o.addProperty('App::PropertyString',k);setattr(o,k,val)
+        o.addProperty('App::PropertyBool','IsMoving');o.IsMoving=moving
+        getattr(doc,g).addObject(o)
+        o.ViewObject.ShapeColor={'Frame':(.62,.67,.72),'Drive':(.24,.29,.33),'Testing':(.85,.42,.16),'Optical':(.29,.64,.62),'PrintCandidates':(.15,.43,.66)}[g]
+        o.ViewObject.LineColor=(.1,.13,.16)
+        records.append(dict(name=n,material=material,authority=note))
+        return o
+    def box(w,d,h,x,y,z):return Part.makeBox(w,d,h,V(x,y,z))
+    def cyl(r,h,x,y,z,axis=V(0,0,1)):return Part.makeCylinder(r,h,V(x,y,z),axis)
+    def tube(w,d,h,t,x,y,z,axis='Z'):
+        if axis=='X':return box(w,d,h,x,y,z).cut(box(w+2,d-2*t,h-2*t,x-1,y+t,z+t))
+        if axis=='Y':return box(w,d,h,x,y,z).cut(box(w-2*t,d+2,h-2*t,x+t,y-1,z+t))
+        return box(w,d,h,x,y,z).cut(box(w-2*t,d-2*t,h+2,x+t,y+t,z-1))
+    # MT02 external envelopes from thesis, with a declared consistent column-hole grid.
+    cx=200 if engineering else 180;foot_h=80 if engineering else 40;col_h=800 if engineering else 590
+    top_z=foot_h+col_h;beam_h=80 if engineering else 40
+    screw_x=140 if engineering else 122
+    lower_z=180 if engineering else 140
+    cross_z=655 if engineering else 535
+    cross_w=340 if engineering else 300
+    frame_material='Steel SHS; certified grade/weld design pending' if engineering else 'Aluminium4080; nominal simplified section'
+    for side,x in [('Left',-cx),('Right',cx)]:
+        add('Foot'+side,tube(80,400,foot_h,4,x-40,-200,0,'Y'),'Frame',frame_material,'Concept foot, no weld or anchor qualification')
+        add('Column'+side,tube(40,80,col_h,4,x-20,-40,foot_h),'Frame',frame_material,
+            '800mm80x40x4 steel' if engineering else '590mm4080 nominal envelope; authentic MT02 CAD unavailable')
+    top_w=440 if engineering else 400
+    top=tube(top_w,80,beam_h,5 if engineering else 4,-top_w/2,-40,top_z,'X')
+    bottom_w=360 if engineering else 320
+    bottom=tube(bottom_w,80,beam_h,5 if engineering else 4,-bottom_w/2,-40,lower_z,'X')
+    cross=tube(cross_w,80,beam_h,5 if engineering else 4,-cross_w/2,-40,cross_z,'X')
+    for x in (-screw_x,screw_x):
+        top=top.cut(cyl(14 if engineering else 13.75,beam_h+2,x,0,top_z-1))
+        cross=cross.cut(cyl(11 if engineering else 10,beam_h+2,x,0,cross_z-1))
+    cross=cross.cut(cyl(10 if engineering else 7,beam_h+2,0,0,cross_z-1))
+    add('TopBeam',top,'Frame',frame_material,'80square steel proposed' if engineering else '400mm top nominal; end grid differs4mm from thesisFigure16')
+    add('BottomBeam',bottom,'Frame',frame_material,'Lower reaction beam, end joints unqualified')
+    add('Crosshead',cross,'Frame',frame_material,'Moving reaction beam; nominal pass-through bores',True)
+    path=out/'cad'/(tag+'.FCStd');doc.recompute();doc.saveAs(str(path))
+    # Source-derived metal mounts, or independent higher-load carrier envelopes.
+    for side,x in [('Left',-screw_x),('Right',screw_x)]:
+        if engineering:
+            sh=tube(60,60,40,10,x-30,-30,top_z+beam_h,'Z')
+            add('AxialCarrier'+side,sh,'Drive','Steel custom carrier REQUIREMENT, not selected',
+                'Required rated axial reaction>=10kN per axis; example51101 is not a drop-in support; shoulder/preload/locknut design open')
+            for n,z in enumerate((top_z+beam_h+4,top_z+beam_h+16)):
+                add('Thrust51101'+side+str(n),cyl(13,9,x,0,z).cut(cyl(6,11,x,0,z-1)),'Drive','Bearing:NTN51101 example12x26x9',
+                    'NTN Ca10.3kN/C0a15.4kN; washer abutment and complete assembly capacity still unqualified')
+            add('RadialBearing'+side,cyl(14,8,x,0,top_z+beam_h+27).cut(cyl(6,10,x,0,top_z+beam_h+26)),
+                'Drive','6001 nominal radial-bearing envelope','Axial load is assigned to the thrust package, not the motor')
+            motor_z=top_z+beam_h+105
+            gearbox=cyl(30,60,x,0,motor_z-60)
+            add('Reduction3to1'+side,gearbox,'Drive','3:1 gearbox envelope UNSELECTED',
+                'Continuous output and running torque require exact rated product/curve; not holding-torque proof')
+            motor=box(57,57,112,x-28.5,-28.5,motor_z).fuse(cyl(4,25,x,0,motor_z-25))
+            add('Motor'+side,motor,'Drive','NEMA23 3Nm candidate nominal envelope','Dynamic curve and reducer interfaces not frozen')
+            shaft=cyl(10,top_z+beam_h-230,x,0,230).fuse(cyl(6,45,x,0,top_z+beam_h))
+            add('Screw'+side,shaft,'Drive','Nominal20mm ball screw,lead5; exact OEM ends unselected','Shaft shown in tensile load path; nut rating, journal and shoulder drawing required')
+            body=cyl(18,50,x,0,cross_z-60).cut(cyl(10.25,52,x,0,cross_z-61))
+            flange=cyl(29,10,x,0,cross_z-10).cut(cyl(10.25,12,x,0,cross_z-11))
+            add('BallNut'+side,body.fuse(flange),'Drive','Ballnut envelope UNSELECTED','Exact rated nut and flange pattern required',True)
+            plate=box(70,80,10,x-35,-40,cross_z)
+            plate=plate.cut(cyl(11,12,x,0,cross_z-1))
+            # The separate spreader occupies a machined recess, not overlapping solid beam metal.
+            cross_obj=doc.getObject('Crosshead');cross_obj.Shape=cross_obj.Shape.cut(plate)
+            add('NutSpreader'+side,plate,'Drive','Steel10mm spreader candidate','Seat/load transfer and mounting bolts remain design work',True)
+        else:
+            for kind,z,thickness in [('MotorMount',top_z+beam_h,6),('FixedMount',top_z-6,6)]:
+                sh=box(70,78,thickness,x-35,-39,z)
+                sh=sh.cut(cyl(11.25 if kind=='MotorMount' else 13.75,thickness+2,x,0,z-1))
+                for xx in (-20,20):
+                    for yy in (-29,29):sh=sh.cut(cyl(4.25,thickness+2,x+xx,yy,z-1))
+                if kind=='MotorMount':
+                    for a in (45,135,225,315):
+                        sh=sh.cut(cyl(1.5,thickness+2,x+14*math.cos(math.radians(a)),14*math.sin(math.radians(a)),z-1))
+                add(kind+side,sh,'Drive','Aluminium AW6060 plate6mm','ThesisFigure17 dimensions; exact assembly mates not original CAD')
+            for kind,z,w,d in [('NutMount',cross_z-10,55,80),('FloatingMount',120,69,80)]:
+                sh=box(w,d,10,x-w/2,-d/2,z).cut(cyl(10,12,x,0,z-1))
+                add(kind+side,sh,'Drive','Aluminium AW6060 plate10mm','Nut M4/M5 and stock-width conflict unresolved',kind=='NutMount')
+            add('FixedBK12'+side,box(60,43,25,x-30,-21.5,top_z-31).cut(cyl(6,27,x,0,top_z-32)),
+                'Drive','BK12 support envelope, supplier kit may differ','Code alone does not establish axial rating')
+            add('FloatingBF12'+side,box(60,43,20,x-30,-21.5,100).cut(cyl(5,22,x,0,99)),
+                'Drive','BF12 nominal envelope','Current supplier BK12/EF12 kit differs from this assumed mounting')
+            add('Screw'+side,cyl(8,470,x,0,140).fuse(cyl(6,30,x,0,610)),'Drive','SFU1605x500 nominal','Authentic end machining not recovered')
+            add('BallNut'+side,cyl(14,40,x,0,cross_z-50).cut(cyl(8.2,42,x,0,cross_z-51)),
+                'Drive','SFU1605 nut envelope','Exact flange and taps unresolved',True)
+            add('Motor'+side,box(42.3,42.3,83,x-21.15,-21.15,top_z+beam_h+7).fuse(cyl(4,20,x,0,top_z+beam_h-13)),
+                'Drive','NEMA17 PG19 nominal83mm body','Original19.203:1 drive; not a rated force or speed curve')
+            add('Coupling'+side,cyl(12.5,30,x,0,top_z+8).cut(cyl(5,32,x,0,top_z+7)),
+                'Drive','8/10 coupling envelope','Actual rated SKU/insertion not selected')
+    # Sensor shape is ONLY an external dimensional representation from CAS drawing.
+    cell_z=272 if engineering else 190;W,H,T,C=(77,108,25.4,33) if engineering else (51,76,19,27)
+    cell=box(W,T,H,-W/2,-T/2,cell_z)
+    cell=cell.cut(box(W*.78,T+2,7,-W/2-1,-T/2-1,cell_z+H*.27))
+    cell=cell.cut(box(W*.78,T+2,7,-W*.28,-T/2-1,cell_z+H*.66))
+    cell=cell.fuse(cyl(15,(C-T)/2,0,T/2,cell_z+H/2,V(0,1,0))).fuse(cyl(15,(C-T)/2,0,-T/2,cell_z+H/2,V(0,-1,0)))
+    r=9 if engineering else 6
+    cell=cell.cut(cyl(r,16,0,0,cell_z-1)).cut(cyl(r,16,0,0,cell_z+H-15))
+    sensor=add('LoadCell',cell,'Testing','CAS SBA-2 candidate2t' if engineering else 'CAS SBA500kg dimensional reference, not priced genericS500',
+        'OEM external dimensions; S flexure/cable projection schematic; no stiffness or tap-depth authority')
+    sensor.addProperty('App::PropertyString','ThreadSpec');sensor.ThreadSpec='M18x1.5; engagement depth UNCONFIRMED' if engineering else 'M12x1.75; engagement depth UNCONFIRMED'
+    sensor.addProperty('App::PropertyString','ExcitationNote');sensor.ExcitationNote='10V recommended;5V HX711 interface not qualified'
+    plate_z=lower_z+beam_h
+    mounting=box(80,80,cell_z-plate_z,-40,-40,plate_z).cut(cyl(r+1,cell_z-plate_z+2,0,0,plate_z-1))
+    add('LoadCellBaseMount',mounting,'Testing','Steel reaction plate candidate' if engineering else 'AW6060 reaction plate reconstruction',
+        'Force-sensor fastening/seat and anti-rotation detail pending; M18/M12 specification must match cell')
+    # A separate compact gripper study: two symmetric steel stepped halves and4M8 bolts.
+    pin=420 if engineering else 306;inner=pin+45;upper_inner=inner+115;mid=(inner+upper_inner)/2
+    def flip(s):
+        ss=s.copy();ss.rotate(V(0,0,mid),V(0,1,0),180);return ss
+    for side,sign in [('Rear',-1),('Front',1)]:
+        outer_y=-26 if sign<0 else 6;inner_y=-22 if sign<0 else 2
+        sh=box(66,20,40,-33,outer_y,pin-20).fuse(box(66,20,25,-33,inner_y,inner-25))
+        sh=sh.cut(cyl(6.1,64,0,-32,pin,V(0,1,0)))
+        for xx in (-24,24):
+            for zz in (inner-19,inner-6):sh=sh.cut(cyl(4.5,64,xx,-32,zz,V(0,1,0)))
+        for end,shape in [('Lower',sh),('Upper',flip(sh))]:
+            add(end+'Grip'+side,shape,'Testing','Steel grip candidate; grade/heat treatment not frozen',
+                'Nominal20x4 shoulder acceptance; friction/preload/crushing/strength not verified',end=='Upper')
+    for end,pinz in [('Lower',pin),('Upper',2*mid-pin)]:
+        sh=cyl(6,62,0,-31,pinz,V(0,1,0)).fuse(cyl(10,4,0,31,pinz,V(0,1,0)))
+        add(end+'GripPin',sh,'Testing','Steel12mm pin candidate','Double-shear screening only; fit/grade/capture unqualified',end=='Upper')
+        for n,(xx,zz) in enumerate([(xx,zz) for xx in (-24,24) for zz in (inner-19,inner-6)]):
+            b=cyl(4,60,xx,24,zz,V(0,-1,0)).fuse(cyl(6.5,8,xx,24,zz,V(0,1,0)))
+            add(end+'ClampBolt'+str(n),b if end=='Lower' else flip(b),'Testing','Steel M8x60 candidate10.9',
+                'Torque cannot establish grip slip capacity without physical verification',end=='Upper')
+    lower_eye=cyl(18,12,0,-6,pin,V(0,1,0)).cut(cyl(6.1,14,0,-7,pin,V(0,1,0)))
+    lower_stud=cyl(r,40,0,0,cell_z+H-16)
+    add('LowerStudEye',lower_eye.fuse(lower_stud),'Testing','Steel machined threaded-eye candidate',
+        '16mm engagement is provisional; OEM depth/grade must be confirmed')
+    upperpin=2*mid-pin
+    upper_eye=cyl(18,12,0,-6,upperpin,V(0,1,0)).cut(cyl(6.1,14,0,-7,upperpin,V(0,1,0)))
+    upper_eye=upper_eye.fuse(cyl(r,cross_z+beam_h+35-(upperpin+16),0,0,upperpin+16))
+    add('UpperStudEye',upper_eye,'Testing','Steel machined threaded-eye candidate','Crosshead nut/spreader/retention detail incomplete',True)
+    spread=box(80,80,12,-40,-40,cross_z+beam_h).cut(cyl(r+1,14,0,0,cross_z+beam_h-1))
+    add('CentralSpreader',spread,'Testing','Steel12mm spreader candidate','Primary force transferred onto beam walls;4bolt/capture detail pending',True)
+    # Nominal coupon in the actual measuring plane; no claim of a standards master.
+    flat=dogbone()
+    rotation=App.Rotation(V(1,0,0),V(0,0,1),V(0,1,0),'ZXY')
+    # map local longX→globalZ, local widthY→globalX, local thicknessZ→globalY.
+    mat=App.Matrix();mat.A11=0;mat.A12=1;mat.A13=0;mat.A21=0;mat.A22=0;mat.A23=1;mat.A31=1;mat.A32=0;mat.A33=0
+    sample=flat.transformGeometry(mat);sample.translate(V(0,-2,mid))
+    o=add('NominalCoupon',sample,'Testing','Printed specimen nominal170x20x4','A1-like nominal geometry; radius24 is our choice, current standard master NOT verified')
+    o.addProperty('App::PropertyLength','GaugeCentreZ');o.GaugeCentreZ=mid
+    o.ViewObject.ShapeColor=(.85,.69,.23)
+    for gauge in (75,50):
+        for z in (mid-gauge/2,mid+gauge/2):
+            mark=add('Mark'+str(gauge)+('Low' if z<mid else 'High'),cyl(.8,.08,0,-2.08,z,V(0,1,0)),
+                'Optical','Paint mark, not a mechanical feature','Gauge75 preferred A1;50 conditional QC; no verified optical accuracy')
+            mark.ViewObject.ShapeColor=(1.,1.,1.)
+    # Camera bracket/target are packaging concepts, not a calibrated extensometer.
+    add('CameraMount',box(110,12,50,-55,-240,mid-25).cut(box(70,14,20,-35,-241,mid-10)),
+        'PrintCandidates','Printed camera clamp candidate','Lens/mount/FOV unselected; not an ISO9513 verified instrument')
+    add('CameraEnvelope',box(60,35,35,-30,-225,mid-17.5),'Optical','Camera envelope UNSELECTED',
+        'Contact or equally accurate optical extensometer may be used; no bit/pixel-based accuracy claim')
+    add('CalibrationTarget',box(12,2,110,75,-4,mid-55),'Optical','Traceable-reference placeholder',
+        'Printed ruler is not a calibration standard; displacement stage/gauge reference not supplied')
+    # Low-cost printed end-cap examples; no plastic is assigned to the primary10kN path.
+    for side,x in [('Left',-cx),('Right',cx)]:
+        add('EndCap'+side,box(82,3,foot_h+2,x-41,-203,-1),'PrintCandidates','PETG cover candidate','Non-load-bearing foot end cap, outside primary reaction joints')
+    doc.recompute();doc.save()
+    parts=[o for o in doc.Objects if hasattr(o,'PartID')]
+    invalid=[o.Name for o in parts if not o.Shape.Solids or not o.Shape.isValid()]
+    if invalid:raise RuntimeError(repr(invalid))
+    App.setActiveDocument(doc.Name);Gui.activeDocument().activeView().viewAxonometric();Gui.activeDocument().activeView().fitAll()
+    Gui.activeDocument().activeView().saveImage(str(out/'renders'/(tag+'.png')),1400,1200,'White')
+    doc.save();Import.export(parts,str(path.with_suffix('.step')))
+    # Standalone flat print candidates, not normative fabrication masters.
+    for name,shape in [('Nominal_A1like_170x20x4',flat),('Custom_halfscale_85x10x2',dogbone(85,40,5,10,12,2))]:
+        MeshPart.meshFromShape(Shape=shape,LinearDeflection=.05,AngularDeflection=.2,Relative=False).write(str(out/'print-candidates'/(name+'.stl')))
+    (out/(tag+'-INDEX.json')).write_text(json.dumps(records,indent=2)+'\n',encoding='utf-8',newline='\n')
+    print(json.dumps({'file':doc.FileName,'parts':len(parts),'invalid_shapes':invalid,'ISO_master_verified':False,'assembly_ready':False}))
+    return doc
