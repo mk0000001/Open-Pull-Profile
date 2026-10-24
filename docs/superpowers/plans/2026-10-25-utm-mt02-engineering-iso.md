@@ -33,4 +33,4 @@
 - [x] Generate source-derived MT02 layout and independent10kN extension/coupon/fixture concepts; save native after frame and after completion.
 - [x] Save parallel UTM-derived PETG/custom engineering coupon packaging study with explicit third-party licensing and unverified substitute-component interfaces.
 - [x] Verify reopened CAD, selected mounting/clearance/force-envelope invariants and exported STEP pairing. Record all unresolved mates.
-- [ ] Independently review evidence/claims, fix important findings, commit and publish the study without a certification or build-ready claim.
+- [x] Independently review evidence/claims, fix important findings, commit and publish the study without a certification or build-ready claim. Published draft PR1; first remote push CI40111816113 passed. Native/STEP and price evidence are preserved; physical procurement/assembly/2kN/ISO work remains outside the achieved feasibility-study checks.
