@@ -1,0 +1,286 @@
+{
+  "schema_version": 1,
+  "checked_date": "2026-10-25",
+  "scope": {
+    "test": "Tension only",
+    "target_environment_c": 23,
+    "materials": "Representative chopped-carbon-fibre and unfilled engineering FFF grades; not literally all engineering materials",
+    "normalization": "Different standards, moisture conditioning and thermal histories were not normalized."
+  },
+  "areas": [
+    {
+      "label": "10×4 mm full-section example",
+      "area_mm2": 40,
+      "iso_approved": false
+    },
+    {
+      "label": "5×2 mm half-scale example",
+      "area_mm2": 10,
+      "iso_approved": false
+    },
+    {
+      "label": "Custom narrow-section example",
+      "area_mm2": 4,
+      "iso_approved": false
+    }
+  ],
+  "materials": [
+    {
+      "material": "Bambu PPS-CF",
+      "edition": "TDS V1.0, currently linked 2026-10-25",
+      "xy": 87,
+      "xy_pm": 5,
+      "z": 24,
+      "z_pm": 3,
+      "kind": "Tensile Strength",
+      "standard": "ISO 527 / GB/T 1040",
+      "condition": "Printed X1E; 320°C nozzle /110°C bed /60°C chamber /60mm/s /100% infill; not annealed. Specimen moisture/test temperature not explicitly quantified in this TDS.",
+      "url": "https://store.bblcdn.eu/s8/default/623b28bf2fbe495fa9dd559a85f494ed/Bambu_PPS-CF_Technical_Data_Sheet.pdf",
+      "forces_n": {
+        "xy": {
+          "4": 348,
+          "10": 870,
+          "40": 3480
+        },
+        "z": {
+          "4": 96,
+          "10": 240,
+          "40": 960
+        },
+        "unspecified_orientation": null
+      }
+    },
+    {
+      "material": "Bambu PA6-CF",
+      "edition": "TDS V3.0, currently linked 2026-10-25",
+      "xy": 102,
+      "xy_pm": 7,
+      "z": 48,
+      "z_pm": 6,
+      "kind": "Tensile Strength",
+      "standard": "ISO 527 / GB/T 1040",
+      "condition": "Printed280°C nozzle /100°C bed /100mm/s /100% infill; annealed and dried80°C12h. Dry-condition values, not wet-conditioned equivalents.",
+      "url": "https://store.bblcdn.com/b2abc59ac250492b979a52f1ce3e61b3.pdf",
+      "forces_n": {
+        "xy": {
+          "4": 408,
+          "10": 1020,
+          "40": 4080
+        },
+        "z": {
+          "4": 192,
+          "10": 480,
+          "40": 1920
+        },
+        "unspecified_orientation": null
+      }
+    },
+    {
+      "material": "Bambu PPA-CF",
+      "edition": "TDS V1.0, currently linked 2026-10-25",
+      "xy": 168,
+      "xy_pm": 4,
+      "z": 57,
+      "z_pm": 5,
+      "kind": "Tensile Strength",
+      "standard": "ISO 527 / GB/T 1040",
+      "condition": "Printed X1C;290°C nozzle /110°C bed /52°C chamber /80mm/s /100% infill; not annealed. Specimen moisture/test temperature not explicitly quantified.",
+      "url": "https://store.bblcdn.eu/s8/default/f592e57fe69c40289897513bdd2b61bc/Bambus_PPA-CF_Technical_Data_Sheet_2ab26420-79f5-4692-888e-090006814050.pdf",
+      "forces_n": {
+        "xy": {
+          "4": 672,
+          "10": 1680,
+          "40": 6720
+        },
+        "z": {
+          "4": 228,
+          "10": 570,
+          "40": 2280
+        },
+        "unspecified_orientation": null
+      }
+    },
+    {
+      "material": "Polymaker Fiberon PA6-CF20 dry",
+      "edition": "TDS V1.1 EN, currently linked 2026-10-25",
+      "xy": 109.3,
+      "xy_pm": 2.4,
+      "z": 54,
+      "z_pm": 5.2,
+      "kind": "Tensile strength",
+      "standard": "ISO 527 / GB/T 1040; specimen drawing also bears ASTM D638 label",
+      "condition": "Printed300°C nozzle /50°C bed /100% infill; annealed100°C16h; DRY STATUS. Do not call ASTM/ISO tests equivalent based on drawing label.",
+      "url": "https://fiberon.polymaker.com/wp-content/uploads/TDS_FIBERON-PA6-CF20_V1.1_EN.pdf",
+      "forces_n": {
+        "xy": {
+          "4": 437.2,
+          "10": 1093,
+          "40": 4372
+        },
+        "z": {
+          "4": 216,
+          "10": 540,
+          "40": 2160
+        },
+        "unspecified_orientation": null
+      }
+    },
+    {
+      "material": "Polymaker Fiberon PA6-CF20 wet",
+      "edition": "TDS V1.1 EN, currently linked 2026-10-25",
+      "xy": 54.7,
+      "xy_pm": 1.1,
+      "z": 25.5,
+      "z_pm": 1.2,
+      "kind": "Tensile strength",
+      "standard": "ISO 527 / GB/T 1040",
+      "condition": "Annealed100°C16h then immersed in water60°C48h; average specimen moisture5.30%. Not equivalent to23°C/50%RH equilibrium conditioning.",
+      "url": "https://fiberon.polymaker.com/wp-content/uploads/TDS_FIBERON-PA6-CF20_V1.1_EN.pdf",
+      "forces_n": {
+        "xy": {
+          "4": 218.8,
+          "10": 547,
+          "40": 2188
+        },
+        "z": {
+          "4": 102,
+          "10": 255,
+          "40": 1020
+        },
+        "unspecified_orientation": null
+      }
+    },
+    {
+      "material": "Bambu PC",
+      "edition": "TDS V3.0, currently linked 2026-10-25",
+      "xy": 55,
+      "xy_pm": 4,
+      "z": 34,
+      "z_pm": 3,
+      "kind": "Tensile Strength",
+      "standard": "ISO 527 / GB/T 1040",
+      "condition": "Printed270°C nozzle /100°C bed /100% infill; annealed and dried80°C12h. Table speed200mm/s contradicts footnote100mm/s; retain uncertainty.",
+      "url": "https://store.bblcdn.com/3bf3be91a7164c86a7e5ceffb18ee21b.pdf",
+      "forces_n": {
+        "xy": {
+          "4": 220,
+          "10": 550,
+          "40": 2200
+        },
+        "z": {
+          "4": 136,
+          "10": 340,
+          "40": 1360
+        },
+        "unspecified_orientation": null
+      }
+    },
+    {
+      "material": "3DXTECH CarbonX PC+CF",
+      "edition": "TDS Rev3.0, currently linked 2026-10-25",
+      "xy": 70,
+      "xy_pm": null,
+      "z": null,
+      "z_pm": null,
+      "kind": "Tensile Strength, Break",
+      "standard": "ISO 527",
+      "condition": "XY Flat; open-sourceFFF;0.4mm nozzle /0.25mm layer /100% ±45° infill /300°C extrusion /140°C bed. Z and conditioning not supplied.",
+      "url": "https://cdn.shopify.com/s/files/1/0625/4185/6821/files/CarbonX_CF_PC_TDSv3.pdf?v=1723942764",
+      "forces_n": {
+        "xy": {
+          "4": 280,
+          "10": 700,
+          "40": 2800
+        },
+        "z": null,
+        "unspecified_orientation": null
+      }
+    },
+    {
+      "material": "3DXTECH CarbonX PEEK+CF10",
+      "edition": "TDS Rev3.0, currently linked 2026-10-25",
+      "xy": 105,
+      "xy_pm": null,
+      "z": null,
+      "z_pm": null,
+      "kind": "Tensile Strength, Break",
+      "standard": "ISO 527",
+      "condition": "XY Flat; open-sourceFFF;0.4mm nozzle /0.25mm layer /100% ±45° infill /400°C extrusion /140°C bed. Z and conditioning not supplied.",
+      "url": "https://cdn.shopify.com/s/files/1/0625/4185/6821/files/CarbonX_CF_PEEK_TDS_v3.pdf?v=1723942765",
+      "forces_n": {
+        "xy": {
+          "4": 420,
+          "10": 1050,
+          "40": 4200
+        },
+        "z": null,
+        "unspecified_orientation": null
+      }
+    },
+    {
+      "material": "3DXTECH CarbonX PEKK-A+CF15",
+      "edition": "TDS Rev1.0, currently linked 2026-10-25",
+      "xy": 126,
+      "xy_pm": null,
+      "z": null,
+      "z_pm": null,
+      "kind": "Tensile Strength, Break",
+      "standard": "ISO 527",
+      "condition": "XY Flat; open-sourceFFF;0.4mm nozzle /0.25mm layer /100% ±45° infill /390°C extrusion /140°C bed. Z and conditioning not supplied.",
+      "url": "https://cdn.shopify.com/s/files/1/0625/4185/6821/files/CarbonX_CF15_PEKK-A__TDS_v1.pdf?v=1723942767",
+      "forces_n": {
+        "xy": {
+          "4": 504,
+          "10": 1260,
+          "40": 5040
+        },
+        "z": null,
+        "unspecified_orientation": null
+      }
+    },
+    {
+      "material": "INTAMSYS PEEK-CF",
+      "edition": "Manufacturer-authored TDS, ©2021; distributor filename v2; current manufacturer revision unverified",
+      "xy": null,
+      "xy_pm": null,
+      "z": null,
+      "z_pm": null,
+      "unspecified_orientation": 87.4,
+      "kind": "Tensile strength",
+      "standard": "ISO 527",
+      "condition": "FUNMAT HT;410°C nozzle /45mm/s /2 shells /100% infill; annealed200°C2h. Print direction not declared. Current official Tech Sheet requires form; no submission/contact performed.",
+      "url": "https://shop.bfi-it.de/media/20/3e/0b/1693570740/intamsys_peek-cf_tds_v2.pdf",
+      "manufacturer_page": "https://www.intamsys.com/materials/peek-cf",
+      "source_caution": "Author is manufacturer, hosting is distributor.168.6MPa in this TDS is FLEXURAL strength ISO178, not tensile.",
+      "forces_n": {
+        "xy": null,
+        "z": null,
+        "unspecified_orientation": {
+          "4": 349.6,
+          "10": 874,
+          "40": 3496
+        }
+      }
+    }
+  ],
+  "recommendation": {
+    "working_force_n": 10000,
+    "envelope_mpa_at40mm2": 250,
+    "structural_review_target_n": 15000,
+    "proof_test_performed": false,
+    "current_machine_capacity_claimed": false,
+    "twenty_kn_required_by_reviewed_data": false,
+    "twenty_kn_trigger": "Stress times actual area above10000N, larger specimens, new stronger grades or additional test scope.",
+    "budget_limit_krw": 500000,
+    "budget_feasibility_for10kn": "Not established by this material research; existing V2 is not a validated10kN structure."
+  },
+  "cautions": [
+    "Do not substitute flexural strength for tensile strength.",
+    "Do not treat tensile strength as a declared yield/break value unless TDS says so.",
+    "Unpublished Z values remain null.",
+    "TDS reference strengths are not certified upper bounds.",
+    "Current INTAMSYS TDS revision not verified; no form submission/contact.",
+    "Scaled/custom specimen area calculations do not assert ISO compliance."
+  ]
+}
+

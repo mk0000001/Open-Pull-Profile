@@ -1,0 +1,282 @@
+[
+  {
+    "name": "FootLeft",
+    "material": "Aluminium4080; nominal simplified section",
+    "authority": "Concept foot, no weld or anchor qualification"
+  },
+  {
+    "name": "ColumnLeft",
+    "material": "Aluminium4080; nominal simplified section",
+    "authority": "590mm4080 nominal envelope; authentic MT02 CAD unavailable"
+  },
+  {
+    "name": "FootRight",
+    "material": "Aluminium4080; nominal simplified section",
+    "authority": "Concept foot, no weld or anchor qualification"
+  },
+  {
+    "name": "ColumnRight",
+    "material": "Aluminium4080; nominal simplified section",
+    "authority": "590mm4080 nominal envelope; authentic MT02 CAD unavailable"
+  },
+  {
+    "name": "TopBeam",
+    "material": "Aluminium4080; nominal simplified section",
+    "authority": "400mm top nominal; end grid differs4mm from thesisFigure16"
+  },
+  {
+    "name": "BottomBeam",
+    "material": "Aluminium4080; nominal simplified section",
+    "authority": "Lower reaction beam, end joints unqualified"
+  },
+  {
+    "name": "Crosshead",
+    "material": "Aluminium4080; nominal simplified section",
+    "authority": "Moving reaction beam; nominal pass-through bores"
+  },
+  {
+    "name": "MotorMountLeft",
+    "material": "Aluminium AW6060 plate6mm",
+    "authority": "ThesisFigure17 dimensions; exact assembly mates not original CAD"
+  },
+  {
+    "name": "FixedMountLeft",
+    "material": "Aluminium AW6060 plate6mm",
+    "authority": "ThesisFigure17 dimensions; exact assembly mates not original CAD"
+  },
+  {
+    "name": "NutMountLeft",
+    "material": "Aluminium AW6060 plate10mm",
+    "authority": "Nut M4/M5 and stock-width conflict unresolved"
+  },
+  {
+    "name": "FloatingMountLeft",
+    "material": "Aluminium AW6060 plate10mm",
+    "authority": "Nut M4/M5 and stock-width conflict unresolved"
+  },
+  {
+    "name": "FixedBK12Left",
+    "material": "BK12 support envelope, supplier kit may differ",
+    "authority": "Code alone does not establish axial rating"
+  },
+  {
+    "name": "FloatingBF12Left",
+    "material": "BF12 nominal envelope",
+    "authority": "Current supplier BK12/EF12 kit differs from this assumed mounting"
+  },
+  {
+    "name": "ScrewLeft",
+    "material": "SFU1605x500 nominal",
+    "authority": "Authentic end machining not recovered"
+  },
+  {
+    "name": "BallNutLeft",
+    "material": "SFU1605 nut envelope",
+    "authority": "Exact flange and taps unresolved"
+  },
+  {
+    "name": "MotorLeft",
+    "material": "NEMA17 PG19 nominal83mm body",
+    "authority": "Original19.203:1 drive; not a rated force or speed curve"
+  },
+  {
+    "name": "CouplingLeft",
+    "material": "8/10 coupling envelope",
+    "authority": "Actual rated SKU/insertion not selected"
+  },
+  {
+    "name": "MotorMountRight",
+    "material": "Aluminium AW6060 plate6mm",
+    "authority": "ThesisFigure17 dimensions; exact assembly mates not original CAD"
+  },
+  {
+    "name": "FixedMountRight",
+    "material": "Aluminium AW6060 plate6mm",
+    "authority": "ThesisFigure17 dimensions; exact assembly mates not original CAD"
+  },
+  {
+    "name": "NutMountRight",
+    "material": "Aluminium AW6060 plate10mm",
+    "authority": "Nut M4/M5 and stock-width conflict unresolved"
+  },
+  {
+    "name": "FloatingMountRight",
+    "material": "Aluminium AW6060 plate10mm",
+    "authority": "Nut M4/M5 and stock-width conflict unresolved"
+  },
+  {
+    "name": "FixedBK12Right",
+    "material": "BK12 support envelope, supplier kit may differ",
+    "authority": "Code alone does not establish axial rating"
+  },
+  {
+    "name": "FloatingBF12Right",
+    "material": "BF12 nominal envelope",
+    "authority": "Current supplier BK12/EF12 kit differs from this assumed mounting"
+  },
+  {
+    "name": "ScrewRight",
+    "material": "SFU1605x500 nominal",
+    "authority": "Authentic end machining not recovered"
+  },
+  {
+    "name": "BallNutRight",
+    "material": "SFU1605 nut envelope",
+    "authority": "Exact flange and taps unresolved"
+  },
+  {
+    "name": "MotorRight",
+    "material": "NEMA17 PG19 nominal83mm body",
+    "authority": "Original19.203:1 drive; not a rated force or speed curve"
+  },
+  {
+    "name": "CouplingRight",
+    "material": "8/10 coupling envelope",
+    "authority": "Actual rated SKU/insertion not selected"
+  },
+  {
+    "name": "LoadCell",
+    "material": "CAS SBA500kg dimensional reference, not priced genericS500",
+    "authority": "OEM external dimensions; S flexure/cable projection schematic; no stiffness or tap-depth authority"
+  },
+  {
+    "name": "LoadCellBaseMount",
+    "material": "AW6060 reaction plate reconstruction",
+    "authority": "Force-sensor fastening/seat and anti-rotation detail pending; M18/M12 specification must match cell"
+  },
+  {
+    "name": "LowerGripRear",
+    "material": "Steel grip candidate; grade/heat treatment not frozen",
+    "authority": "Nominal20x4 shoulder acceptance; friction/preload/crushing/strength not verified"
+  },
+  {
+    "name": "UpperGripRear",
+    "material": "Steel grip candidate; grade/heat treatment not frozen",
+    "authority": "Nominal20x4 shoulder acceptance; friction/preload/crushing/strength not verified"
+  },
+  {
+    "name": "LowerGripFront",
+    "material": "Steel grip candidate; grade/heat treatment not frozen",
+    "authority": "Nominal20x4 shoulder acceptance; friction/preload/crushing/strength not verified"
+  },
+  {
+    "name": "UpperGripFront",
+    "material": "Steel grip candidate; grade/heat treatment not frozen",
+    "authority": "Nominal20x4 shoulder acceptance; friction/preload/crushing/strength not verified"
+  },
+  {
+    "name": "LowerGripPin",
+    "material": "Steel12mm pin candidate",
+    "authority": "Double-shear screening only; fit/grade/capture unqualified"
+  },
+  {
+    "name": "LowerClampBolt0",
+    "material": "Steel M8x60 candidate10.9",
+    "authority": "Torque cannot establish grip slip capacity without physical verification"
+  },
+  {
+    "name": "LowerClampBolt1",
+    "material": "Steel M8x60 candidate10.9",
+    "authority": "Torque cannot establish grip slip capacity without physical verification"
+  },
+  {
+    "name": "LowerClampBolt2",
+    "material": "Steel M8x60 candidate10.9",
+    "authority": "Torque cannot establish grip slip capacity without physical verification"
+  },
+  {
+    "name": "LowerClampBolt3",
+    "material": "Steel M8x60 candidate10.9",
+    "authority": "Torque cannot establish grip slip capacity without physical verification"
+  },
+  {
+    "name": "UpperGripPin",
+    "material": "Steel12mm pin candidate",
+    "authority": "Double-shear screening only; fit/grade/capture unqualified"
+  },
+  {
+    "name": "UpperClampBolt0",
+    "material": "Steel M8x60 candidate10.9",
+    "authority": "Torque cannot establish grip slip capacity without physical verification"
+  },
+  {
+    "name": "UpperClampBolt1",
+    "material": "Steel M8x60 candidate10.9",
+    "authority": "Torque cannot establish grip slip capacity without physical verification"
+  },
+  {
+    "name": "UpperClampBolt2",
+    "material": "Steel M8x60 candidate10.9",
+    "authority": "Torque cannot establish grip slip capacity without physical verification"
+  },
+  {
+    "name": "UpperClampBolt3",
+    "material": "Steel M8x60 candidate10.9",
+    "authority": "Torque cannot establish grip slip capacity without physical verification"
+  },
+  {
+    "name": "LowerStudEye",
+    "material": "Steel machined threaded-eye candidate",
+    "authority": "16mm engagement is provisional; OEM depth/grade must be confirmed"
+  },
+  {
+    "name": "UpperStudEye",
+    "material": "Steel machined threaded-eye candidate",
+    "authority": "Crosshead nut/spreader/retention detail incomplete"
+  },
+  {
+    "name": "CentralSpreader",
+    "material": "Steel12mm spreader candidate",
+    "authority": "Primary force transferred onto beam walls;4bolt/capture detail pending"
+  },
+  {
+    "name": "NominalCoupon",
+    "material": "Printed specimen nominal170x20x4",
+    "authority": "A1-like nominal geometry; radius24 is our choice, current standard master NOT verified"
+  },
+  {
+    "name": "Mark75Low",
+    "material": "Paint mark, not a mechanical feature",
+    "authority": "Gauge75 preferred A1;50 conditional QC; no verified optical accuracy"
+  },
+  {
+    "name": "Mark75High",
+    "material": "Paint mark, not a mechanical feature",
+    "authority": "Gauge75 preferred A1;50 conditional QC; no verified optical accuracy"
+  },
+  {
+    "name": "Mark50Low",
+    "material": "Paint mark, not a mechanical feature",
+    "authority": "Gauge75 preferred A1;50 conditional QC; no verified optical accuracy"
+  },
+  {
+    "name": "Mark50High",
+    "material": "Paint mark, not a mechanical feature",
+    "authority": "Gauge75 preferred A1;50 conditional QC; no verified optical accuracy"
+  },
+  {
+    "name": "CameraMount",
+    "material": "Printed camera clamp candidate",
+    "authority": "Lens/mount/FOV unselected; not an ISO9513 verified instrument"
+  },
+  {
+    "name": "CameraEnvelope",
+    "material": "Camera envelope UNSELECTED",
+    "authority": "Contact or equally accurate optical extensometer may be used; no bit/pixel-based accuracy claim"
+  },
+  {
+    "name": "CalibrationTarget",
+    "material": "Traceable-reference placeholder",
+    "authority": "Printed ruler is not a calibration standard; displacement stage/gauge reference not supplied"
+  },
+  {
+    "name": "EndCapLeft",
+    "material": "PETG cover candidate",
+    "authority": "Non-load-bearing foot end cap, outside primary reaction joints"
+  },
+  {
+    "name": "EndCapRight",
+    "material": "PETG cover candidate",
+    "authority": "Non-load-bearing foot end cap, outside primary reaction joints"
+  }
+]

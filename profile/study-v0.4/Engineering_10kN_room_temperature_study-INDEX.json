@@ -1,0 +1,272 @@
+[
+  {
+    "name": "FootLeft",
+    "material": "Steel SHS; certified grade/weld design pending",
+    "authority": "Concept foot, no weld or anchor qualification"
+  },
+  {
+    "name": "ColumnLeft",
+    "material": "Steel SHS; certified grade/weld design pending",
+    "authority": "800mm80x40x4 steel"
+  },
+  {
+    "name": "FootRight",
+    "material": "Steel SHS; certified grade/weld design pending",
+    "authority": "Concept foot, no weld or anchor qualification"
+  },
+  {
+    "name": "ColumnRight",
+    "material": "Steel SHS; certified grade/weld design pending",
+    "authority": "800mm80x40x4 steel"
+  },
+  {
+    "name": "TopBeam",
+    "material": "Steel SHS; certified grade/weld design pending",
+    "authority": "80square steel proposed"
+  },
+  {
+    "name": "BottomBeam",
+    "material": "Steel SHS; certified grade/weld design pending",
+    "authority": "Lower reaction beam, end joints unqualified"
+  },
+  {
+    "name": "Crosshead",
+    "material": "Steel SHS; certified grade/weld design pending",
+    "authority": "Moving reaction beam; nominal pass-through bores"
+  },
+  {
+    "name": "AxialCarrierLeft",
+    "material": "Steel custom carrier REQUIREMENT, not selected",
+    "authority": "Required rated axial reaction>=10kN per axis; example51101 is not a drop-in support; shoulder/preload/locknut design open"
+  },
+  {
+    "name": "Thrust51101Left0",
+    "material": "Bearing:NTN51101 example12x26x9",
+    "authority": "NTN Ca10.3kN/C0a15.4kN; washer abutment and complete assembly capacity still unqualified"
+  },
+  {
+    "name": "Thrust51101Left1",
+    "material": "Bearing:NTN51101 example12x26x9",
+    "authority": "NTN Ca10.3kN/C0a15.4kN; washer abutment and complete assembly capacity still unqualified"
+  },
+  {
+    "name": "RadialBearingLeft",
+    "material": "6001 nominal radial-bearing envelope",
+    "authority": "Axial load is assigned to the thrust package, not the motor"
+  },
+  {
+    "name": "Reduction3to1Left",
+    "material": "3:1 gearbox envelope UNSELECTED",
+    "authority": "Continuous output and running torque require exact rated product/curve; not holding-torque proof"
+  },
+  {
+    "name": "MotorLeft",
+    "material": "NEMA23 3Nm candidate nominal envelope",
+    "authority": "Dynamic curve and reducer interfaces not frozen"
+  },
+  {
+    "name": "ScrewLeft",
+    "material": "Nominal20mm ball screw,lead5; exact OEM ends unselected",
+    "authority": "Shaft shown in tensile load path; nut rating, journal and shoulder drawing required"
+  },
+  {
+    "name": "BallNutLeft",
+    "material": "Ballnut envelope UNSELECTED",
+    "authority": "Exact rated nut and flange pattern required"
+  },
+  {
+    "name": "NutSpreaderLeft",
+    "material": "Steel10mm spreader candidate",
+    "authority": "Seat/load transfer and mounting bolts remain design work"
+  },
+  {
+    "name": "AxialCarrierRight",
+    "material": "Steel custom carrier REQUIREMENT, not selected",
+    "authority": "Required rated axial reaction>=10kN per axis; example51101 is not a drop-in support; shoulder/preload/locknut design open"
+  },
+  {
+    "name": "Thrust51101Right0",
+    "material": "Bearing:NTN51101 example12x26x9",
+    "authority": "NTN Ca10.3kN/C0a15.4kN; washer abutment and complete assembly capacity still unqualified"
+  },
+  {
+    "name": "Thrust51101Right1",
+    "material": "Bearing:NTN51101 example12x26x9",
+    "authority": "NTN Ca10.3kN/C0a15.4kN; washer abutment and complete assembly capacity still unqualified"
+  },
+  {
+    "name": "RadialBearingRight",
+    "material": "6001 nominal radial-bearing envelope",
+    "authority": "Axial load is assigned to the thrust package, not the motor"
+  },
+  {
+    "name": "Reduction3to1Right",
+    "material": "3:1 gearbox envelope UNSELECTED",
+    "authority": "Continuous output and running torque require exact rated product/curve; not holding-torque proof"
+  },
+  {
+    "name": "MotorRight",
+    "material": "NEMA23 3Nm candidate nominal envelope",
+    "authority": "Dynamic curve and reducer interfaces not frozen"
+  },
+  {
+    "name": "ScrewRight",
+    "material": "Nominal20mm ball screw,lead5; exact OEM ends unselected",
+    "authority": "Shaft shown in tensile load path; nut rating, journal and shoulder drawing required"
+  },
+  {
+    "name": "BallNutRight",
+    "material": "Ballnut envelope UNSELECTED",
+    "authority": "Exact rated nut and flange pattern required"
+  },
+  {
+    "name": "NutSpreaderRight",
+    "material": "Steel10mm spreader candidate",
+    "authority": "Seat/load transfer and mounting bolts remain design work"
+  },
+  {
+    "name": "LoadCell",
+    "material": "CAS SBA-2 candidate2t",
+    "authority": "OEM external dimensions; S flexure/cable projection schematic; no stiffness or tap-depth authority"
+  },
+  {
+    "name": "LoadCellBaseMount",
+    "material": "Steel reaction plate candidate",
+    "authority": "Force-sensor fastening/seat and anti-rotation detail pending; M18/M12 specification must match cell"
+  },
+  {
+    "name": "LowerGripRear",
+    "material": "Steel grip candidate; grade/heat treatment not frozen",
+    "authority": "Nominal20x4 shoulder acceptance; friction/preload/crushing/strength not verified"
+  },
+  {
+    "name": "UpperGripRear",
+    "material": "Steel grip candidate; grade/heat treatment not frozen",
+    "authority": "Nominal20x4 shoulder acceptance; friction/preload/crushing/strength not verified"
+  },
+  {
+    "name": "LowerGripFront",
+    "material": "Steel grip candidate; grade/heat treatment not frozen",
+    "authority": "Nominal20x4 shoulder acceptance; friction/preload/crushing/strength not verified"
+  },
+  {
+    "name": "UpperGripFront",
+    "material": "Steel grip candidate; grade/heat treatment not frozen",
+    "authority": "Nominal20x4 shoulder acceptance; friction/preload/crushing/strength not verified"
+  },
+  {
+    "name": "LowerGripPin",
+    "material": "Steel12mm pin candidate",
+    "authority": "Double-shear screening only; fit/grade/capture unqualified"
+  },
+  {
+    "name": "LowerClampBolt0",
+    "material": "Steel M8x60 candidate10.9",
+    "authority": "Torque cannot establish grip slip capacity without physical verification"
+  },
+  {
+    "name": "LowerClampBolt1",
+    "material": "Steel M8x60 candidate10.9",
+    "authority": "Torque cannot establish grip slip capacity without physical verification"
+  },
+  {
+    "name": "LowerClampBolt2",
+    "material": "Steel M8x60 candidate10.9",
+    "authority": "Torque cannot establish grip slip capacity without physical verification"
+  },
+  {
+    "name": "LowerClampBolt3",
+    "material": "Steel M8x60 candidate10.9",
+    "authority": "Torque cannot establish grip slip capacity without physical verification"
+  },
+  {
+    "name": "UpperGripPin",
+    "material": "Steel12mm pin candidate",
+    "authority": "Double-shear screening only; fit/grade/capture unqualified"
+  },
+  {
+    "name": "UpperClampBolt0",
+    "material": "Steel M8x60 candidate10.9",
+    "authority": "Torque cannot establish grip slip capacity without physical verification"
+  },
+  {
+    "name": "UpperClampBolt1",
+    "material": "Steel M8x60 candidate10.9",
+    "authority": "Torque cannot establish grip slip capacity without physical verification"
+  },
+  {
+    "name": "UpperClampBolt2",
+    "material": "Steel M8x60 candidate10.9",
+    "authority": "Torque cannot establish grip slip capacity without physical verification"
+  },
+  {
+    "name": "UpperClampBolt3",
+    "material": "Steel M8x60 candidate10.9",
+    "authority": "Torque cannot establish grip slip capacity without physical verification"
+  },
+  {
+    "name": "LowerStudEye",
+    "material": "Steel machined threaded-eye candidate",
+    "authority": "16mm engagement is provisional; OEM depth/grade must be confirmed"
+  },
+  {
+    "name": "UpperStudEye",
+    "material": "Steel machined threaded-eye candidate",
+    "authority": "Crosshead nut/spreader/retention detail incomplete"
+  },
+  {
+    "name": "CentralSpreader",
+    "material": "Steel12mm spreader candidate",
+    "authority": "Primary force transferred onto beam walls;4bolt/capture detail pending"
+  },
+  {
+    "name": "NominalCoupon",
+    "material": "Printed specimen nominal170x20x4",
+    "authority": "A1-like nominal geometry; radius24 is our choice, current standard master NOT verified"
+  },
+  {
+    "name": "Mark75Low",
+    "material": "Paint mark, not a mechanical feature",
+    "authority": "Gauge75 preferred A1;50 conditional QC; no verified optical accuracy"
+  },
+  {
+    "name": "Mark75High",
+    "material": "Paint mark, not a mechanical feature",
+    "authority": "Gauge75 preferred A1;50 conditional QC; no verified optical accuracy"
+  },
+  {
+    "name": "Mark50Low",
+    "material": "Paint mark, not a mechanical feature",
+    "authority": "Gauge75 preferred A1;50 conditional QC; no verified optical accuracy"
+  },
+  {
+    "name": "Mark50High",
+    "material": "Paint mark, not a mechanical feature",
+    "authority": "Gauge75 preferred A1;50 conditional QC; no verified optical accuracy"
+  },
+  {
+    "name": "CameraMount",
+    "material": "Printed camera clamp candidate",
+    "authority": "Lens/mount/FOV unselected; not an ISO9513 verified instrument"
+  },
+  {
+    "name": "CameraEnvelope",
+    "material": "Camera envelope UNSELECTED",
+    "authority": "Contact or equally accurate optical extensometer may be used; no bit/pixel-based accuracy claim"
+  },
+  {
+    "name": "CalibrationTarget",
+    "material": "Traceable-reference placeholder",
+    "authority": "Printed ruler is not a calibration standard; displacement stage/gauge reference not supplied"
+  },
+  {
+    "name": "EndCapLeft",
+    "material": "PETG cover candidate",
+    "authority": "Non-load-bearing foot end cap, outside primary reaction joints"
+  },
+  {
+    "name": "EndCapRight",
+    "material": "PETG cover candidate",
+    "authority": "Non-load-bearing foot end cap, outside primary reaction joints"
+  }
+]

@@ -1,0 +1,46 @@
+"""FreeCAD checks for the study; no physical load or ISO conformance claim."""
+import json
+from pathlib import Path
+import FreeCAD as App
+import Part
+
+def run(root):
+    root=Path(root);out=root/'profile/study-v0.4'
+    path=out/'cad/Engineering_10kN_room_temperature_study.FCStd'
+    assert path.is_file(),'Engineering study native CAD has not been generated'
+    doc=next((d for d in App.listDocuments().values() if d.FileName and Path(d.FileName)==path),None)
+    if doc:App.closeDocument(doc.Name)
+    doc=App.openDocument(str(path))
+    parts=[o for o in doc.Objects if hasattr(o,'PartID')]
+    assert len(parts)>40
+    assert all(o.Shape.Solids and o.Shape.isValid() for o in parts)
+    coupon=doc.getObject('NominalCoupon')
+    # Central10x4mm section is checked geometrically, not merely read from a label.
+    centre=float(coupon.GaugeCentreZ)
+    section=coupon.Shape.common(Part.makeBox(100,100,.01,App.Vector(-50,-50,centre-.005)))
+    assert abs(section.Volume/.01-40)<.01
+    assert abs(doc.LoadCell.Shape.BoundBox.XLength-77)<.01
+    assert abs(doc.LoadCell.Shape.BoundBox.ZLength-108)<.01
+    assert doc.LoadCell.ThreadSpec=='M18x1.5; engagement depth UNCONFIRMED'
+    assert doc.ColumnLeft.Shape.BoundBox.ZLength==800
+    for name in ['LowerGripRear','LowerGripFront','UpperGripRear','UpperGripFront']:
+        assert getattr(doc,name).MaterialPlan.startswith('Steel')
+    cfg=json.loads((out/'DESIGN_INPUTS.json').read_text(encoding='utf-8'))
+    assert cfg['working_force_target_N']==10000
+    assert cfg['physical_force_test_performed'] is cfg['ISO_conformance_established'] is False
+    assert cfg['nominal_coupon']['current_standard_master_verified'] is False
+    moving=[o for o in parts if hasattr(o,'IsMoving') and o.IsMoving]
+    barriers=[doc.ColumnLeft,doc.ColumnRight,doc.TopBeam]
+    collision=[]
+    for dz in range(0,101,10):
+        for o in moving:
+            s=o.Shape.copy();s.translate(App.Vector(0,0,dz))
+            for b in barriers:
+                if s.BoundBox.intersect(b.Shape.BoundBox) and s.common(b.Shape).Volume>.01:collision.append([dz,o.Name,b.Name])
+    assert collision==[],collision
+    report={'version':cfg['version'],'status':'GEOMETRY_STUDY_CHECKS_PASS','parts':len(parts),
+        'coupon_central_section_mm2':section.Volume/.01,'screened_positions_mm':list(range(0,101,10)),
+        'moving_vs_columns_topbeam_overlap':collision,'physical_test_performed':False,'ISO_conformance':False,
+        'scope':'selected solid/envelope checks; no full mating, fastener preload, gripslip, physical force or ISO metrology verification'}
+    (out/'NATIVE_CHECK.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')
+    print(json.dumps(report));return doc

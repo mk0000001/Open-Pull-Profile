@@ -1,0 +1,74 @@
+"""UTM V2 derived packaging study. Output CAD CC BY-NC-SA4.0; see THIRD_PARTY.md.
+
+This keeps the author's motor and load cell as REFERENCES. Neither is the
+selected substitute from the price plan. No purchase-ready fit is asserted.
+"""
+import json
+from pathlib import Path
+import FreeCAD as App
+import FreeCADGui as Gui
+import Part
+import Import
+import MeshPart
+import runpy
+
+def build(root,source_native):
+    root=Path(root);out=root/'profile/study-v0.4'
+    helper=runpy.run_path(str(out/'build_studies.FCMacro'))
+    source=next((d for d in App.listDocuments().values() if d.FileName and Path(d.FileName)==Path(source_native)),None)
+    if source is None:source=App.openDocument(str(source_native))
+    name='UTM_V2_budget_fixture_study'
+    if name in App.listDocuments():App.closeDocument(name)
+    doc=App.newDocument(name);doc.Label='60만원 UTM 파생 배치 / PETG·엔지니어링 소형시편 / 미검증'
+    # App::Part.Shape repeats the leaf solids; copying it duplicates assemblies.
+    source_parts=[o for o in source.Objects if o.TypeId=='Part::Feature' and o.Shape.Solids]
+    copied=[]
+    for original in source_parts:
+        o=doc.addObject('Part::Feature','Ref_'+original.Name);o.Label=original.Label
+        shape=original.Shape.copy()
+        if original.Name in ('Part__Feature001','Part__Feature004'):shape.translate(App.Vector(0,6.987,0))
+        if original.Name in ('Part__Feature002','Part__Feature003'):shape.translate(App.Vector(0,-7.013,0))
+        o.Shape=shape
+        o.addProperty('App::PropertyString','Authority');o.Authority='Author UTM V2 reference; CC BY-NC-SA4.0; substitute motor/cell fit NOT verified'
+        o.addProperty('App::PropertyString','OriginalName');o.OriginalName=original.Name
+        o.ViewObject.ShapeColor=getattr(original.ViewObject,'ShapeColor',(.7,.7,.7))
+        copied.append(o)
+    doc.recompute()
+    path=out/'utm-derived'/ (name+'.FCStd');path.parent.mkdir(exist_ok=True)
+    doc.saveAs(str(path))
+    centre=(333.73+429.801)/2
+    reports=[]
+    for tag,parallel,narrow,colour in [('PETG_custom_150x5x2',60,5,(.85,.65,.12)),('Engineering_custom_150x2x2',50,2,(.65,.3,.7))]:
+        flat=helper['dogbone'](150,parallel,narrow,20,24,2)
+        shape=flat.copy();shape.rotate(App.Vector(),App.Vector(1,0,0),90);shape.translate(App.Vector(centre,21,95.012))
+        o=doc.addObject('Part::Feature',tag);o.Shape=shape
+        o.addProperty('App::PropertyString','Authority');o.Authority='CUSTOM comparative specimen, NOT verified ISO geometry; 2mm jaw adjustment not fully mated'
+        o.addProperty('App::PropertyFloat','CentralSectionMM2');o.CentralSectionMM2=narrow*2
+        o.ViewObject.ShapeColor=colour
+        o.Visibility=tag.startswith('PETG')
+        MeshPart.meshFromShape(Shape=flat,LinearDeflection=.05,AngularDeflection=.2,Relative=False).write(str(out/'print-candidates'/(tag+'.stl')))
+        section=shape.common(Part.makeBox(.01,100,100,App.Vector(centre-.005,-30,45)))
+        assert shape.isValid() and abs(section.Volume/.01-narrow*2)<.01
+        reports.append({'name':tag,'section_mm2':section.Volume/.01,'parallel_length_mm':parallel,'standard_geometry_verified':False})
+    doc.recompute();doc.save()
+    assert len(copied)==142,len(copied)
+    assert all(o.Shape.isValid() for o in copied)
+    gaps=[]
+    for lower,upper in [('001','002'),('004','003')]:
+        a=doc.getObject('Ref_Part__Feature'+lower).Shape.BoundBox
+        b=doc.getObject('Ref_Part__Feature'+upper).Shape.BoundBox
+        gap=b.YMin-a.YMax
+        assert abs(gap-2)<.001,(lower,upper,gap)
+        assert abs(a.YMax-19)<.001 and abs(b.YMin-21)<.001
+        gaps.append(gap)
+    App.setActiveDocument(name);Gui.activeDocument().activeView().viewAxonometric();Gui.activeDocument().activeView().fitAll()
+    Gui.activeDocument().activeView().saveImage(str(out/'renders'/(name+'.png')),1500,900,'White')
+    doc.save()
+    # STEP includes the visible PETG coupon only, so two alternatives never overlap.
+    Import.export(copied+[doc.getObject('PETG_custom_150x5x2')],str(path.with_suffix('.step')))
+    report={'status':'SELECTED_PACKAGING_CHECKS_PASS','reference_solids':len(copied),'coupon_alternatives':reports,
+        'both_grip_openings_mm':gaps,
+        'assembly_ready':False,'minimum_2kN_validated':False,'ISO_conformance':False,
+        'open_interfaces':['quoted replacement motor and sensor differ from source solids','jaw knobs/stems not remated after 2mm specimen adjustment','no complete collision or thread/fastener/preload check','2kN load path and bearing axial retention unverified']}
+    (out/'BUDGET_NATIVE_CHECK.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')
+    print(json.dumps(report));return doc

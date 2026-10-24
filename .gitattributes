@@ -5,4 +5,5 @@
 *.f3d binary
 *.png binary
 *.xlsx binary
+*.zip binary
 LICENSE -text

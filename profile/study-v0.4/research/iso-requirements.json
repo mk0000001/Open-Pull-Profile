@@ -1,0 +1,88 @@
+{
+  "checked_date": "2026-10-25",
+  "scope": "Printed tensile specimens for material and print-condition comparison",
+  "formal_conformance_verified": false,
+  "cad_release_blocker": "Current final dimension/tolerance tables and reduced-specimen Annex A not publicly verified",
+  "standards": {
+    "general": {"id": "ISO 527-1:2019", "confirmed": 2025, "url": "https://www.iso.org/standard/527-1"},
+    "plastics_conditions": {"id": "ISO 527-2:2025", "published": "2025-06-18", "replaces": "ISO 527-2:2012", "url": "https://www.iso.org/standard/527-2"},
+    "specimens": {"id": "ISO 20753:2023", "revision_in_development": true, "url": "https://www.iso.org/standard/83642.html"},
+    "force_verification": {"id": "ISO 7500-1:2018", "confirmed": 2026, "url": "https://www.iso.org/standard/72572.html"},
+    "extensometer_calibration": {"id": "ISO 9513:2012", "confirmed": 2022, "corrigendum": "Cor 1:2013", "url": "https://www.iso.org/standard/41619.html"},
+    "conditioning": {"id": "ISO 291:2008", "confirmed": 2021, "under_review": true, "url": "https://www.iso.org/standard/50572.html"},
+    "dimensions": {"id": "ISO 16012:2015", "confirmed": 2026, "url": "https://committee.iso.org/standard/63481.html?browse=ics"},
+    "am_orientation": {"id": "ISO 17295:2023", "url": "https://www.iso.org/standard/76471.html?browse=tc"},
+    "am_classification": {"id": "ISO/ASTM 52924:2023", "not_claimed": true, "url": "https://www.iso.org/standard/76909.html"},
+    "am_tests": {"id": "ISO/ASTM 52927:2024", "url": "https://www.iso.org/standard/81802.html?browse=tc"},
+    "comparable_single_point_data": {"id": "ISO 10350-1:2025", "full_speed_table_verified": false, "url": "https://www.iso.org/standard/85826.html"}
+  },
+  "verified_requirements": {
+    "source": "https://standards.iteh.ai/catalog/standards/cen/63eedfdd-676e-48bd-9a33-3d274e612cd7/en-iso-527-1-2019",
+    "force_class": {"value": 1, "clause": "5.1.4", "basis": "ISO7500-1"},
+    "extensometer_class": {"value": 1, "clause": "5.1.5.1", "basis": "ISO9513", "non_contact_same_accuracy": true},
+    "modulus_extension_accuracy_um": {"L0_50mm": 1, "L0_75mm": 1.5, "L0_20to50mm": 1},
+    "grips": {"clause": "5.1.3", "aligned": true, "no_slip": true, "no_premature_grip_fracture": true, "no_crushing": true},
+    "minimum_valid_replicates_each_required_direction": 5,
+    "discard_replace": ["fracture_inside_grips", "slip_inside_grips"],
+    "conditioning": {"clause": "8", "material_standard_first": true, "default_min_h": 16, "agreement_exceptions": true, "preferred_C": 23, "tolerance_C": 2, "preferred_RH_pct": 50, "tolerance_RH_pct": 10, "moisture_insensitive_exception": true},
+    "dimension_rounding_mm": {"width": 0.1, "thickness": 0.01},
+    "modulus_strain_interval_pct": [0.05, 0.25],
+    "strength_definition": "first_local_stress_maximum",
+    "one_mm_min_speed_tolerance_pct": 20
+  },
+  "speed_verification": {
+    "manufacturer_source": "https://www.zwickroell.com/industries/plastics/thermoplastics-and-thermosetting-molding-materials/tensile-test-iso-527-1-2/",
+    "A1_A2_modulus_mm_min": 1,
+    "subsequent_manufacturer_examples_mm_min": [5, 50],
+    "universal_strength_50mm_min_claim": false,
+    "current_clause9_full_text_verified": false,
+    "ISO527_1_2019_clause9_6_primary_licensed_preview_verified": false,
+    "clause9_6_reposted_text_found_but_not_adopted_as_authorized_source": true,
+    "current_reduced_specimen_speed_verified": false,
+    "legacy_2012_modulus_clause8_verified": true,
+    "legacy_source": "https://cdn.standards.iteh.ai/samples/56046/c5c3ec20cc0741289bf6def861e0a40b/ISO-527-2-2012.pdf",
+    "low_speed_protocol_label": "documented_research_comparison_protocol_not_full_material_default_or_ISO10350_claim"
+  },
+  "lead2_speed_calculation": {
+    "engineering_assumptions_not_ISO_requirements": true,
+    "lead_mm_rev": 2,
+    "gear_ratio": 99.5,
+    "travel_mm_min": [1, 5, 50],
+    "screw_rpm": [0.5, 2.5, 25],
+    "motor_rpm": [49.75, 248.75, 2487.5],
+    "force_at_50mm_min_not_proven": true
+  },
+  "naming": {"A1_previous": "1A", "A2_previous": "1B", "old_1BA_1BB_changed": true, "reduced_current_reference": "ISO20753_Axy_and_ISO527-2_AnnexA", "CW_general_tensile_substitute_claim": false},
+  "geometry_candidates": [
+    {"name": "A1_family_nominal_envelope", "released_as_current_iso_geometry": false, "b1_mm": 10, "h_mm": 4, "h_status": "preferred", "l1_mm": 80, "b2_mm": 20, "l3_min_mm": 170, "L_nominal_mm": 115, "L0_preferred_mm": 75, "L0_conditional_mm": 50, "r_mm": null, "l2_mm": null, "current_tolerances": null, "process": "A1_normative_process_is_direct_injection_moulding"},
+    {"name": "A2_family_nominal_envelope", "released_as_current_iso_geometry": false, "b1_mm": 10, "h_mm": 4, "h_status": "preferred", "l1_mm": 60, "b2_mm": 20, "l3_min_mm": 150, "L_nominal_mm": 115, "L0_mm": 50, "r_mm": null, "l2_mm": null, "current_tolerances": null, "process": "A2_normative_process_is_machining"}
+  ],
+  "geometry_sources": {
+    "nominal_legacy_manufacturer": "https://www.zwickroell.com/fileadmin/content/Files/SharePoint/user_upload/Brochures_EN/Industry_Brochures/99_269_Testing_of_Plastics_and_Rubber_E_EN.pdf",
+    "current_gauge_A1": "https://standards.iteh.ai/catalog/standards/iso/9d55cbc8-5096-4e1e-bb26-ce74eea5c4d9/iso-527-2-2025",
+    "current_process_and_scaling_indexed_preview": "https://www.evs.ee/et/StandardDownload/DownloadPreview?language=EnglishLanguage&productId=161842",
+    "current_20753_public_preview": "https://cdn.standards.iteh.ai/samples/83642/3f31c860b40e4957b873a9fabbf2153d/ISO-20753-2023.pdf"
+  },
+  "data_acquisition_example": {"source_clause": "ISO527-2:2025_5.3_NOTE", "not_universal_minimum": true, "v_mm_min": 1, "L0_mm": 75, "L_mm": 115, "r_mm": 0.0005, "appropriate_strain_Hz_gte": 22},
+  "force_envelope": {
+    "equation": "F_N=stress_MPa*area_mm2",
+    "peak_force_not_first_local_maximum_only": true,
+    "capacity_margin_included": false,
+    "stress_columns_MPa": [50, 60, 80, 100],
+    "examples": [
+      {"section_mm": [10,4], "area_mm2": 40, "loads_N": [2000,2400,3200,4000], "current_geometry_approved": false},
+      {"section_mm": [10,2], "area_mm2": 20, "loads_N": [1000,1200,1600,2000], "current_geometry_approved": false},
+      {"section_mm": [5,2], "area_mm2": 10, "loads_N": [500,600,800,1000], "current_geometry_approved": false}
+    ]
+  },
+  "machine_gap_matrix": [
+    {"machine": "CrazyBlackStone_UTM_V2", "capacity_N_assumption": 1000, "capacity_provenance": "coordinator_reported_not_independently_verified_here", "meets_2kN_requirement": false, "capacity_divided_by_40mm2_MPa": 25, "force_class1_verified": false, "extensometer_verified": false, "speed_verified": false, "grip_geometry_alignment_verified": false},
+    {"machine": "TU_Wien_MT02", "capacity_N_assumption": 3500, "capacity_provenance": "design_target_not_certified_rating", "meets_2kN_requirement": "target_only", "capacity_divided_by_40mm2_MPa": 87.5, "headroom_over_80MPa_40mm2_N": 300, "force_class1_verified": false, "extensometer_verified": false, "speed_verified": false, "grip_geometry_alignment_verified": false}
+  ],
+  "design_priorities": ["whole_load_path_capacity", "centered_repeatable_grips", "in_range_force_verification", "independent_actual_motion_and_speed_measurement", "gauge_extensometer_if_reporting_E", "synchronized_raw_logging", "dimensions_conditioning_direction_replicates"],
+  "forbidden_inferences": ["24bit_ADC_means_class1", "loadcell_rating_means_machine_rating", "stepper_steps_equal_specimen_gauge_strain", "arbitrarily_thin_specimen_is_ISO_compliant", "AM_A1_shape_equals_injection_A1_material_state", "ISO527_min5_equals_ISO52924_classification_complete", "2kN_at_low_speed_implies_2kN_at50mm_min"],
+  "raw_filament_contrast": {"circular_diameter_mm": 1.75, "assumed_area_mm2": 2.4052818754, "loads_at_50_80MPa_N_approx": [120,192], "ISO527_2_A1_A2_claim": false, "printed_interlayer_strength_measured": false},
+  "not_accessed": ["current_final_full_geometry_tolerance_tables", "ISO527_2_2025_AnnexA_full", "ISO527_2_2025_clause9_full", "ISO527_1_2019_clause9_6_authorized_primary_preview", "ISO527_1_2019_AnnexC_full", "full_ISO7500_and_ISO9513_calibration_procedures", "full_ISO52924_classification_arrangement_requirements", "ISO10350_1_2025_full_speed_table"],
+  "purchases_or_contacts_made": false,
+  "cad_or_git_modified": false
+}

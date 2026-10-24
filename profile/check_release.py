@@ -20,10 +20,13 @@ def files_to_hash():
     selected += list((ROOT/'docs/superpowers').rglob('*.md'))
     selected += [p for p in (ROOT/'profile').rglob('*') if p.is_file()
                  and p.suffix in {'.json','.csv','.md','.py','.FCMacro','.FCStd','.step','.png','.stl','.zip'}
-                 and not (p.suffix=='.step' and p.parent==ROOT/'profile/build-v0.3/cad')]
+                 and not (p.suffix=='.step' and (p.parent==ROOT/'profile/build-v0.3/cad' or ROOT/'profile/study-v0.4' in p.parents))]
     selected += list((ROOT/'tests').glob('test_profile*.py'))
     selected += [ROOT/'tests/test_domestic_interfaces.py']
     selected += [ROOT/'tests/test_costdown_release.py']
+    selected += [ROOT/'tests/test_study_budget.py']
+    selected += list((ROOT/'tests').glob('test_*native.FCMacro'))
+    selected += [ROOT/'tests/test_study_exchange.FCMacro']
     selected += list((ROOT/'.github/workflows').glob('profile*.yml'))
     return sorted(set(selected))
 
@@ -68,10 +71,15 @@ def check():
     assert roundtrip['native_sha256']==evidence['native_sha256']==digest(latest)
     assert roundtrip['step_sha256']==digest(latest.with_suffix('.step'))
     costdown=json.loads((ROOT/'profile/build-v0.3/config.json').read_text(encoding='utf-8'))
-    assert current_version==costdown['version']=='0.3.0-costdown-layout'
+    assert costdown['version']=='0.3.0-costdown-layout'
     assert costdown['design_target_force_N']==2000
     assert costdown['assembly_ready'] is costdown['load_rating_validated'] is False
     subprocess.run([sys.executable,str(ROOT/'tests/test_costdown_release.py')],cwd=ROOT,check=True)
+    study=json.loads((ROOT/'profile/study-v0.4/DESIGN_INPUTS.json').read_text(encoding='utf-8'))
+    assert current_version==study['version']=='0.4.0-engineering-feasibility'
+    assert study['budget_target_KRW']==600000 and study['budget_strict_ceiling_KRW']==800000
+    assert study['assembly_ready'] is study['ISO_conformance_established'] is study['physical_force_test_performed'] is False
+    subprocess.run([sys.executable,str(ROOT/'tests/test_study_budget.py')],cwd=ROOT,check=True)
     native = ROOT/('profile/cad/OpenPull_Profile_v'+version+'.FCStd')
     step = native.with_suffix('.step')
     assert native.is_file() and step.is_file(), 'Missing CAD deliverable'

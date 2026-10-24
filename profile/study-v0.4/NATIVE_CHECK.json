@@ -1,0 +1,23 @@
+{
+  "version": "0.4.0-engineering-feasibility",
+  "status": "GEOMETRY_STUDY_CHECKS_PASS",
+  "parts": 54,
+  "coupon_central_section_mm2": 39.99999999996415,
+  "screened_positions_mm": [
+    0,
+    10,
+    20,
+    30,
+    40,
+    50,
+    60,
+    70,
+    80,
+    90,
+    100
+  ],
+  "moving_vs_columns_topbeam_overlap": [],
+  "physical_test_performed": false,
+  "ISO_conformance": false,
+  "scope": "selected solid/envelope checks; no full mating, fastener preload, gripslip, physical force or ISO metrology verification"
+}

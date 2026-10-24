@@ -1,0 +1,658 @@
+{
+  "source_url": "https://repositum.tuwien.at/handle/20.500.12708/200949",
+  "pdf_url": "https://repositum.tuwien.at/bitstream/20.500.12708/200949/1/Demmel%20Stella%20-%202024%20-%20Design%20manufacturing%20and%20testing%20of%20an%20open-source...pdf",
+  "retrieved": "2026-10-25",
+  "author": "Stella Demmel",
+  "year": 2024,
+  "machine": "MT-02",
+  "source_status": "Official thesis downloaded with PowerShell normal OS trust. No public native MT02 CAD found; do not label reconstruction authentic MT02 CAD.",
+  "source_pages": {
+    "bom": {
+      "printed": 62,
+      "pdf": 73
+    },
+    "fasteners_tools": {
+      "printed": 63,
+      "pdf": 74
+    },
+    "assembly_figure14_15": {
+      "printed": 18,
+      "pdf": 29
+    },
+    "profiles_figure16": {
+      "printed": 20,
+      "pdf": 31
+    },
+    "mounts_figure17": {
+      "printed": 22,
+      "pdf": 33
+    }
+  },
+  "original_cost": null,
+  "original_cost_note": "Appendix BOM has no price column. No numerical total in thesis found. MT01 README under EUR500 is not MT02 price.",
+  "profiles": [
+    {
+      "qty": 2,
+      "section_mm": [
+        40,
+        80
+      ],
+      "length_mm": 590,
+      "role": "columns",
+      "slots": "groove8 I-type lightweight, black anodized",
+      "processing": "two center holes each end tapped M8 to depth35"
+    },
+    {
+      "qty": 1,
+      "section_mm": [
+        40,
+        80
+      ],
+      "length_mm": 400,
+      "role": "top",
+      "processing": "2xdiam27.5 pass-through at244mm centers; frame mount8.5mm holes; end mounting holes8.5 with counterbores"
+    },
+    {
+      "qty": 2,
+      "section_mm": [
+        40,
+        80
+      ],
+      "length_mm": 400,
+      "role": "feet",
+      "processing": "2x8.5 through40mm apart;13.5 counterbore12.25deep (prose); drawing appears labels12.25 as diameter, inconsistency"
+    },
+    {
+      "qty": 1,
+      "section_mm": [
+        40,
+        80
+      ],
+      "length_mm": 320,
+      "role": "lower fixed beam",
+      "processing": "unmodified"
+    },
+    {
+      "qty": 1,
+      "section_mm": [
+        40,
+        80
+      ],
+      "length_mm": 300,
+      "role": "crosshead",
+      "processing": "2xdiam20 through at244mm centers,28mm end offsets"
+    }
+  ],
+  "geometry": {
+    "total_profile_length_mm": 3000,
+    "screw_axis_spacing_mm": 244,
+    "top_hole_screw_axes_xy_mm": [
+      [
+        78,
+        40
+      ],
+      [
+        322,
+        40
+      ]
+    ],
+    "crosshead_hole_screw_axes_xy_mm": [
+      [
+        28,
+        40
+      ],
+      [
+        272,
+        40
+      ]
+    ],
+    "footprint_nominal_mm": [
+      400,
+      400
+    ],
+    "nominal_frame_height_mm": 670,
+    "footprint_height_note": "Inferred from assembly590columns+40feet+40top; excludes printed caps/motors. Do not call measured external envelope.",
+    "top_frame_hole_pairs_spacing_mm": [
+      368,
+      308,
+      192
+    ],
+    "top_hole_slot_rows_mm": [
+      20,
+      60
+    ]
+  },
+  "mounts": [
+    {
+      "type": "stepper_motor",
+      "qty": 2,
+      "material": "AW6060",
+      "size_mm": [
+        70,
+        78,
+        6
+      ],
+      "center_bore_d_mm": 22.5,
+      "motor_holes": {
+        "qty": 4,
+        "diameter_mm": 3,
+        "pcd_mm": 28,
+        "angular_offset_deg": 45,
+        "countersink": "6.5x90deg"
+      },
+      "frame_holes": {
+        "diameter_mm": 8.5,
+        "xy_mm": [
+          [
+            15,
+            10
+          ],
+          [
+            55,
+            10
+          ],
+          [
+            15,
+            68
+          ],
+          [
+            55,
+            68
+          ]
+        ]
+      }
+    },
+    {
+      "type": "fixed_bearing",
+      "qty": 2,
+      "material": "AW6060",
+      "size_mm": [
+        70,
+        78,
+        6
+      ],
+      "thickness_note": "6mm inferred Fig21 grouping and Fig17 shape; verify native source before fabrication",
+      "center_bore_d_mm": 27.5,
+      "bearing_mount_pattern_mm": [
+        46,
+        18
+      ],
+      "bearing_mount_thread": "M5",
+      "frame_holes": {
+        "diameter_mm": 8.5,
+        "xy_mm": [
+          [
+            15,
+            10
+          ],
+          [
+            55,
+            10
+          ],
+          [
+            15,
+            68
+          ],
+          [
+            55,
+            68
+          ]
+        ]
+      }
+    },
+    {
+      "type": "ball_nut",
+      "qty": 2,
+      "material": "AW6060",
+      "size_mm": [
+        80,
+        55,
+        10
+      ],
+      "center_bore_d_mm": 20,
+      "nut_mount": {
+        "qty": 6,
+        "pcd_mm": 38.23,
+        "thread_drawing": "M4",
+        "thread_prose": "M5",
+        "note": "Actual purchased ballnut drawing controls; thesis inconsistent"
+      },
+      "frame_holes": {
+        "diameter_mm": 8.5,
+        "horizontal_spacing_mm": 40,
+        "countersink": "18.7x90deg"
+      }
+    },
+    {
+      "type": "floating_bearing",
+      "qty": 2,
+      "material": "AW6060",
+      "size_mm": [
+        80,
+        69,
+        10
+      ],
+      "bearing_mount_pattern_mm": [
+        46,
+        18
+      ],
+      "bearing_mount_thread": "M5",
+      "frame_holes": {
+        "diameter_mm": 8.5,
+        "horizontal_spacing_mm": 40,
+        "vertical_spacing_mm": 48,
+        "countersink": "18.7x90deg"
+      }
+    },
+    {
+      "type": "load_cell_or_grip",
+      "qty": 2,
+      "material": "AW6060",
+      "size_mm": [
+        60,
+        80,
+        10
+      ],
+      "center_bore_d_mm": 12,
+      "center_countersink": "27.8x90deg",
+      "frame_holes": {
+        "qty": 4,
+        "diameter_mm": 8.5,
+        "pattern_mm": [
+          30,
+          40
+        ],
+        "countersink": "19x90deg"
+      }
+    }
+  ],
+  "parts": [
+    {
+      "qty": 4,
+      "part": "Corner bracket"
+    },
+    {
+      "qty": 34,
+      "part": "M8 slot nut"
+    },
+    {
+      "qty": 1,
+      "part": "Aluminum flatbar10x70x500mm",
+      "note": "Appendix dimension conflicts prose and80wide finished mounts; do not order unchanged"
+    },
+    {
+      "qty": 1,
+      "part": "Aluminum flatbar6x70x500mm"
+    },
+    {
+      "qty": 1,
+      "part": "Load cell500kg",
+      "note": "S-type, M12 mounting interface in text; body calls5kN;500kgf=4.903kN"
+    },
+    {
+      "qty": 2,
+      "part": "Stepper motor+gearbox19:1",
+      "exact": "17HS19-1684S-PG19",
+      "gear_ratio": 19.203,
+      "phase_current_A": 1.68
+    },
+    {
+      "qty": 2,
+      "part": "Coupler8mm-to10mm"
+    },
+    {
+      "qty": 2,
+      "part": "SFU1605 ball screw set500mm",
+      "bearing_fixed": "BK12 named in p26 spacer",
+      "bearing_floating": "Floating bearing; BF12 inferred standard matching type, not explicit thesis part number"
+    },
+    {
+      "qty": 1,
+      "part": "Arduino Mega2560"
+    },
+    {
+      "qty": 1,
+      "part": "3.2inch TFT LCD touch"
+    },
+    {
+      "qty": 1,
+      "part": "TFT LCD shield"
+    },
+    {
+      "qty": 2,
+      "part": "DM542T stepper driver"
+    },
+    {
+      "qty": 1,
+      "part": "24V-to5V converter"
+    },
+    {
+      "qty": 1,
+      "part": "HX711 loadcell amplifier ADC"
+    },
+    {
+      "qty": 1,
+      "part": "24V8A power supply"
+    },
+    {
+      "qty": 1,
+      "part": "PETG filament",
+      "quantity_unit": "not specified spool mass"
+    },
+    {
+      "qty": 1,
+      "part": "TPU filament",
+      "quantity_unit": "not specified spool mass"
+    },
+    {
+      "qty": null,
+      "part": "Crimp connectors"
+    },
+    {
+      "qty": null,
+      "part": "Headers"
+    }
+  ],
+  "fasteners": [
+    {
+      "qty": 4,
+      "size": "M3x6",
+      "type": "slotted"
+    },
+    {
+      "qty": 8,
+      "size": "M3x10",
+      "type": "countersunk"
+    },
+    {
+      "qty": 2,
+      "size": "M3x20",
+      "type": "slotted"
+    },
+    {
+      "qty": 2,
+      "size": "M3x35",
+      "type": "slotted"
+    },
+    {
+      "qty": 2,
+      "size": "M4x10",
+      "type": "slotted"
+    },
+    {
+      "qty": 12,
+      "size": "M5x20",
+      "type": "hex"
+    },
+    {
+      "qty": 8,
+      "size": "M5x30",
+      "type": "hex"
+    },
+    {
+      "qty": 8,
+      "size": "M5x35",
+      "type": "hex"
+    },
+    {
+      "qty": 8,
+      "size": "M8x16",
+      "type": "raised countersunk"
+    },
+    {
+      "qty": 26,
+      "size": "M8x20",
+      "type": "countersunk"
+    },
+    {
+      "qty": 8,
+      "size": "M8x45",
+      "type": "hex"
+    },
+    {
+      "qty": 8,
+      "size": "M8x70",
+      "type": "hex"
+    },
+    {
+      "qty": 1,
+      "size": "M12x35",
+      "type": "countersunk"
+    }
+  ],
+  "printed_parts": [
+    "PETG end caps",
+    "PETG motor mount spacers1mm",
+    "PETG fixed bearing spacers1mm",
+    "PETG cable caps",
+    "PETG electronics housing",
+    "PETG PCB spacing cylinders",
+    "TPU endcap dampers"
+  ],
+  "omitted_from_appendix_but_needed": [
+    "PCB manufacture and exact PCB sources",
+    "24Vpower jack",
+    "rocker power switch",
+    "USB cable",
+    "wire and terminals",
+    "M8-compatible grippers or M12 grippers",
+    "M12-toM8 adapter used in test",
+    "nuts/washers/spacers used for improvised upper clamp",
+    "reference masses and calibration setup",
+    "machining and labor",
+    "shipping/importtax/VAT"
+  ],
+  "sourcing": {
+    "checked_date": "2026-10-25 KST",
+    "items": [
+      {
+        "id": "motor_original",
+        "name": "17HS19-1684S-PG19",
+        "supplier": "STEPPERONLINE manufacturer KR catalogue",
+        "unit_price_krw": 44444.4,
+        "quantity": 2,
+        "url": "https://www.stepperonline.co.kr/nema-17-%EC%8A%A4%ED%85%8C%ED%8D%BC-%EB%AA%A8%ED%84%B0%EC%99%80-%EA%B2%BD%EC%A0%9C%EC%A0%81%EC%9D%B8-%ED%94%8C%EB%9E%98%EB%84%88%ED%84%B0%EB%A6%AC-%EA%B8%B0%EC%96%B4%EB%B0%95%EC%8A%A4",
+        "usd_unit_price": 28.86,
+        "usd_url": "https://www.omc-stepperonline.com/nema-17-stepper-motor-bipolar-l-48mm-w-gear-ratio-19-1-planetary-gearbox-17hs19-1684s-pg19",
+        "vat_shipping_status": "Not verified delivered Korea; KR site is foreign dispatch, not Korean local stock."
+      },
+      {
+        "id": "driver",
+        "name": "DM542T",
+        "supplier": "STEPPERONLINE",
+        "unit_price_krw": 30261,
+        "quantity": 2,
+        "usd_unit_price": 19.65,
+        "url": "https://www.stepperonline.co.kr/nema-17-23-24-%EC%8A%A4%ED%85%8C%ED%8D%BC-%EB%AA%A8%ED%84%B0%EC%9A%A9-%EB%94%94%EC%A7%80%ED%84%B8-%EC%8A%A4%ED%85%8C%ED%8D%BC-%EB%93%9C%EB%9D%BC%EC%9D%B4%EB%B2%84-1-0-4-2a-20-50vdc-dm542t",
+        "evidence_file": "stepper-dm542t.html",
+        "price_evidence": "Product HTML JSON-LD KRW30261.00, InStock; price group same.",
+        "vat_shipping_status": "Not verified delivered Korea; tax/shipping extra unknown."
+      },
+      {
+        "id": "screws_only",
+        "name": "SFU1605 500mm with nut, without supports",
+        "supplier": "Mizo domestic",
+        "unit_price_krw": 47000,
+        "quantity": 2,
+        "url": "https://mizo.kr/product/detail.html?product_no=109&item_code=P00000EF00DF",
+        "evidence_file": "mizo-sfu1605.html",
+        "price_evidence": "500mm exact variant P00000EF00DF structured offer47000 InStock; base50000 refers600mm.",
+        "vat_shipping_status": "Domestic shipping3300, free over100000. Mizo tax inclusion not separately checked."
+      },
+      {
+        "id": "screw_sets",
+        "name": "SFU1605 500mm plus support set",
+        "supplier": "Mizo domestic",
+        "unit_price_krw": 79000,
+        "quantity": 2,
+        "url": "https://mizo.kr/product/detail.html?product_no=96&item_code=P00000DS00EE",
+        "evidence_file": "mizo-sfu1605-set.html",
+        "price_evidence": "Exact500mm variants P00000DS00ED/EE both79000 InStock.",
+        "compatibility": "Options literally say BK12EF12. Thesis uses BK12 and floating mount consistent BF12. Seller support nomenclature and dimensions require verification, not a drop-in certified match.",
+        "vat_shipping_status": "Domestic3300, free over100000; two sets free standard domestic shipping per policy."
+      },
+      {
+        "id": "frame",
+        "name": "4080 silver profile per100mm",
+        "supplier": "Ajin domestic",
+        "unit_price_krw": 3050,
+        "quantity": 30,
+        "derived_material_cost_krw": 91500,
+        "url": "https://e-ajin.com/product/detail.html?product_no=39",
+        "evidence_file": "ajin-4080.html",
+        "price_evidence": "Per100mm3050; JSON-LD InStock and is_soldout_icon=F. Rendered text includes hidden soldout template.",
+        "compatibility": "Not verified exact groove8 I-type light geometry.",
+        "vat_shipping_status": "Cut list590x2,400x3,320,300 totals3000mm. 91500 is tariff multiplication, not selected cut-list quote; per-piece rounding/kerf/machining/shipping unknown."
+      },
+      {
+        "id": "load_cell",
+        "name": "S type YZC-516C500kg",
+        "supplier": "VCTEC domestic seller",
+        "unit_price_ex_vat_krw": 62000,
+        "unit_price_krw": 68200,
+        "quantity": 1,
+        "url": "https://vctec.co.kr/product/detail.html?product_no=21203",
+        "evidence_file": "vctec-loadcell.html",
+        "price_evidence": "62000VATexcluded; is_soldout_icon=F; hidden SOLD OUT not actual status. stock_number2 but use_stock=false means live quantity not guaranteed.",
+        "compatibility": "Verify bidirectional tension/compression rating, M12 pitch, dimensions, rated output, overload and calibration before substituting.",
+        "vat_shipping_status": "3500 shipping below100000 order; stock unconfirmed;2days not shipped means import order per seller."
+      },
+      {
+        "id": "mega",
+        "name": "Mega2560 compatible board",
+        "supplier": "Eduino",
+        "unit_price_krw": 23000,
+        "quantity": 1,
+        "url": "https://eduino.kr/product/detail.html?product_no=41",
+        "vat_shipping_status": "Domestic listing; USB cable extra1000/3300; shipping not included."
+      },
+      {
+        "id": "hx711",
+        "name": "HX711 SZH-SSBH-016",
+        "supplier": "DeviceMart",
+        "unit_price_ex_vat_krw": 1700,
+        "unit_price_krw": 1870,
+        "quantity": 1,
+        "url": "https://www.devicemart.co.kr/goods/view?no=1327440",
+        "vat_shipping_status": "VATincluded1870; shipping2700 unless order66000+."
+      },
+      {
+        "id": "psu",
+        "name": "MEANWELL LRS-200-24 24V8.8A211W",
+        "supplier": "DeviceMart",
+        "unit_price_ex_vat_krw": 32400,
+        "unit_price_krw": 35640,
+        "quantity": 1,
+        "url": "https://www.devicemart.co.kr/goods/view?no=13231951",
+        "compatibility": "Equivalent electrical capacity above thesis24V8A; enclosure mains PSU requires cord/inlet/fuse/earth and guarded terminals budget.",
+        "vat_shipping_status": "VATincluded35640;3-4day displayed preparation, long lead if stock exhausted."
+      },
+      {
+        "id": "lcd_original_family",
+        "name": "ITDB02-3.2S SSD1289 touch320x240",
+        "supplier": "VCTEC",
+        "unit_price_ex_vat_krw": 45036,
+        "unit_price_krw": 49539.6,
+        "quantity": 1,
+        "url": "https://vctec.co.kr/product/detail.html?product_no=4834",
+        "evidence_file": "vctec-screen.html",
+        "price_evidence": "45036VATexcluded; InStock JSON-LD, is_soldout_icon=F.",
+        "compatibility": "Same UTFT/URTouch family; exact thesis controller/pinout and separate Mega shield unconfirmed.",
+        "vat_shipping_status": "Additional shield/PCB/cable not included."
+      },
+      {
+        "id": "motor_costdown",
+        "name": "NEMA23 direct23HS30-2804S2.00Nm2.8A",
+        "supplier": "STEPPERONLINE manufacturer KR catalogue",
+        "unit_price_krw": 28120.4,
+        "quantity": 2,
+        "url": "https://www.stepperonline.co.kr/arduino-%EC%8A%A4%ED%85%8C%ED%8D%BC-%EB%AA%A8%ED%84%B0",
+        "compatibility": "57x57x76.5mm,6.35mmshaft; needs new mounts,6.35-to10couplings and firmware gear-ratio removal. 2Nm is holding torque, not validated force.",
+        "vat_shipping_status": "Foreign dispatch; Korean destination shipping/taxes unknown."
+      },
+      {
+        "id": "lcd_costdown",
+        "name": "ILI9341 3.2inch TFT touch THL-CD01",
+        "supplier": "DeviceMart",
+        "unit_price_ex_vat_krw": 18000,
+        "unit_price_krw": 19800,
+        "quantity": 1,
+        "url": "https://www.devicemart.co.kr/goods/view?no=15454164",
+        "compatibility": "320x240 SPI touch retained; different controller/bus, firmware port and3.3Vlogic adaptation needed. Not same original firmware hardware."
+      }
+    ],
+    "aliexpress_status": "Previously safety-blocked ko.aliexpress.com not accessed or bypassed. No Ali selected-option checkout price verified. Do not present search/history prices as purchasable Korea totals."
+  },
+  "budget_comparisons": [
+    {
+      "name": "A_MT02_original-equivalent_current_listing_partial",
+      "line_ids": [
+        "frame",
+        "screw_sets",
+        "motor_original",
+        "driver",
+        "load_cell",
+        "mega",
+        "hx711",
+        "psu",
+        "lcd_original_family"
+      ],
+      "partial_subtotal_krw": 577160.4,
+      "full_total_krw": null,
+      "is_complete_quote": false,
+      "budget500000_status": "Selected listing subtotal already exceeds; excludes many mandatory lines. Not proof cheapest possible design impossible."
+    },
+    {
+      "name": "B_dual_direct_NEMA23_and_SPI_touch_costdown_partial",
+      "changes": {
+        "motor_original": "motor_costdown",
+        "lcd_original_family": "lcd_costdown"
+      },
+      "partial_subtotal_krw": 514772.8,
+      "full_total_krw": null,
+      "is_complete_quote": false,
+      "budget500000_status": "Still exceeds before missing items; high-level functions can be retained with mechanical/firmware redesign. 2kN remains validation target."
+    }
+  ],
+  "budget_missing_lines": [
+    "10 metal mounts/material/machining",
+    "TFTshield/ribbonCable in A",
+    "PCB/manufacture or rewiring",
+    "couplings",
+    "4corner brackets",
+    "34slotnuts and fasteners",
+    "PETG/TPU consumption",
+    "grippers/compression platens and adapters",
+    "DCconverter",
+    "power jack/switch/cables/fuse/earth",
+    "USBcable",
+    "limitSwitches/emergency-off if added",
+    "reference load/calibration fixture",
+    "all suppliers shipping/tax amounts not explicitly fixed",
+    "camera strain measurement hardware if not already owned",
+    "labor/tool access"
+  ],
+  "performance": {
+    "target_force_N": 3500,
+    "calculated_thrust_N": 3388,
+    "loadcell_capacity_kgf": 500,
+    "comparative_tests_count_each": 5,
+    "comparison_material": "3DprintedPETG",
+    "MT02_mean_peak_force_N": 800.346,
+    "Zwick_mean_peak_force_N": 850.762,
+    "MT02_corrected_modulus_GPa": 0.717,
+    "Zwick_video_modulus_GPa": 1.483,
+    "modulus_underestimation_percent_thesis": 48,
+    "strength_comparison": "~1percent discrepancy;Table5andothertext differ inZwickmean40.842/40.648/40.642MPa",
+    "logging_Hz": 5,
+    "manual_speed_mm_per_min": [
+      0.5,
+      6
+    ],
+    "max_travel_speed_mm_per_min": 450,
+    "calibration_mass_kg": 0.5,
+    "calibration_note": "One low reference mass andn5PETGcomparison near800N do not demonstrate full2kN/3.5kN calibrated range.",
+    "displacement_sensor": "None: calculated motor pulse count, no encoder; crossheadcompliance/grip movement included.",
+    "current_sensor": "INA219 experiment discarded after failing to detect missedsteps; not installed validated current metrology."
+  }
+}
