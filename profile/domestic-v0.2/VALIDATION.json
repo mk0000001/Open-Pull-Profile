@@ -1,0 +1,34 @@
+{
+  "version": "0.2.0-interface-review",
+  "status": "DRAWING_INTERFACE_CHECKS_PASSED",
+  "native_sha256": "50b402cb440b6ce6acf8b3d331169100538043a82b447a1087ef795b049dda4f",
+  "parts_checked": 116,
+  "invalid_shapes": [],
+  "pull_positions_mm": [
+    0,
+    -10,
+    -20,
+    -30,
+    -40,
+    -50,
+    -60,
+    -70,
+    -80,
+    -90,
+    -100
+  ],
+  "moving_fixed_collisions": [],
+  "assembly_ready": false,
+  "motor_wrap_deg": 72.49850979702568,
+  "motor_teeth_in_mesh": 4.027694988723649,
+  "load_path_complete": false,
+  "load_rating_validated": false,
+  "physical_test_performed": false,
+  "remaining_gates": [
+    "profile family and slot fastening",
+    "shaft-pulley torque transmission and low belt wrap",
+    "FK axial rating and seating verification",
+    "CAS tap depth and grip adapters",
+    "brake/capture, guards and electronics commissioning"
+  ]
+}

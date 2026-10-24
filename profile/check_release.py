@@ -21,6 +21,7 @@ def files_to_hash():
     selected += [p for p in (ROOT/'profile').rglob('*') if p.is_file()
                  and p.suffix in {'.json','.csv','.md','.py','.FCMacro','.FCStd','.step','.png'}]
     selected += list((ROOT/'tests').glob('test_profile*.py'))
+    selected += [ROOT/'tests/test_domestic_interfaces.py']
     selected += list((ROOT/'.github/workflows').glob('profile*.yml'))
     return sorted(set(selected))
 
@@ -30,8 +31,9 @@ def digest(path):
 
 
 def check():
-    version = (ROOT/'VERSION').read_text().strip()
+    current_version = (ROOT/'VERSION').read_text().strip()
     cfg = json.loads((ROOT/'profile/config.json').read_text(encoding='utf-8'))
+    version = cfg['version']  # Frozen v0.1 remains independently paired.
     validation = json.loads((ROOT/'profile/VALIDATION.json').read_text(encoding='utf-8'))
     assert cfg['version'] == validation['version'] == version, 'Version mismatch'
     assert validation['status'] == 'GEOMETRY_CHECKS_PASSED', 'No successful geometry evidence'
@@ -39,6 +41,30 @@ def check():
     assert validation['physical_test_performed'] is False, 'Physical test status incorrect'
     assert validation['assembly_ready'] is cfg['assembly_ready'] is False, 'Unproven assembly-ready claim'
     assert validation['checked_pull_positions_mm'] == [0,-cfg['pull_travel_mm']], 'Travel evidence mismatch'
+    domestic=ROOT/'profile/domestic-v0.2'
+    parts=json.loads((domestic/'PARTS.json').read_text(encoding='utf-8'))
+    evidence=json.loads((domestic/'VALIDATION.json').read_text(encoding='utf-8'))
+    assert parts['version']==evidence['version']==current_version=='0.2.0-interface-review'
+    assert parts['domestic_sales_only'] is True
+    assert evidence['status']=='DRAWING_INTERFACE_CHECKS_PASSED'
+    assert evidence['invalid_shapes']==evidence['moving_fixed_collisions']==[]
+    assert evidence['pull_positions_mm']==list(range(0,-101,-10))
+    for field in ('assembly_ready','load_path_complete'):
+        assert parts[field] is evidence[field] is False
+    for field in ('load_rating_validated','physical_test_performed'):
+        assert evidence[field] is False
+    assert parts['screw_total_mm']==861
+    latest=domestic/'cad'/('OpenPull_Profile_v'+current_version+'.FCStd')
+    with zipfile.ZipFile(latest) as archive:
+        assert archive.testzip() is None and 'Document.xml' in archive.namelist()
+    assert latest.with_suffix('.step').read_bytes().startswith(b'ISO-10303-21;')
+    roundtrip=json.loads((domestic/'ROUNDTRIP.json').read_text(encoding='utf-8'))
+    assert roundtrip['version']==current_version
+    assert roundtrip['native_reopened_from_disk'] is roundtrip['step_shapes_valid'] is True
+    assert roundtrip['native_parts']==evidence['parts_checked']
+    assert roundtrip['volume_relative_difference']<1e-8
+    assert roundtrip['native_sha256']==evidence['native_sha256']==digest(latest)
+    assert roundtrip['step_sha256']==digest(latest.with_suffix('.step'))
     native = ROOT/('profile/cad/OpenPull_Profile_v'+version+'.FCStd')
     step = native.with_suffix('.step')
     assert native.is_file() and step.is_file(), 'Missing CAD deliverable'
@@ -67,9 +93,10 @@ def check():
     assert {name for _,name in entries} == expected, 'Manifest file set out of date'
     for sha,name in entries:
         assert digest(ROOT/name) == sha, 'Artifact hash mismatch: '+name
-    print(json.dumps({'status':'PASS','version':version,'hashes_checked':len(entries),
+    print(json.dumps({'status':'PASS','version':current_version,'frozen_concept_version':version,'hashes_checked':len(entries),
                       'upstream_preserved':True if (ROOT/'.git').exists() else 'not checked: clone required',
                       'geometry_evidence_parts':validation['checked_parts'],
+                      'domestic_interface_parts':evidence['parts_checked'],
                       'physical_load_rating':False},indent=2))
 
 

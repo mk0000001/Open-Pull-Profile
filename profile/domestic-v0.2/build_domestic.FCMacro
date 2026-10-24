@@ -1,0 +1,219 @@
+"""GPL-3.0. Drawing-derived interfaces, not a fabrication release.
+
+Run build(repository_root) in FreeCAD 1.1. Frozen v0.1 is read only.
+See PARTS.json and README.ko.md for authority, omissions and unresolved mates.
+"""
+import math
+import json
+import runpy
+from pathlib import Path
+import FreeCAD as App
+import FreeCADGui as Gui
+import Part
+import Import
+from pivy import coin
+
+V=App.Vector
+
+
+def build(root):
+    root=Path(root);out=root/'profile/domestic-v0.2'
+    (out/'cad').mkdir(parents=True,exist_ok=True)
+    (out/'renders').mkdir(parents=True,exist_ok=True)
+    source=App.openDocument(str(root/'profile/cad/OpenPull_Profile_v0.1.0-design.FCStd'))
+    name='OpenPull_Domestic_020'
+    if name in App.listDocuments():App.closeDocument(name)
+    doc=App.newDocument(name)
+    doc.Label='Open-Pull v0.2 — 국내품 도면 대조 / 연결 미완성'
+    colours={'Frame':(.72,.76,.80),'Drive':(.2,.3,.4),'Moving':(.20,.50,.42),
+             'Testing':(.9,.35,.12),'Safety':(.75,.8,.9)}
+    for group in colours:doc.addObject('App::DocumentObjectGroup',group)
+    def add(name,shape,group,sku,note,authority='LAYOUT_ONLY'):
+        obj=doc.addObject('Part::Feature',name);obj.Shape=shape
+        obj.Label=sku+' | '+name
+        for prop,value in [('PartID',sku),('Revision','0.2.0-interface-review'),
+            ('SourceNote',note),('Representation',authority),('DesignStatus','HOLD — incomplete load path; not load rated')]:
+            obj.addProperty('App::PropertyString',prop);setattr(obj,prop,value)
+        obj.ViewObject.ShapeColor=colours[group]
+        obj.ViewObject.LineColor=(.12,.14,.17)
+        obj.ViewObject.DisplayMode='Flat Lines'
+        getattr(doc,group).addObject(obj)
+        return obj
+    def cylinder(r,h,x,y,z,axis=V(0,0,1)):
+        return Part.makeCylinder(r,h,V(x,y,z),axis)
+    def hole_z(shape,r,h,x,y,z):return shape.cut(cylinder(r,h,x,y,z))
+    def bolt(name,d,length,head_d,head_h,origin,axis,group):
+        p=V(*origin);direction=V(*axis)
+        shape=Part.makeCylinder(d/2,length,p,direction)
+        shape=shape.fuse(Part.makeCylinder(head_d/2,head_h,p-direction*head_h,direction))
+        obj=add(name,shape,group,'ISO4762 M'+str(d)+'x'+str(length),
+            'Nominal shank/head geometry, threads and hex socket omitted; catalogue engagement checked',
+            'NOMINAL_FASTENER')
+        return obj
+    omitted=('Screw','BK','BF','Rail','GuideBlock','Nut','Motor','Pulley','TimingBelt',
+             'LowerStem','UpperStem','CellTopStem','LoadCell')
+    for group in colours:
+        for old in getattr(source,group).Group:
+            if not hasattr(old,'PartID') or old.Name.startswith(omitted):continue
+            authority='UPSTREAM_STEP' if old.Name in ('LowerGrip','UpperGrip','Specimen') else 'V0_1_CONCEPT_REFERENCE'
+            obj=add(old.Name,old.Shape.copy(),group,old.PartID,old.SourceNote,authority)
+            obj.ViewObject.ShapeColor=old.ViewObject.ShapeColor
+            obj.ViewObject.Transparency=old.ViewObject.Transparency
+    # 861 total length aligns the existing 172 / 992 mounting planes.
+    z0=164.5;total=861
+    for tag,x in [('Left',-160),('Right',160)]:
+        segments=[(0,11,5),(11,total-51,8),(total-51,total-26,6),
+                  (total-26,total-15,6),(total-15,total,5)]
+        shaft=None
+        for lo,hi,r in segments:
+            s=cylinder(r,hi-lo,x,0,z0+lo)
+            shaft=s if shaft is None else shaft.fuse(s)
+        ring=cylinder(5.1,1.15,x,0,z0+1.85).cut(cylinder(4.8,1.15,x,0,z0+1.85))
+        shaft=shaft.cut(ring)
+        add('Screw'+tag,shaft,'Drive','C-TBSE1505-861',
+            'MISUMI p03-023: stepped end machining; M12x1 thread shown by nominal major diameter; helical race omitted',
+            'DRAWING_DERIVED_INTERFACE')
+        # Fixed support: derived station from shoulder, supplied 5.5 collar and T1=5.
+        rear=975.;plane=992.
+        flange=Part.makeBox(44,44,10,V(x-22,-22,plane)).common(cylinder(27,10,x,0,plane))
+        shape=flange.fuse(cylinder(18,17,x,0,rear))
+        shape=hole_z(shape,6,29,x,0,rear-1)
+        shape=hole_z(shape,7.85,5,x,0,rear)
+        offset=44/(2*math.sqrt(2))
+        for dx in (-offset,offset):
+            for dy in (-offset,offset):
+                shape=hole_z(shape,2.25,12,x+dx,dy,plane-1)
+                shape=hole_z(shape,4,4,x+dx,dy,998)
+                doc.BearingRoof.Shape=hole_z(doc.BearingRoof.Shape,1.65,14,x+dx,dy,979)
+                bolt('FKBolt'+tag+str(dx)+str(dy),4,16,7,4,(x+dx,dy,998),(0,0,-1),'Drive')
+        obj=add('FK'+tag,shape,'Drive','C-TFK12','MISUMI p03-053. PCD44; body44 clipped at maximum envelope54. Station derived, independent seating verification pending. Internal bearings omitted.','DRAWING_DERIVED_INTERFACE')
+        obj.addProperty('App::PropertyLength','MountPlane').MountPlane=plane
+        collar=cylinder(7.75,5.5,x,0,974.5).cut(cylinder(6,5.5,x,0,974.5))
+        add('FKCollar'+tag,collar,'Drive','C-TFK12 supplied collar','OD15.5, ID12, L5.5; supplied collar source and seating derivation in SCREWS_GUIDES.md','DRAWING_DERIVED_INTERFACE')
+        lock=cylinder(10,7.5,x,0,1002).cut(cylinder(6,7.5,x,0,1002))
+        add('FKLocknut'+tag,lock,'Drive','C-TFK12 locknut reference','Axial projection7.5 from catalogue; outer form approximate, lock details not reproduced','AXIAL_ENVELOPE')
+        # FF radial bearing seats s=3..11; housing extends -0.5..14.5.
+        flange=Part.makeBox(42,42,7,V(x-21,-21,172)).common(cylinder(26,7,x,0,172))
+        shape=flange.fuse(cylinder(17,8,x,0,164))
+        shape=hole_z(shape,5,17,x,0,163)
+        shape=hole_z(shape,8.25,4,x,0,175.5)
+        offset=42/(2*math.sqrt(2))
+        for dx in (-offset,offset):
+            for dy in (-offset,offset):
+                shape=hole_z(shape,2.25,9,x+dx,dy,171)
+                shape=hole_z(shape,4,4,x+dx,dy,175)
+                doc.FloatingSupportPlate.Shape=hole_z(doc.FloatingSupportPlate.Shape,1.65,14,x+dx,dy,159)
+                bolt('FFBolt'+tag+str(dx)+str(dy),4,12,7,4,(x+dx,dy,175),(0,0,-1),'Drive')
+        obj=add('FF'+tag,shape,'Drive','C-TFF12','PCD42, flange42, max envelope52. Radial bearing and shaft ring not fully reproduced; retain axial float. Derived station.','DRAWING_DERIVED_INTERFACE')
+        obj.addProperty('App::PropertyLength','MountPlane').MountPlane=172
+        doc.BearingRoof.Shape=hole_z(doc.BearingRoof.Shape,18.1,14,x,0,979)
+        doc.FloatingSupportPlate.Shape=hole_z(doc.FloatingSupportPlate.Shape,17.1,14,x,0,159)
+        for beam in (doc.UpperBeamFront,doc.UpperBeamRear):
+            beam.Shape=hole_z(beam.Shape,18.25,82,x,0,899)
+        # 42mm nut, flange10 and body28. Six flange holes at the published angles.
+        flange=cylinder(24,10,x,0,470).common(Part.makeBox(40,60,10,V(x-20,-30,470)))
+        nut=flange.fuse(cylinder(14,32,x,0,480))
+        nut=hole_z(nut,8.1,44,x,0,469)
+        for angle in (45,90,135,225,270,315):
+            hx=x+19*math.cos(math.radians(angle));hy=19*math.sin(math.radians(angle))
+            nut=hole_z(nut,2.75,12,hx,hy,469)
+            doc.CrossheadTop.Shape=hole_z(doc.CrossheadTop.Shape,2.75,14,hx,hy,457)
+            bolt('NutBolt'+tag+str(angle),5,30,8.5,5,(hx,hy,480),(0,0,-1),'Moving')
+            n=cylinder(4.6,4,hx,hy,454).cut(cylinder(2.5,4,hx,hy,454))
+            add('NutFastener'+tag+str(angle),n,'Moving','M5 nut reference','Nominal nut envelope; matching grade/washer finalisation pending','NOMINAL_FASTENER')
+        add('Nut'+tag,nut,'Moving','C-TBSE1505-861 supplied nut','42 long, flange48 flattened40, body28, PCD38 six5.5 holes. Race and return circuit omitted.','DRAWING_DERIVED_INTERFACE')
+    # Actual E-HLGH rail and installed block height, with mating plate holes.
+    doc.CrossheadFront.Shape=Part.makeBox(500,12,160,V(-250,-80,310))
+    for obj in (doc.CrossheadTop,doc.CrossheadBottom):
+        obj.Shape=obj.Shape.cut(Part.makeBox(500,4,200,V(-250,-72,300)))
+    for tag,x in [('Left',-230),('Right',230)]:
+        rail=Part.makeBox(15,15,700,V(x-7.5,-55,200))
+        for i in range(12):
+            zz=220+60*i
+            rail=rail.cut(cylinder(2.25,17,x,-56,zz,V(0,1,0)))
+            rail=rail.cut(cylinder(3.75,5.3,x,-55,zz,V(0,1,0)))
+        add('Rail'+tag,rail,'Drive','E-HLGH15-700-B2 / rail','W15 H15 L700, 12 holes at E20/P60, bore4.5 counterbore7.5 depth5.3. Crown/race omitted. Profile slot nut mounting remains unselected.','DRAWING_DERIVED_INTERFACE')
+        for k,zc in ((1,360),(2,440)):
+            block=Part.makeBox(34,23.7,58.4,V(x-17,-68,zc-29.2))
+            block=block.cut(Part.makeBox(15.2,11,60,V(x-7.6,-55.2,zc-30)))
+            for dx in (-13,13):
+                for dz in (-13,13):
+                    block=block.cut(cylinder(1.65,5,x+dx,-68,zc+dz,V(0,1,0)))
+                    doc.CrossheadFront.Shape=doc.CrossheadFront.Shape.cut(cylinder(2.25,14,x+dx,-81,zc+dz,V(0,1,0)))
+                    bolt('GuideBolt'+tag+str(k)+str(dx)+str(dz),4,16,7,4,(x+dx,-80,zc+dz),(0,1,0),'Moving')
+            add('GuideBlock'+('L' if x<0 else 'R')+str(k),block,'Moving','E-HLGH15B',
+                'Installed H28, underside clearance4.3, W34 L58.4; mounting26x26 M4 depth5. Simplified race/end seals.','DRAWING_DERIVED_INTERFACE')
+    # Real motor, drawing-derived pilot/shaft/holes. Cable exit is a separate keepout.
+    helper=runpy.run_path(str(root/'profile/build_profile.FCMacro'))
+    radii=[40*5/(2*math.pi),40*5/(2*math.pi),20*5/(2*math.pi)]
+    lo,hi=60.,240.
+    for _ in range(60):
+        distance=(lo+hi)/2;centres=[(-160,0),(160,0),(0,-distance)]
+        length,normal,wrap=helper['belt_geometry'](centres,radii)
+        if length<920:lo=distance
+        else:hi=distance
+    my=-distance;face=1011.;motor_face=1005.
+    motor=Part.makeBox(57.2,57.2,76.5,V(-28.6,my-28.6,motor_face-76.5))
+    mount=Part.makeBox(100,120,6,V(-50,my-50,motor_face))
+    mount=hole_z(mount,19.15,8,0,my,motor_face-1)
+    for x in (-23.57,23.57):
+        for dy in (-23.57,23.57):
+            motor=hole_z(motor,2.5,5,x,my+dy,motor_face-5)
+            mount=hole_z(mount,2.75,8,x,my+dy,motor_face-1)
+    add('Motor',motor,'Drive','Leadshine 57CM23-3A','2021 MS30 PDF, max square57.2 x76.5; no 4A STEP substitution. Through ears5mm; rear casing represented as maximum envelope. Motor bolts/nuts and rear access not finalised.','DRAWING_DERIVED_INTERFACE')
+    shaft=cylinder(4,21,0,my,motor_face)
+    shaft=shaft.cut(Part.makeBox(9,1,15,V(-4.5,my+3.5,motor_face+6)))
+    add('MotorShaft',shaft,'Drive','57CM23-3A shaft','8mm diameter, 21 exposed, flat height7.5 from opposite side x15 length','DRAWING_DERIVED_INTERFACE')
+    add('MotorPilot',cylinder(19.05,1.6,0,my,motor_face),'Drive','57CM23-3A pilot','38.1 diameter x1.6','DRAWING_DERIVED_INTERFACE')
+    add('MotorMount',mount,'Drive','PL-MM-020','6mm plate; pilot clearance38.3; 47.14 square4x5.5; backside screw access required. Bridge and roof fastening remain provisional.','CUSTOM_MATING_GEOMETRY')
+    for xx in (-50,44):
+        add('MotorBridge'+str(abs(xx)),Part.makeBox(6,abs(my)-20,13,V(xx,my,992)),
+            'Drive','MM concept','6mm webs; attachment, tension slots and stiffness not final','LAYOUT_ONLY')
+    for i,(cx,cy) in enumerate(centres):
+        motor_pulley=i==2;hub=9.5 if motor_pulley else 23.5
+        tooth=15.435 if motor_pulley else 31.35
+        flange=18 if motor_pulley else 33.5
+        bore=4 if motor_pulley else 5
+        shape=cylinder(hub,12,cx,cy,face)
+        shape=shape.fuse(cylinder(tooth,22,cx,cy,face+12))
+        for z in (face+12,face+32.5):shape=shape.fuse(cylinder(flange,1.5,cx,cy,z))
+        shape=hole_z(shape,bore,36,cx,cy,face-1)
+        add('Pulley'+str(i),shape,'Drive','HTPA'+('20' if motor_pulley else '40')+'S5M150-A-P'+('8' if motor_pulley else '10'),
+            'MISUMI A type L34,W22,face17,hub12; smooth OD substitutes tooth geometry. Set screw and overhung torque transfer NOT approved.','DRAWING_DERIVED_ENVELOPE')
+    belt=helper['belt_shape'](centres,radii,normal,wrap,15)
+    belt.translate(V(0,0,face+15.5-932))
+    add('TimingBelt',belt,'Drive','C-HTBN920S5M-150','S5M complete system, 184 teeth, pitch920 width15. Pitch ribbon, no tooth engagement/tension rating simulated.','PITCH_PATH_ONLY')
+    # CAS real body dimensions only. Public drawing omits tap depth and port offsets.
+    cell=Part.makeBox(51,19,76,V(-25.5,-9.5,799))
+    cell=cell.fuse(Part.makeBox(45,27,58,V(-22.5,-13.5,808)))
+    obj=add('LoadCell',cell,'Testing','CAS SBA-500L','CAS PDF:51x76,body19,cover27. Cover outline simplified; tap depth/offset unknown. No false threaded connection to original grip.','DRAWING_DERIVED_ENVELOPE')
+    obj.ViewObject.ShapeColor=(.85,.2,.15)
+    # Extend the old cover to include the newly sourced pulley geometry.
+    doc.BeltCover.Shape=Part.makeBox(430,280,45,V(-215,-215,1004)).cut(Part.makeBox(422,272,43,V(-211,-211,1004)))
+    for obj in (doc.BearingRoof,doc.FloatingSupportPlate,doc.CrossheadTop,doc.CrossheadFront):
+        obj.Representation='CUSTOM_MATING_GEOMETRY'
+        obj.SourceNote='v0.2 actual selected-hole patterns; remaining frame fastening and structural design not released'
+    metadata=doc.addObject('App::FeaturePython','DesignStatus')
+    for k,v in [('Version','0.2.0-interface-review'),('AssemblyReady',False),('LoadPathComplete',False),
+                ('ScrewTotalLength',861.),('FKMountPlane',992.),('FFMountPlane',172.),('MotorY',my),
+                ('MotorWrapDegrees',math.degrees(wrap[2])),('MotorTeethInMesh',20*wrap[2]/(2*math.pi))]:
+        t='App::PropertyBool' if isinstance(v,bool) else 'App::PropertyFloat' if isinstance(v,float) else 'App::PropertyString'
+        metadata.addProperty(t,k);setattr(metadata,k,v)
+    doc.recompute();App.setActiveDocument(doc.Name)
+    Gui.activeDocument().activeView().viewAxonometric();Gui.activeDocument().activeView().fitAll();Gui.updateGui()
+    model=out/'cad/OpenPull_Profile_v0.2.0-interface-review.FCStd'
+    doc.saveAs(str(model))
+    visible=[o for o in doc.Objects if hasattr(o,'PartID')]
+    Import.export(visible,str(model.with_suffix('.step')))
+    view=Gui.activeDocument().activeView();view.setCameraType('Orthographic')
+    angles={'isometric':App.Rotation(V(1,1,0),V(-1,1,2),V(1,-1,1),'ZXY'),
+            'front':App.Rotation(V(1,0,0),90),'right':App.Rotation(V(0,0,1),90).multiply(App.Rotation(V(1,0,0),90))}
+    for name,rotation in angles.items():
+        view.getCameraNode().orientation.setValue(coin.SbRotation(*rotation.Q));view.fitAll();Gui.updateGui()
+        view.saveImage(str(out/'renders'/(name+'.png')),1400,1400,'White')
+    view.getCameraNode().orientation.setValue(coin.SbRotation(*angles['isometric'].Q));view.fitAll();Gui.updateGui();doc.save()
+    print(json.dumps({'version':'0.2.0-interface-review','parts':len(visible),'motor_y':my,'assembly_ready':False,'native':str(model)},indent=2))
+    return doc
+
+
+if __name__=='__main__':build(Path(__file__).resolve().parents[2])

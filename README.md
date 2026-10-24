@@ -1,6 +1,6 @@
-> **Profile-frame fork — v0.1.0-design:** [FreeCAD redesign and Korean build review](profile/README.ko.md). Design review only; not physically load-rated. Original CNC Kitchen source directories remain preserved. See [provenance](UPSTREAM.md) and [changes](CHANGELOG.md).
+> **Current fork revision — v0.2.0-interface-review:** [Domestic Korea sourcing and drawing-derived FreeCAD interfaces](profile/domestic-v0.2/README.ko.md), [Misumi / Coupang comparison](profile/domestic-v0.2/SOURCING.ko.md). Incomplete load path; HOLD fabrication and procurement. Original CNC Kitchen source directories remain preserved. [Frozen v0.1 tag](https://github.com/mk0000001/Open-Pull-Profile/releases/tag/v0.1.0-design), [provenance](UPSTREAM.md), [changes](CHANGELOG.md).
 
-> **Assembly audit: HOLD procurement/assembly.** [Verified buying options and concrete interface mismatches](profile/ASSEMBLY_AUDIT.ko.md). The current layout passes its documented geometry checks but is not ready for fabrication.
+> **Earlier v0.1 concept:** [Build audit](profile/ASSEMBLY_AUDIT.ko.md). v0.2 corrects selected motor/screw/support/guide interfaces, removes unsupported M8 grip stems, and explicitly retains unresolved frame fastening, pulley torque transfer, sensing adapters and safety systems. Neither version is load-rated or ready for assembly.
 
 __WORK IN PROGRESS__
 # Open-Pull

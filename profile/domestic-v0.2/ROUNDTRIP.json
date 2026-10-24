@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0-interface-review",
+  "native_reopened_from_disk": true,
+  "native_parts": 116,
+  "step_leaf_parts": 134,
+  "step_shapes_valid": true,
+  "volume_relative_difference": 1.9605745875000105e-14,
+  "bounds_mm": [
+    510.0,
+    415.0,
+    1049.0
+  ],
+  "assembly_ready": false,
+  "load_path_complete": false,
+  "native_sha256": "50b402cb440b6ce6acf8b3d331169100538043a82b447a1087ef795b049dda4f",
+  "step_sha256": "080b869118899122f608f3821015e483f274f9b15544a59dc35edf04155e90ca"
+}
