@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0-interface-review",
+  "remote_repository": "https://github.com/mk0000001/Open-Pull-Profile",
+  "branch": "codex/domestic-parts-v0.2",
+  "verified_design_commit": "1893370cd71bfb3b9acfc06961fb2a206922a770",
+  "verified_design_tree": "c8d6cf71ed2ebc4f762d303472cdc775e317aaa0",
+  "remote_tree_matches_local": true,
+  "ci_run_url": "https://github.com/mk0000001/Open-Pull-Profile/actions/runs/40089489464",
+  "ci_conclusion": "success",
+  "ci_scope": "Version/hash/CAD-container/upstream-preservation checks; FreeCAD interface checks recorded separately in VALIDATION.json",
+  "frozen_v01_tag": "v0.1.0-design",
+  "assembly_ready": false,
+  "load_path_complete": false,
+  "notes": "This publication record is a documentation-only follow-up to the verified design commit. It is not a physical assembly acceptance."
+}
