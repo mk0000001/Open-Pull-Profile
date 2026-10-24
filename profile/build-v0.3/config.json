@@ -1,0 +1,32 @@
+{
+  "version": "0.3.0-costdown-layout",
+  "design_target_force_N": 2000,
+  "initial_commissioning_limit_N": 100,
+  "budget_target_KRW": 500000,
+  "assembly_ready": false,
+  "load_rating_validated": false,
+  "physical_test_performed": false,
+  "upstream_commit": "55017419fae89409b1098540212e1620b1e46d0b",
+  "source_step": "CAD/TestMachine/OpenPull-assembly.step",
+  "source_transform": "rotate Z -90 degrees; translate (0,12,220.9225) mm",
+  "column_section_mm": [80,40],
+  "column_length_mm": 780,
+  "column_centres_mm": 340,
+  "fixed_beam_length_mm": 260,
+  "moving_beam_length_mm": 250,
+  "screw": "TR10 lead2 x500, two independent geared motors",
+  "screw_centres_mm": 200,
+  "motor": "17HS19-1684S-PG14; 1.68A; 13.73:1; shaft8x20",
+  "sensor_original": "AEP TC4 5kN; HX711",
+  "sensor_alternative": "Zemic H3-C3-500kg-3B; separate adapter redesign required",
+  "profile_representation": "nominal external envelope and simplified hollow section; NOT YJ slot manufacturing geometry",
+  "open_interfaces": [
+    "TR10 axial bearing journals/sleeves and load-rated coupling selection",
+    "Steel bearing reaction plates and profile drilling/fastener detail",
+    "M20x1.5 to original grip mount thread/clevis interface",
+    "AEP flange fastening preload and metal compression sleeves",
+    "Alternative S-cell and grip adapters; alternative not shown as installed",
+    "Electrical wiring, firmware, guarding and independent dual-axis fault handling",
+    "Physical alignment, force calibration, proof loading and printed-part qualification"
+  ]
+}

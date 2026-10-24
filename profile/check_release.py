@@ -19,9 +19,11 @@ def files_to_hash():
     selected = [ROOT/name for name in ('VERSION','UPSTREAM.md','CHANGELOG.md','README.md','LICENSE','.gitattributes','.gitignore')]
     selected += list((ROOT/'docs/superpowers').rglob('*.md'))
     selected += [p for p in (ROOT/'profile').rglob('*') if p.is_file()
-                 and p.suffix in {'.json','.csv','.md','.py','.FCMacro','.FCStd','.step','.png'}]
+                 and p.suffix in {'.json','.csv','.md','.py','.FCMacro','.FCStd','.step','.png','.stl','.zip'}
+                 and not (p.suffix=='.step' and p.parent==ROOT/'profile/build-v0.3/cad')]
     selected += list((ROOT/'tests').glob('test_profile*.py'))
     selected += [ROOT/'tests/test_domestic_interfaces.py']
+    selected += [ROOT/'tests/test_costdown_release.py']
     selected += list((ROOT/'.github/workflows').glob('profile*.yml'))
     return sorted(set(selected))
 
@@ -44,7 +46,7 @@ def check():
     domestic=ROOT/'profile/domestic-v0.2'
     parts=json.loads((domestic/'PARTS.json').read_text(encoding='utf-8'))
     evidence=json.loads((domestic/'VALIDATION.json').read_text(encoding='utf-8'))
-    assert parts['version']==evidence['version']==current_version=='0.2.0-interface-review'
+    assert parts['version']==evidence['version']=='0.2.0-interface-review'
     assert parts['domestic_sales_only'] is True
     assert evidence['status']=='DRAWING_INTERFACE_CHECKS_PASSED'
     assert evidence['invalid_shapes']==evidence['moving_fixed_collisions']==[]
@@ -54,17 +56,22 @@ def check():
     for field in ('load_rating_validated','physical_test_performed'):
         assert evidence[field] is False
     assert parts['screw_total_mm']==861
-    latest=domestic/'cad'/('OpenPull_Profile_v'+current_version+'.FCStd')
+    latest=domestic/'cad'/('OpenPull_Profile_v'+parts['version']+'.FCStd')
     with zipfile.ZipFile(latest) as archive:
         assert archive.testzip() is None and 'Document.xml' in archive.namelist()
     assert latest.with_suffix('.step').read_bytes().startswith(b'ISO-10303-21;')
     roundtrip=json.loads((domestic/'ROUNDTRIP.json').read_text(encoding='utf-8'))
-    assert roundtrip['version']==current_version
+    assert roundtrip['version']==parts['version']
     assert roundtrip['native_reopened_from_disk'] is roundtrip['step_shapes_valid'] is True
     assert roundtrip['native_parts']==evidence['parts_checked']
     assert roundtrip['volume_relative_difference']<1e-8
     assert roundtrip['native_sha256']==evidence['native_sha256']==digest(latest)
     assert roundtrip['step_sha256']==digest(latest.with_suffix('.step'))
+    costdown=json.loads((ROOT/'profile/build-v0.3/config.json').read_text(encoding='utf-8'))
+    assert current_version==costdown['version']=='0.3.0-costdown-layout'
+    assert costdown['design_target_force_N']==2000
+    assert costdown['assembly_ready'] is costdown['load_rating_validated'] is False
+    subprocess.run([sys.executable,str(ROOT/'tests/test_costdown_release.py')],cwd=ROOT,check=True)
     native = ROOT/('profile/cad/OpenPull_Profile_v'+version+'.FCStd')
     step = native.with_suffix('.step')
     assert native.is_file() and step.is_file(), 'Missing CAD deliverable'

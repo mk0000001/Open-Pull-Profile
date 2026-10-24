@@ -1,0 +1,43 @@
+"""Reopen saved native/STEP artifacts; geometric validity is not an assembly rating."""
+import hashlib
+import json
+from pathlib import Path
+import FreeCAD as App
+import FreeCADGui as Gui
+import Import
+
+def verify(root):
+    out=Path(root)/'profile/build-v0.3';rows=[]
+    for tag in ('costdown-layout','printed-frame','rod-reinforced'):
+        path=out/'cad'/('OpenPull_v0.3.0-'+tag+'.FCStd')
+        for d in list(App.listDocuments().values()):
+            if d.FileName and Path(d.FileName)==path:App.closeDocument(d.Name)
+        doc=App.openDocument(str(path));parts=[o for o in doc.Objects if hasattr(o,'PartID')]
+        assert parts and all(o.Shape.isValid() and o.Shape.Solids for o in parts)
+        assert doc.getObject('Original_Part__Feature025') is not None
+        assert doc.getObject('Original_Part__Feature036') is not None
+        assert doc.getObject('TimingBelt') is None
+        if tag=='costdown-layout':
+            assert abs(doc.ColumnLeft.Shape.BoundBox.ZLength-780)<.01
+            assert abs(doc.BeamMoving.Shape.BoundBox.XLength-250)<.01
+        else:
+            assert len([o for o in parts if 'Module' in o.Name])==8
+            for o in parts:
+                if 'Module' in o.Name:
+                    assert max(o.Shape.BoundBox.XLength,o.Shape.BoundBox.YLength,o.Shape.BoundBox.ZLength)<=195.01
+        volume=sum(o.Shape.Volume for o in parts)
+        tmp=App.newDocument('CostdownRoundtrip');Import.insert(str(path.with_suffix('.step')),tmp.Name);tmp.recompute()
+        shapes=[o.Shape for o in tmp.Objects if o.TypeId!='App::Part' and hasattr(o,'Shape') and o.Shape.Solids]
+        assert shapes and all(s.isValid() for s in shapes)
+        delta=abs(sum(s.Volume for s in shapes)-volume)/volume
+        assert delta<1e-7,(tag,delta)
+        row={'variant':tag,'native_reopened_from_disk':True,'native_parts':len(parts),'STEP_solids_valid':True,
+             'native_total_volume_mm3':volume,'STEP_volume_relative_difference':delta,
+             'native_sha256':hashlib.sha256(path.read_bytes()).hexdigest(),
+             'STEP_sha256':hashlib.sha256(path.with_suffix('.step').read_bytes()).hexdigest()}
+        rows.append(row);App.closeDocument(tmp.Name)
+    result={'version':'0.3.0-costdown-layout','variants':rows,'physical_load_rating':False,
+            'scope':'saved native and exchange solid validity/volume, original motors, module bed size; NOT full mating or motion collision audit'}
+    (out/'ROUNDTRIP.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')
+    App.setActiveDocument(doc.Name);Gui.activeDocument().activeView().viewAxonometric();Gui.activeDocument().activeView().fitAll()
+    print(json.dumps(result,indent=2));return result

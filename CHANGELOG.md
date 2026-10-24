@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.0-costdown-layout — 2026-10-24
+
+- Return to original two geared NEMA17/TR10x2 drives and actual upstream component solids; remove dependence on the prior single-motor belt concept.
+- Save separate FreeCAD layouts for cheap4080, segmented printed frame, and printed columns with M8 reinforcement. Add81/86/91-solid reopen/STEP volume checks and bed-sized printed candidates.
+- Correct original-BOM price attribution. Separate public prices, shipping/machining allowances, original AEP sensor reference cost and unquoted Zemic alternative. KRW500,000 and a physical2kN guarantee are not established.
+- Add analytical stiffness/buckling screening and actual CAD volume costs for NG-inspired printed frame alternatives. No NG geometry copied; frame/bearing/sensor joints and electrical validation remain open.
+- Preserve original sources and frozen v0.1/v0.2 artifacts. Publish as a costed layout study, not fabrication drawings.
+
 ## 0.2.0-interface-review — 2026-10-24
 
 - Switch sourcing baseline to domestic Korea sales; compare MISUMI economy components with actual Coupang domestic-seller listings. Separate configured live prices, indexed prices and unquoted parts.

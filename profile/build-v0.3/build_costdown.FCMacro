@@ -1,0 +1,147 @@
+"""GPL-3.0. Rebuild the v0.3 priced layout in FreeCAD; not a fabrication release."""
+import json
+from pathlib import Path
+import FreeCAD as App
+import FreeCADGui as Gui
+import Part
+import Import
+import MeshPart
+
+V=App.Vector
+
+def build(root):
+    root=Path(root); out=root/'profile/build-v0.3'
+    for sub in ('cad','renders','printed-candidates'): (out/sub).mkdir(parents=True,exist_ok=True)
+    cfg=json.loads((out/'config.json').read_text(encoding='utf-8'))
+    for oldname in ('UpstreamCostdownSource','OpenPull_Costdown_030'):
+        if oldname in App.listDocuments():App.closeDocument(oldname)
+    src=App.newDocument('UpstreamCostdownSource')
+    Import.insert(str(root/cfg['source_step']),src.Name)
+    src.recompute()
+    doc=App.newDocument('OpenPull_Costdown_030')
+    doc.Label='Open-Pull v0.3 — 원본 구동 / 저가 프로파일 / 견적·배치 검토'
+    for name in ('OriginalComponents','Profiles','PrintedCandidates','Hardware','Reference'):
+        doc.addObject('App::DocumentObjectGroup',name)
+    transform=App.Placement(V(0,12,220.9225),App.Rotation(V(0,0,1),-90))
+    index=[]
+    def add(name,shape,group,material,note,authority):
+        o=doc.addObject('Part::Feature',name);o.Shape=shape
+        o.Label=name
+        for p,value in [('PartID',name),('Revision',cfg['version']),('MaterialPlan',material),('SourceNote',note),('Representation',authority),('DesignStatus','LAYOUT ONLY — interfaces and physical qualification pending')]:
+            o.addProperty('App::PropertyString',p);setattr(o,p,value)
+        getattr(doc,group).addObject(o)
+        colours={'Profiles':(.70,.75,.80),'PrintedCandidates':(.15,.47,.66),'Hardware':(.35,.37,.40),'Reference':(.9,.65,.2)}
+        o.ViewObject.ShapeColor=colours.get(group,(.48,.51,.54));o.ViewObject.LineColor=(.12,.15,.18)
+        index.append({'name':name,'group':group,'material_plan':material,'authority':authority,'note':note})
+        return o
+    shapes={}
+    excluded={'foot','foot001','sidePillars','sidePillars001','mostUpperMember','lowerMember','upperMember'}
+    for old in src.Objects:
+        if old.TypeId=='App::Part' or not hasattr(old,'Shape') or old.Shape.isNull() or not old.Shape.Solids: continue
+        sh=old.Shape.copy()
+        sh.Placement=transform.multiply(old.getGlobalPlacement().multiply(old.Placement.inverse())).multiply(sh.Placement)
+        shapes[old.Label]=sh
+        if old.Label in excluded: continue
+        name='Original_'+old.Name
+        note='Upstream STEP leaf '+old.Label+'; original interfaces retained, no inferred thread identity'
+        group='OriginalComponents'
+        material='OEM/reference; material and print eligibility must be qualified individually'
+        o=add(name,sh,group,material,note,'UPSTREAM_STEP_WORLD_TRANSFORM')
+        if old.Label=='TestSpecimen_ISO-527-2-1A':o.ViewObject.ShapeColor=(.95,.6,.18)
+        if old.Label=='loadCell':o.ViewObject.ShapeColor=(.85,.40,.15)
+    filename=out/'cad/OpenPull_v0.3.0-costdown-layout.FCStd'
+    doc.recompute();doc.saveAs(str(filename))  # checkpoint: actual original components saved first
+    def box(w,d,h,x,y,z):return Part.makeBox(w,d,h,V(x,y,z))
+    def cyl(r,h,x,y,z,axis=V(0,0,1)):return Part.makeCylinder(r,h,V(x,y,z),axis)
+    # Simplified hollow section only: manufacturer slot artwork is not a machining solid.
+    def column(x):
+        return box(80,40,780,x-40,-20,60).cut(box(72,32,782,x-36,-16,59))
+    for tag,x in [('Left',-170),('Right',170)]:
+        add('Column'+tag,column(x),'Profiles','Aluminium 4080; YJ 701–800mm option; cut780',
+            'External80x40; simplified hollow section, NOT actual slots or strength geometry','NOMINAL_ENVELOPE')
+    for label,z,h,depth,length in [('FixedBottom',60,80,40,260),('FixedTop',640,80,40,260),('Moving',453,40,80,250)]:
+        sh=box(length,depth,h,-length/2,-depth/2,z)
+        sh=sh.cut(box(length+2,depth-8,h-8,-length/2-1,-depth/2+4,z+4))
+        if label=='FixedBottom':sh=sh.cut(cyl(8.5,h+2,0,0,z-1))
+        if label=='FixedTop':
+            for x in (-100,100):
+                sh=sh.cut(cyl(6,h+2,x,0,z-1)).cut(cyl(15,14,x,0,z+h-14))
+                sh=sh.cut(box(60,depth+2,4,x-30,-depth/2-1,702))
+                reaction=box(60,60,4,x-30,-30,702).cut(cyl(12.5,6,x,0,701))
+                add('BearingReaction'+('Left' if x<0 else 'Right'),reaction,'Hardware','Steel4mm reaction insert, custom machining allowance',
+                    'Outer race seat25ID below30OD bearing; profile side insertion slot; end capture detail pending','NEW_METAL_CANDIDATE')
+        if label=='Moving':
+            for x in (-100,100):sh=sh.cut(cyl(6,h+2,x,0,z-1)).cut(cyl(13,4,x,0,z))
+            sh=sh.cut(cyl(15,h+2,0,0,z-1))
+            for x in (-43,43):sh=sh.cut(cyl(4.5,h+2,x,0,z-1))
+        add('Beam'+label,sh,'Profiles','Aluminium 4080; 201–300mm price band',
+            'Machining envelopes retained from original; bearing reaction and drill detail pending','NOMINAL_ENVELOPE_WITH_CLEARANCES')
+    # Bed-sized feet and split profile wraps; 0.4mm total profile clearance.
+    for tag,x in [('Left',-170),('Right',170)]:
+        for end,y0 in [('Front',-150),('Back',0)]:
+            sh=box(100,150,60,x-50,y0,0)
+            sh=sh.cut(box(92,142,52,x-46,y0+4,4))
+            sh=sh.fuse(box(80,20,60,x-40,(-20 if end=='Front' else 0),0))
+            for xx in (x-43,x+43):
+                sh=sh.fuse(cyl(7,150,xx,y0,38,V(0,1,0)))
+                sh=sh.cut(cyl(4.3,152,xx,y0-1,38,V(0,1,0)))
+            add('Foot'+tag+end,sh,'PrintedCandidates','PETG prototype; floor support/creep test required',
+                '100x150x60 hollow4mm shell; solid column-to-floor compression rib; M8 joining bores; no load rating','NEW_PRINT_CANDIDATE')
+        for level,z in [('Bottom',60),('Top',640)]:
+            ring=box(110,54,40,x-55,-27,z).cut(box(80.4,40.4,42,x-40.2,-20.2,z-1))
+            for xx in (x-47,x+47):
+                for zz in (z+10,z+30):ring=ring.cut(cyl(4.3,56,xx,-28,zz,V(0,1,0)))
+            for face,y0 in [('Front',-36),('Back',0)]:
+                piece=ring.common(box(112,36,42,x-56,y0,z-1))
+                add('Wrap'+tag+level+face,piece,'PrintedCandidates','PETG; locating clamp, not a qualified primary load joint',
+                    'Split wrap with4M8clearance holes; beam fastening still requires metal detail','NEW_PRINT_CANDIDATE')
+    # Existing fixed timber envelope becomes small front/back printed facing candidates.
+    for label,z in [('Bottom',60),('Top',640)]:
+        for side,x0 in [('Left',-130),('Right',0)]:
+            for face,y0 in [('Front',-30),('Back',20)]:
+                sh=box(130,10,80,x0,y0,z)
+                sh=sh.cut(box(124,8,74,x0+3,y0+2,z+3))
+                add('BeamFacing'+label+side+face,sh,'PrintedCandidates','PETG cover only',
+                    '130x10x80, original timber depth restored outside metal insert','NEW_PRINT_CANDIDATE')
+    # Moving beam restores original 448..498 stack using 5mm pads above/below4080.
+    for level,z in [('Lower',448),('Upper',493)]:
+        for side,x0 in [('Left',-125),('Right',0)]:
+            sh=box(125,80,5,x0,-40,z)
+            for x in (-100,100):
+                sh=sh.cut(cyl(6,7,x,0,z-1))
+                if level=='Lower':sh=sh.cut(cyl(13,4,x,0,z))
+            sh=sh.cut(cyl(15,7,0,0,z-1))
+            for x in (-43,43):sh=sh.cut(cyl(4.5,7,x,0,z-1))
+            add('CrossheadPad'+level+side,sh,'PrintedCandidates','PETG locating pad; metal load-spreading sleeves required',
+                '125x80x5; original upper/lower member planes retained','NEW_PRINT_CANDIDATE')
+    # Electronics enclosure is only a packaging allowance, separated from the force path.
+    enclosure=box(115,45,100,215,-22.5,65).cut(box(107,41,92,219,-18.5,69))
+    add('ElectronicsBox',enclosure,'PrintedCandidates','PETG, vent and cable detail pending',
+        'Uno/CNC-shield/HX711 packaging candidate; no completed wiring represented','NEW_PRINT_CANDIDATE')
+    doc.recompute();doc.save()
+    parts=[o for o in doc.Objects if hasattr(o,'PartID')]
+    invalid=[o.Name for o in parts if o.Shape.isNull() or not o.Shape.isValid()]
+    if invalid:raise RuntimeError('Invalid shapes: '+repr(invalid))
+    App.setActiveDocument(doc.Name)
+    Gui.activeDocument().activeView().viewAxonometric();Gui.activeDocument().activeView().fitAll()
+    Gui.activeDocument().activeView().saveImage(str(out/'renders/isometric.png'),1400,1200,'White')
+    Gui.activeDocument().activeView().viewFront();Gui.activeDocument().activeView().fitAll()
+    Gui.activeDocument().activeView().saveImage(str(out/'renders/front.png'),1100,1400,'White')
+    Gui.activeDocument().activeView().viewAxonometric();Gui.activeDocument().activeView().fitAll()
+    doc.save()
+    Import.export(parts,str(filename.with_suffix('.step')))
+    for o in doc.PrintedCandidates.Group:
+        sh=o.Shape.copy();bb=sh.BoundBox;sh.translate(V(-bb.XMin,-bb.YMin,-bb.ZMin))
+        mesh=MeshPart.meshFromShape(Shape=sh,LinearDeflection=.15,AngularDeflection=.4,Relative=False)
+        mesh.write(str(out/'printed-candidates'/(o.Name+'.stl')))
+    report={'version':cfg['version'],'status':'COSTDOWN_LAYOUT_GEOMETRY_CHECKED','parts':len(parts),
+        'new_print_candidates':len(doc.PrintedCandidates.Group),'invalid_shapes':invalid,
+        'new_printed_volume_mm3':sum(o.Shape.Volume for o in doc.PrintedCandidates.Group),
+        'new_printed_PETG_kg_at_1_27':sum(o.Shape.Volume for o in doc.PrintedCandidates.Group)*1.27/1e6,
+        'assembly_ready':False,'load_rating_validated':False,'physical_test_performed':False,
+        'source_step_reused':True,'profile_section_exact':False,'open_interfaces':cfg['open_interfaces']}
+    (out/'VALIDATION.json').write_text(json.dumps(report,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+    (out/'PART_INDEX.json').write_text(json.dumps(index,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+    App.closeDocument(src.Name)
+    print(json.dumps(report,ensure_ascii=False))
+    return doc

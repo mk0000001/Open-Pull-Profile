@@ -5,3 +5,4 @@ __pycache__/
 *.FCBak
 .superpowers/
 profile/cad/*.log
+profile/build-v0.3/cad/*.step

@@ -1,0 +1,23 @@
+{
+  "version": "0.3.0-costdown-layout",
+  "status": "COSTDOWN_LAYOUT_GEOMETRY_CHECKED",
+  "parts": 81,
+  "new_print_candidates": 25,
+  "invalid_shapes": [],
+  "new_printed_volume_mm3": 2133414.7631719285,
+  "new_printed_PETG_kg_at_1_27": 2.7094367492283493,
+  "assembly_ready": false,
+  "load_rating_validated": false,
+  "physical_test_performed": false,
+  "source_step_reused": true,
+  "profile_section_exact": false,
+  "open_interfaces": [
+    "TR10 axial bearing journals/sleeves and load-rated coupling selection",
+    "Steel bearing reaction plates and profile drilling/fastener detail",
+    "M20x1.5 to original grip mount thread/clevis interface",
+    "AEP flange fastening preload and metal compression sleeves",
+    "Alternative S-cell and grip adapters; alternative not shown as installed",
+    "Electrical wiring, firmware, guarding and independent dual-axis fault handling",
+    "Physical alignment, force calibration, proof loading and printed-part qualification"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "version": "0.3.0-costdown-layout",
+  "variants": [
+    {
+      "variant": "costdown-layout",
+      "native_reopened_from_disk": true,
+      "native_parts": 81,
+      "STEP_solids_valid": true,
+      "native_total_volume_mm3": 6319261.860989539,
+      "STEP_volume_relative_difference": 6.30828100416722e-11,
+      "native_sha256": "dde6d7d252b9d865c6c11a2f473cf132b704572397b0ce7abe0a08239288f8db",
+      "STEP_sha256": "f0a2435d9e2852132f1b36e0a487bfaf79a4c73378fa4f7763fe4d1a85a5847d"
+    },
+    {
+      "variant": "printed-frame",
+      "native_reopened_from_disk": true,
+      "native_parts": 86,
+      "STEP_solids_valid": true,
+      "native_total_volume_mm3": 8268937.980395696,
+      "STEP_volume_relative_difference": 3.238982876308644e-09,
+      "native_sha256": "9a98774d82b4967efb773d020940580e2117e9e22fd3cee6495c66c18c1dad0d",
+      "STEP_sha256": "3b4e748fd3138eb744c1afcbd2bd8e5f59f538a829f002f6e03c50e5b0356b76"
+    },
+    {
+      "variant": "rod-reinforced",
+      "native_reopened_from_disk": true,
+      "native_parts": 91,
+      "STEP_solids_valid": true,
+      "native_total_volume_mm3": 8068911.993204148,
+      "STEP_volume_relative_difference": 3.319276206630408e-09,
+      "native_sha256": "7574845f470d59f11c5a89b8680dad883c33ea59e04cd183fbc5e5122d3a1d97",
+      "STEP_sha256": "1825c28373112ee0e4fc2e12e78f36fe6b36684bf145a6c9c18558e0e095cbe1"
+    }
+  ],
+  "physical_load_rating": false,
+  "scope": "saved native and exchange solid validity/volume, original motors, module bed size; NOT full mating or motion collision audit"
+}

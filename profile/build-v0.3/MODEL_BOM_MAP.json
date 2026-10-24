@@ -1,0 +1,12 @@
+{
+  "version": "0.3.0-costdown-layout",
+  "procurement_ready": false,
+  "mapping": [
+    {"assembly":"two geared motors","CAD":"upstream stepper/stepper001 solids","priced":"17HS19-1684S-PG14 official direct","status":"original nominal83mm body plus20mm shaft; mounting and operational tests still required"},
+    {"assembly":"two TR10 lead2 screws and nuts","CAD":"upstream leadScrew and nut solids","priced":"Nasspop raw500mm stock with brass nuts","status":"same nominal thread/lead only; end machining, nut pattern and load grade NOT matched/frozen"},
+    {"assembly":"couplings","CAD":"upstream Clutch envelope30mm diameter x40mm length","priced":"unrated20mm diameter x20mm length comparison item","status":"NOT the modeled component; axial placement/insertion and rated replacement pending"},
+    {"assembly":"load cell","CAD":"upstream AEP TC4 outer6hole sensor geometry","priced":"original TC4 public foreign reference OR separate H3 allowance","status":"H3 is not installed in CAD; M12 adapter redesign required"},
+    {"assembly":"frame extrusion","CAD":"nominal external80x40 and simplified hollow section","priced":"YJ4080 cut lengths","status":"external layout only; exact slots and drilling/fastener drawing pending"},
+    {"assembly":"printed frame alternatives","CAD":"new195mm column modules/collars/beam split shapes","priced":"actual geometric material volume plus provisional joints","status":"centre beam splice and column/beam joints incomplete; not load-rated print files"}
+  ]
+}

@@ -1,0 +1,111 @@
+"""GPL-3.0. NG-inspired split-frame comparison; no NG geometry is copied."""
+import json
+from pathlib import Path
+import FreeCAD as App
+import FreeCADGui as Gui
+import Part
+import Import
+import MeshPart
+V=App.Vector
+
+def build(root,hybrid=True):
+    out=Path(root)/'profile/build-v0.3'
+    basepath=out/'cad/OpenPull_v0.3.0-costdown-layout.FCStd'
+    base=next((d for d in App.listDocuments().values() if d.FileName and Path(d.FileName)==basepath),None)
+    if base is None:base=App.openDocument(str(basepath))
+    tag='rod-reinforced' if hybrid else 'printed-frame'
+    name='OpenPull_030_'+tag.replace('-','_')
+    if name in App.listDocuments():App.closeDocument(name)
+    doc=App.newDocument(name)
+    doc.Label='Open-Pull v0.3 — '+('출력 기둥+철봉 보강 비교안' if hybrid else '전체 출력 프레임 비교안')
+    for g in ('Reused','PrintedFrame','Reinforcement'):doc.addObject('App::DocumentObjectGroup',g)
+    def add(name,shape,group,note):
+        o=doc.addObject('Part::Feature',name);o.Shape=shape
+        for prop,val in [('PartID',name),('Revision','0.3.0-costdown-layout'),('SourceNote',note),('DesignStatus','COMPARISON ONLY — segmented joints and 2kN rating unqualified')]:
+            o.addProperty('App::PropertyString',prop);setattr(o,prop,val)
+        getattr(doc,group).addObject(o)
+        o.ViewObject.ShapeColor=(.18,.51,.68) if group=='PrintedFrame' else (.5,.52,.55)
+        if group=='Reinforcement':o.ViewObject.ShapeColor=(.83,.56,.19)
+        o.ViewObject.LineColor=(.1,.14,.16)
+        return o
+    for old in base.Objects:
+        if not hasattr(old,'PartID'):continue
+        if old.Name.startswith(('Column','Wrap','BeamFacing')):continue
+        if not hybrid and old.Name.startswith('Beam'):continue
+        reused=old.Shape.copy()
+        if hybrid and old.Name.startswith('Foot'):
+            # Recess the lower steel plate into the shared foot; avoid overlapping solids.
+            cx=-170 if 'Left' in old.Name else 170
+            reused=reused.cut(Part.makeBox(90,70,5,V(cx-45,-35,55)))
+            for xx in (cx-27,cx+27):reused=reused.cut(Part.makeCylinder(4.5,22,V(xx,0,39)))
+        o=add(old.Name,reused,'Reused',old.SourceNote)
+        o.ViewObject.ShapeColor=old.ViewObject.ShapeColor
+    filename=out/'cad'/('OpenPull_v0.3.0-'+tag+'.FCStd')
+    doc.recompute();doc.saveAs(str(filename))
+    def box(w,d,h,x,y,z):return Part.makeBox(w,d,h,V(x,y,z))
+    def cyl(r,h,x,y,z,axis=V(0,0,1)):return Part.makeCylinder(r,h,V(x,y,z),axis)
+    rodx=[]
+    # 195mm modules fit220mm beds standing; closed walls, not a vague infill percentage.
+    for side,x in [('Left',-170),('Right',170)]:
+        rodx.extend([x-27,x+27])
+        for n in range(4):
+            z=60+195*n
+            sh=box(80,60,195,x-40,-30,z).cut(box(68,48,197,x-34,-24,z-1))
+            # Two continuous guide bosses reserved for optional M8 reinforcement.
+            for xx in (x-27,x+27):
+                boss=cyl(8,195,xx,0,z).cut(cyl(4.5,197,xx,0,z-1));sh=sh.fuse(boss)
+            for zz in (z+15,z+180):sh=sh.cut(cyl(3.3,82,x-41,0,zz,V(1,0,0)))
+            add('Column'+side+'Module'+str(n+1),sh,'PrintedFrame',
+                '80x60x195 shell6mm; M8 guide bores; ideal continuous-column calculations exclude joint compliance')
+        for n in range(1,4):
+            z=60+195*n
+            ring=box(94,74,60,x-47,-37,z-30).cut(box(80.4,60.4,62,x-40.2,-30.2,z-31))
+            for zz in (z-15,z+15):ring=ring.cut(cyl(3.3,96,x-48,0,zz,V(1,0,0)))
+            for face,y0 in [('Front',-38),('Back',0)]:
+                sh=ring.common(box(96,38,62,x-48,y0,z-31))
+                add('Splice'+side+str(n)+face,sh,'PrintedFrame',
+                    'Split locating collar; M6 bolts and metal anti-crush sleeves required; preload unqualified')
+    if not hybrid:
+        # Split hollow beams preserve original screw/sensor planes; centre splice detail is open.
+        for name,z,depth,h,length in [('FixedBottom',60,60,80,260),('FixedTop',640,60,80,260),('Moving',453,80,40,250)]:
+            sh=box(length,depth,h,-length/2,-depth/2,z).cut(box(length+2,depth-12,h-12,-length/2-1,-depth/2+6,z+6))
+            if name=='FixedBottom':sh=sh.cut(cyl(8.5,h+2,0,0,z-1))
+            for x in (-100,100):
+                if name!='FixedBottom':sh=sh.cut(cyl(6,h+2,x,0,z-1))
+                if name=='FixedTop':sh=sh.cut(cyl(15,14,x,0,706)).cut(box(60,depth+2,4,x-30,-depth/2-1,702))
+            if name=='Moving':sh=sh.cut(cyl(15,h+2,0,0,z-1))
+            for side,x0 in [('Left',-length/2-1),('Right',0)]:
+                piece=sh.common(box(length/2+1,depth+2,h+2,x0,-depth/2-1,z-1))
+                add('PrintedBeam'+name+side,piece,'PrintedFrame',
+                    'Unqualified centre butt joint; requires designed splice. Not printable fabrication authority for2kN')
+    else:
+        for n,x in enumerate(rodx):
+            add('M8TieRod'+str(n+1),cyl(4,820,x,0,40),'Reinforcement',
+                'Nominal M8 rod; actual thread root~6.47mm for compression/buckling; no unbraced-column rating')
+        for side,x in [('Left',-170),('Right',170)]:
+            for name,z in [('Lower',55),('Upper',840)]:
+                sh=box(90,70,5,x-45,-35,z)
+                for xx in (x-27,x+27):sh=sh.cut(cyl(4.5,7,xx,0,z-1))
+                add('SteelEndPlate'+side+name,sh,'Reinforcement',
+                    '90x70x5 steel candidate; metal end reactions, washer/nut access and preload detail pending')
+    doc.recompute();doc.save()
+    parts=[o for o in doc.Objects if hasattr(o,'PartID')]
+    invalid=[o.Name for o in parts if not o.Shape.isValid() or not o.Shape.Solids]
+    if invalid:raise RuntimeError(repr(invalid))
+    App.setActiveDocument(doc.Name);Gui.activeDocument().activeView().viewAxonometric();Gui.activeDocument().activeView().fitAll()
+    Gui.activeDocument().activeView().saveImage(str(out/'renders'/(tag+'.png')),1400,1200,'White')
+    Import.export(parts,str(filename.with_suffix('.step')))
+    printed_volume=sum(o.Shape.Volume for o in doc.PrintedFrame.Group)
+    folder=out/'printed-candidates'/tag;folder.mkdir(parents=True,exist_ok=True)
+    # Export one repeated column module and one collar half as comparison print coupons.
+    for objname in ('ColumnLeftModule1','SpliceLeft1Front'):
+        o=doc.getObject(objname);sh=o.Shape.copy();b=sh.BoundBox;sh.translate(V(-b.XMin,-b.YMin,-b.ZMin))
+        MeshPart.meshFromShape(Shape=sh,LinearDeflection=.15,AngularDeflection=.4,Relative=False).write(str(folder/(objname+'.stl')))
+    report={'variant':tag,'parts':len(parts),'invalid_shapes':invalid,'native_saved':True,
+        'new_frame_solid_volume_mm3':round(printed_volume,1),'new_frame_PETG_kg_at_1_27':round(printed_volume*1.27/1e6,3),
+        'max_column_module_mm':[80,60,195],'physical_test_performed':False,'load_rating_validated':False,
+        'assembly_ready':False,'analysis_type':'analytical screening, not FEA or joint qualification',
+        'primary_open_issues':['beam/column fasteners and splice design','bearing reaction details','creep, buckling and printed joint proof tests']}
+    (out/(tag+'-VALIDATION.json')).write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
+    doc.save();print(json.dumps(report))
+    return doc

@@ -1,0 +1,73 @@
+{
+  "load_N": 2000,
+  "method": "Euler / linear elastic beam formulas; ideal continuous members",
+  "physical_test_performed": false,
+  "FEA_performed": false,
+  "rating_established": false,
+  "exclusions": [
+    "joint slip",
+    "centre beam butt joints",
+    "hole stress concentration",
+    "layer anisotropy",
+    "creep",
+    "eccentric load",
+    "bearing/coupling/grip deformation",
+    "rod end-transfer and bracing qualification"
+  ],
+  "sensitivity": [
+    {
+      "E_effective_assumption_MPa": 800,
+      "column_area_mm2": 1536,
+      "column_Iweak_mm4": 813312.0,
+      "column_Istrong_mm4": 1302272.0,
+      "column_axial_shortening_mm": 0.634765625,
+      "ideal_column_Euler_pinned_N": 10554.98710671767,
+      "printed_top_beam_deflection_mm": 0.916027271312496,
+      "printed_bottom_beam_deflection_mm": 1.5719322333071228,
+      "printed_moving_beam_deflection_mm": 1.378449431858282,
+      "ideal_total_frame_opening_compliance_mm": 4.501174561477901,
+      "moving_beam_nominal_stress_MPa": 6.616557272919755,
+      "M8_root_assumption_mm": 6.47,
+      "M8_unbraced_780_Euler_N": 279.0792563453416,
+      "M8_195_braced_Euler_N": 4465.268101525466,
+      "hybrid_ideal_parallel_column_shortening_mm": 0.05424279646440537,
+      "hybrid_ideal_force_per_M8_rod_N": 457.27336647726844
+    },
+    {
+      "E_effective_assumption_MPa": 1000,
+      "column_area_mm2": 1536,
+      "column_Iweak_mm4": 813312.0,
+      "column_Istrong_mm4": 1302272.0,
+      "column_axial_shortening_mm": 0.5078125,
+      "ideal_column_Euler_pinned_N": 13193.733883397088,
+      "printed_top_beam_deflection_mm": 0.7328218170499967,
+      "printed_bottom_beam_deflection_mm": 1.2575457866456983,
+      "printed_moving_beam_deflection_mm": 1.1027595454866257,
+      "ideal_total_frame_opening_compliance_mm": 3.6009396491823207,
+      "moving_beam_nominal_stress_MPa": 6.616557272919755,
+      "M8_root_assumption_mm": 6.47,
+      "M8_unbraced_780_Euler_N": 279.0792563453416,
+      "M8_195_braced_Euler_N": 4465.268101525466,
+      "hybrid_ideal_parallel_column_shortening_mm": 0.053108228555146755,
+      "hybrid_ideal_force_per_M8_rod_N": 447.70882111493245
+    },
+    {
+      "E_effective_assumption_MPa": 1500,
+      "column_area_mm2": 1536,
+      "column_Iweak_mm4": 813312.0,
+      "column_Istrong_mm4": 1302272.0,
+      "column_axial_shortening_mm": 0.3385416666666667,
+      "ideal_column_Euler_pinned_N": 19790.600825095633,
+      "printed_top_beam_deflection_mm": 0.48854787803333116,
+      "printed_bottom_beam_deflection_mm": 0.8383638577637987,
+      "printed_moving_beam_deflection_mm": 0.7351730303244172,
+      "ideal_total_frame_opening_compliance_mm": 2.4006264327882136,
+      "moving_beam_nominal_stress_MPa": 6.616557272919755,
+      "M8_root_assumption_mm": 6.47,
+      "M8_unbraced_780_Euler_N": 279.0792563453416,
+      "M8_195_braced_Euler_N": 4465.268101525466,
+      "hybrid_ideal_parallel_column_shortening_mm": 0.05046913784017123,
+      "hybrid_ideal_force_per_M8_rod_N": 425.4609656514394
+    }
+  ]
+}

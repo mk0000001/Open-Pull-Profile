@@ -1,0 +1,569 @@
+[
+  {
+    "name": "Original_Part__Feature",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf Part14; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature001",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf SpecimenHolder_OuterPart; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature002",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf ClampingPlate; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature003",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf ClampingPlate001; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature004",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf einschlagmutter_M8; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature005",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf SpecimenHolder_OuterPart (1); original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature006",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf Knob; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature007",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf 608 bearing; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature008",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf 608 bearing001; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature009",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf SOLID; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature010",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf Part001; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature011",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf SpecimenHolder_OuterPart001; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature012",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf ClampingPlate002; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature013",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf ClampingPlate003; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature014",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf einschlagmutter_M001; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature015",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf SpecimenHolder_OuterPart (1)001; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature016",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf Knob001; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature017",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf 608 bearing002; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature018",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf 608 bearing003; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature019",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf SOLID001; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature020",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf TestSpecimen_ISO-527-2-1A; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature021",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf nut_flange; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature022",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf leadScrew; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature023",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf Clutch; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature024",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf nut; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature025",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf stepper; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature026",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf stepperBracket; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature027",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf lowerBearing; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature028",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf 3200 2RS - bearing; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature029",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf 6202-Z bearing; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature030",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf trapezoidalNut1; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature031",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf trapezoidalNut2; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature032",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf nut_flange001; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature033",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf leadScrew001; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature034",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf Clutch001; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature035",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf nut001; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature036",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf stepper001; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature037",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf stepperBracket001; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature038",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf lowerBearing001; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature039",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf 3200 2RS - bearing001; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature040",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf 6202-Z bearing001; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature041",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf trapezoidalNut001; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature042",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf trapezoidalNut002; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature043",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf upperMemberSupport (1); original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature045",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf upperMemberSupport; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature046",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf loadCell; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature047",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf M8x120; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature048",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf spacer; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "Original_Part__Feature049",
+    "group": "OriginalComponents",
+    "material_plan": "OEM/reference; material and print eligibility must be qualified individually",
+    "authority": "UPSTREAM_STEP_WORLD_TRANSFORM",
+    "note": "Upstream STEP leaf spacer001; original interfaces retained, no inferred thread identity"
+  },
+  {
+    "name": "ColumnLeft",
+    "group": "Profiles",
+    "material_plan": "Aluminium 4080; YJ 701–800mm option; cut780",
+    "authority": "NOMINAL_ENVELOPE",
+    "note": "External80x40; simplified hollow section, NOT actual slots or strength geometry"
+  },
+  {
+    "name": "ColumnRight",
+    "group": "Profiles",
+    "material_plan": "Aluminium 4080; YJ 701–800mm option; cut780",
+    "authority": "NOMINAL_ENVELOPE",
+    "note": "External80x40; simplified hollow section, NOT actual slots or strength geometry"
+  },
+  {
+    "name": "BeamFixedBottom",
+    "group": "Profiles",
+    "material_plan": "Aluminium 4080; 201–300mm price band",
+    "authority": "NOMINAL_ENVELOPE_WITH_CLEARANCES",
+    "note": "Machining envelopes retained from original; bearing reaction and drill detail pending"
+  },
+  {
+    "name": "BearingReactionLeft",
+    "group": "Hardware",
+    "material_plan": "Steel4mm reaction insert, custom machining allowance",
+    "authority": "NEW_METAL_CANDIDATE",
+    "note": "Outer race seat25ID below30OD bearing; profile side insertion slot; end capture detail pending"
+  },
+  {
+    "name": "BearingReactionRight",
+    "group": "Hardware",
+    "material_plan": "Steel4mm reaction insert, custom machining allowance",
+    "authority": "NEW_METAL_CANDIDATE",
+    "note": "Outer race seat25ID below30OD bearing; profile side insertion slot; end capture detail pending"
+  },
+  {
+    "name": "BeamFixedTop",
+    "group": "Profiles",
+    "material_plan": "Aluminium 4080; 201–300mm price band",
+    "authority": "NOMINAL_ENVELOPE_WITH_CLEARANCES",
+    "note": "Machining envelopes retained from original; bearing reaction and drill detail pending"
+  },
+  {
+    "name": "BeamMoving",
+    "group": "Profiles",
+    "material_plan": "Aluminium 4080; 201–300mm price band",
+    "authority": "NOMINAL_ENVELOPE_WITH_CLEARANCES",
+    "note": "Machining envelopes retained from original; bearing reaction and drill detail pending"
+  },
+  {
+    "name": "FootLeftFront",
+    "group": "PrintedCandidates",
+    "material_plan": "PETG prototype; floor support/creep test required",
+    "authority": "NEW_PRINT_CANDIDATE",
+    "note": "100x150x60 hollow4mm shell; solid column-to-floor compression rib; M8 joining bores; no load rating"
+  },
+  {
+    "name": "FootLeftBack",
+    "group": "PrintedCandidates",
+    "material_plan": "PETG prototype; floor support/creep test required",
+    "authority": "NEW_PRINT_CANDIDATE",
+    "note": "100x150x60 hollow4mm shell; solid column-to-floor compression rib; M8 joining bores; no load rating"
+  },
+  {
+    "name": "WrapLeftBottomFront",
+    "group": "PrintedCandidates",
+    "material_plan": "PETG; locating clamp, not a qualified primary load joint",
+    "authority": "NEW_PRINT_CANDIDATE",
+    "note": "Split wrap with4M8clearance holes; beam fastening still requires metal detail"
+  },
+  {
+    "name": "WrapLeftBottomBack",
+    "group": "PrintedCandidates",
+    "material_plan": "PETG; locating clamp, not a qualified primary load joint",
+    "authority": "NEW_PRINT_CANDIDATE",
+    "note": "Split wrap with4M8clearance holes; beam fastening still requires metal detail"
+  },
+  {
+    "name": "WrapLeftTopFront",
+    "group": "PrintedCandidates",
+    "material_plan": "PETG; locating clamp, not a qualified primary load joint",
+    "authority": "NEW_PRINT_CANDIDATE",
+    "note": "Split wrap with4M8clearance holes; beam fastening still requires metal detail"
+  },
+  {
+    "name": "WrapLeftTopBack",
+    "group": "PrintedCandidates",
+    "material_plan": "PETG; locating clamp, not a qualified primary load joint",
+    "authority": "NEW_PRINT_CANDIDATE",
+    "note": "Split wrap with4M8clearance holes; beam fastening still requires metal detail"
+  },
+  {
+    "name": "FootRightFront",
+    "group": "PrintedCandidates",
+    "material_plan": "PETG prototype; floor support/creep test required",
+    "authority": "NEW_PRINT_CANDIDATE",
+    "note": "100x150x60 hollow4mm shell; solid column-to-floor compression rib; M8 joining bores; no load rating"
+  },
+  {
+    "name": "FootRightBack",
+    "group": "PrintedCandidates",
+    "material_plan": "PETG prototype; floor support/creep test required",
+    "authority": "NEW_PRINT_CANDIDATE",
+    "note": "100x150x60 hollow4mm shell; solid column-to-floor compression rib; M8 joining bores; no load rating"
+  },
+  {
+    "name": "WrapRightBottomFront",
+    "group": "PrintedCandidates",
+    "material_plan": "PETG; locating clamp, not a qualified primary load joint",
+    "authority": "NEW_PRINT_CANDIDATE",
+    "note": "Split wrap with4M8clearance holes; beam fastening still requires metal detail"
+  },
+  {
+    "name": "WrapRightBottomBack",
+    "group": "PrintedCandidates",
+    "material_plan": "PETG; locating clamp, not a qualified primary load joint",
+    "authority": "NEW_PRINT_CANDIDATE",
+    "note": "Split wrap with4M8clearance holes; beam fastening still requires metal detail"
+  },
+  {
+    "name": "WrapRightTopFront",
+    "group": "PrintedCandidates",
+    "material_plan": "PETG; locating clamp, not a qualified primary load joint",
+    "authority": "NEW_PRINT_CANDIDATE",
+    "note": "Split wrap with4M8clearance holes; beam fastening still requires metal detail"
+  },
+  {
+    "name": "WrapRightTopBack",
+    "group": "PrintedCandidates",
+    "material_plan": "PETG; locating clamp, not a qualified primary load joint",
+    "authority": "NEW_PRINT_CANDIDATE",
+    "note": "Split wrap with4M8clearance holes; beam fastening still requires metal detail"
+  },
+  {
+    "name": "BeamFacingBottomLeftFront",
+    "group": "PrintedCandidates",
+    "material_plan": "PETG cover only",
+    "authority": "NEW_PRINT_CANDIDATE",
+    "note": "130x10x80, original timber depth restored outside metal insert"
+  },
+  {
+    "name": "BeamFacingBottomLeftBack",
+    "group": "PrintedCandidates",
+    "material_plan": "PETG cover only",
+    "authority": "NEW_PRINT_CANDIDATE",
+    "note": "130x10x80, original timber depth restored outside metal insert"
+  },
+  {
+    "name": "BeamFacingBottomRightFront",
+    "group": "PrintedCandidates",
+    "material_plan": "PETG cover only",
+    "authority": "NEW_PRINT_CANDIDATE",
+    "note": "130x10x80, original timber depth restored outside metal insert"
+  },
+  {
+    "name": "BeamFacingBottomRightBack",
+    "group": "PrintedCandidates",
+    "material_plan": "PETG cover only",
+    "authority": "NEW_PRINT_CANDIDATE",
+    "note": "130x10x80, original timber depth restored outside metal insert"
+  },
+  {
+    "name": "BeamFacingTopLeftFront",
+    "group": "PrintedCandidates",
+    "material_plan": "PETG cover only",
+    "authority": "NEW_PRINT_CANDIDATE",
+    "note": "130x10x80, original timber depth restored outside metal insert"
+  },
+  {
+    "name": "BeamFacingTopLeftBack",
+    "group": "PrintedCandidates",
+    "material_plan": "PETG cover only",
+    "authority": "NEW_PRINT_CANDIDATE",
+    "note": "130x10x80, original timber depth restored outside metal insert"
+  },
+  {
+    "name": "BeamFacingTopRightFront",
+    "group": "PrintedCandidates",
+    "material_plan": "PETG cover only",
+    "authority": "NEW_PRINT_CANDIDATE",
+    "note": "130x10x80, original timber depth restored outside metal insert"
+  },
+  {
+    "name": "BeamFacingTopRightBack",
+    "group": "PrintedCandidates",
+    "material_plan": "PETG cover only",
+    "authority": "NEW_PRINT_CANDIDATE",
+    "note": "130x10x80, original timber depth restored outside metal insert"
+  },
+  {
+    "name": "CrossheadPadLowerLeft",
+    "group": "PrintedCandidates",
+    "material_plan": "PETG locating pad; metal load-spreading sleeves required",
+    "authority": "NEW_PRINT_CANDIDATE",
+    "note": "125x80x5; original upper/lower member planes retained"
+  },
+  {
+    "name": "CrossheadPadLowerRight",
+    "group": "PrintedCandidates",
+    "material_plan": "PETG locating pad; metal load-spreading sleeves required",
+    "authority": "NEW_PRINT_CANDIDATE",
+    "note": "125x80x5; original upper/lower member planes retained"
+  },
+  {
+    "name": "CrossheadPadUpperLeft",
+    "group": "PrintedCandidates",
+    "material_plan": "PETG locating pad; metal load-spreading sleeves required",
+    "authority": "NEW_PRINT_CANDIDATE",
+    "note": "125x80x5; original upper/lower member planes retained"
+  },
+  {
+    "name": "CrossheadPadUpperRight",
+    "group": "PrintedCandidates",
+    "material_plan": "PETG locating pad; metal load-spreading sleeves required",
+    "authority": "NEW_PRINT_CANDIDATE",
+    "note": "125x80x5; original upper/lower member planes retained"
+  },
+  {
+    "name": "ElectronicsBox",
+    "group": "PrintedCandidates",
+    "material_plan": "PETG, vent and cable detail pending",
+    "authority": "NEW_PRINT_CANDIDATE",
+    "note": "Uno/CNC-shield/HX711 packaging candidate; no completed wiring represented"
+  }
+]

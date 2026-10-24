@@ -1,0 +1,22 @@
+{
+  "variant": "printed-frame",
+  "parts": 86,
+  "invalid_shapes": [],
+  "native_saved": true,
+  "new_frame_solid_volume_mm3": 4638558.0,
+  "new_frame_PETG_kg_at_1_27": 5.891,
+  "max_column_module_mm": [
+    80,
+    60,
+    195
+  ],
+  "physical_test_performed": false,
+  "load_rating_validated": false,
+  "assembly_ready": false,
+  "analysis_type": "analytical screening, not FEA or joint qualification",
+  "primary_open_issues": [
+    "beam/column fasteners and splice design",
+    "bearing reaction details",
+    "creep, buckling and printed joint proof tests"
+  ]
+}
