@@ -1,0 +1,10 @@
+id,blank_size_mm,quantity,material_candidate,status,notes
+JP,500x160x8,2,AL6061-T6,NOT_A_MACHINING_DRAWING,Rear joint plates; full bolt and slot pattern pending
+ROOF,500x120x12,1,AL6061-T6,NOT_A_MACHINING_DRAWING,Upper fixed bearing mounting plate
+BF-PLATE,420x100x12,1,AL6061-T6,NOT_A_MACHINING_DRAWING,Lower floating bearing plate
+GR-PLATE,420x100x12,1,AL6061-T6,NOT_A_MACHINING_DRAWING,Fixed grip plate; thread interface pending
+CH-FRONT,500x160x12,1,AL6061-T6,NOT_A_MACHINING_DRAWING,Guide carriage mounting pattern pending
+CH-TOP-BOTTOM,400x122x12,2,AL6061-T6,NOT_A_MACHINING_DRAWING,Nut housing bolts and central grip interface pending
+CH-REAR,400x136x12,1,AL6061-T6,NOT_A_MACHINING_DRAWING,Rear stiffening web needs joinery details
+MOTOR,100x120x6,1,AL6061-T6,NOT_A_MACHINING_DRAWING,Motor slots and support web details pending
+MOTOR-WEB,6x117x42,2,AL6061-T6,NOT_A_MACHINING_DRAWING,Approximate blanks; motor position from belt tangent calculation

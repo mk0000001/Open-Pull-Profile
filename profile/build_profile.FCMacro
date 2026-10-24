@@ -231,10 +231,17 @@ def build(root):
     doc.saveAs(str(out/('OpenPull_Profile_v'+version+'.FCStd')))
     visible=[o for o in doc.Objects if hasattr(o,'PartID')]
     Import.export(visible,str(out/('OpenPull_Profile_v'+version+'.step')))
-    for name,view in [('isometric','viewAxonometric'),('front','viewFront'),('right','viewRight')]:
-        getattr(Gui.activeDocument().activeView(),view)()
-        Gui.activeDocument().activeView().fitAll()
-        Gui.activeDocument().activeView().saveImage(str(renders/(name+'.png')),1400,1400,'White')
+    view=Gui.activeDocument().activeView()
+    view.setCameraType('Orthographic')
+    camera_rotations={
+        'isometric':App.Rotation(App.Vector(1,1,0),App.Vector(-1,1,2),App.Vector(1,-1,1),'ZXY'),
+        'front':App.Rotation(App.Vector(1,0,0),90),
+        'right':App.Rotation(App.Vector(0,0,1),90).multiply(App.Rotation(App.Vector(1,0,0),90))}
+    for name,rotation in camera_rotations.items():
+        view.setCameraOrientation(rotation.Q)
+        view.fitAll()
+        Gui.updateGui()
+        view.saveImage(str(renders/(name+'.png')),1400,1400,'White')
     Gui.activeDocument().activeView().viewAxonometric()
     Gui.activeDocument().activeView().fitAll()
     doc.save()
@@ -242,7 +249,7 @@ def build(root):
           ('EX-BEAM','4080',cfg['crossmember_length_mm'],4,'Front/rear paired upper/lower beams; shaft relief drilling required'),
           ('EX-BASE','4040',cfg['base_length_mm'],2,'Base skids')]
     with (root/'profile/CUT_LIST.csv').open('w',encoding='utf-8-sig',newline='') as f:
-        writer=csv.writer(f); writer.writerow(['part_id','section_mm','cut_length_mm','quantity','notes'])
+        writer=csv.writer(f,lineterminator='\n'); writer.writerow(['part_id','section_mm','cut_length_mm','quantity','notes'])
         writer.writerows(cuts)
     print(json.dumps({'document':doc.Name,'parts':len(visible),'belt_length_mm':length,'motor_y_mm':motor_y,'output':str(out)},indent=2))
     return doc

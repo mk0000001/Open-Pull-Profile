@@ -58,7 +58,7 @@ def run():
               'motor_y_mm': doc.Sizing.MotorY,
               'steps_per_mm_proposal': doc.Sizing.StepsPerMillimetre}
     out = ROOT / 'profile/VALIDATION.json'
-    out.write_text(json.dumps(result, indent=2) + '\n', encoding='utf-8')
+    out.write_text(json.dumps(result, indent=2) + '\n', encoding='utf-8',newline='\n')
     print(json.dumps(result, indent=2))
     return result
 

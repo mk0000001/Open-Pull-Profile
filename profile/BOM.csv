@@ -1,0 +1,25 @@
+id,part,required_spec,quantity,unit,preferred_channel,candidate_url,selection_status,notes
+EX-COL,Column extrusion,4080 x 900mm,2,pcs,Domestic,https://www.yjprofile.co.kr/goods/goods_view.php?goodsNo=1000000051,VENDOR_SECTION_PENDING,Slot family and actual section must be verified
+EX-BEAM,Crossmember extrusion,4080 x 420mm,4,pcs,Domestic,https://www.yjprofile.co.kr/goods/goods_view.php?goodsNo=1000000051,VENDOR_SECTION_PENDING,Paired front and rear; shaft holes required
+EX-BASE,Base extrusion,4040 x 400mm,2,pcs,Domestic,https://www.yjprofile.co.kr/goods/goods_view.php?goodsNo=1000000046,VENDOR_SECTION_PENDING,Match frame fastener family
+PL-SET,Structural plates,AL6061-T6 candidate see PLATE_LIST.csv,1,set,Domestic,https://www.jeilal.com/bbs/content.php?co_id=03_01,QUOTE_AND_DRAWING_PENDING,Do not machine from envelope CAD
+BS,Screw kits,SFU1605 nominal900 plus matched BK12 BF12 housing,2,sets,AliExpress,https://www.aliexpress.com/w/wholesale-SFU1605-900mm-BK12-BF12.html,SEARCH_ONLY,End machining and axial bearing ratings unconfirmed
+RG,Guide set,HGR15 700mm x2 plus HGH15CA x4,1,set,AliExpress,https://www.aliexpress.com/w/wholesale-HGR15-700mm-4-blocks.html,SEARCH_ONLY,Do not substitute listed460mm candidate or MGN rails
+MO,Stepper,NEMA23 2-3Nm shaft8 envelope57x57x112,1,pcs,Coupang,https://www.coupang.com/np/search?q=NEMA23%203Nm,SEARCH_ONLY,Torque curve and current pending
+DR,Driver,DM542 class matched to motor,1,pcs,Coupang,https://www.coupang.com/vp/products/7796163351,INDEX_ONLY,Motor and peak RMS current compatibility pending
+PU20,Motor pulley,HTD5M 20T width15 bore8 candidate,1,pcs,Coupang,https://www.coupang.com/vp/products/8677758567,INDEX_ONLY,Overseas purchasing agent listing; dimensions pending
+PU40,Screw pulleys,HTD5M 40T width15 actual shaft bore TBD,2,pcs,AliExpress,https://www.aliexpress.com/w/wholesale-HTD5M-40T-15mm-pulley.html,SEARCH_ONLY,Match exact machined screw drive end
+BT,Timing belt,920-5M-15 closed loop,1,pcs,AliExpress,https://www.aliexpress.com/w/wholesale-920-5M-15-timing-belt.html,SEARCH_ONLY,Tensioner and stock length availability pending
+LC,Load cell,S-type tension500kgf with datasheet,1,pcs,Coupang,https://www.coupang.com/vp/products/9246574572,INDEX_ONLY,500kg option price and thread unconfirmed; CAS alternative in sourcing note
+ADC,Load cell ADC,HX711 module selectable80SPS preferred,1,pcs,Coupang,https://www.coupang.com/vp/products/8941551676,PAGE_SEEN_STALE_DELIVERY,Displayed880KRW not a verified current quote
+MCU,Controller,Nano ATmega328P or later validated controller,1,pcs,Coupang,https://www.coupang.com/np/search?q=Arduino%20Nano%20ATmega328P,SEARCH_ONLY,Original firmware unvalidated for new mechanics
+PSU,Power supply,24V supply sized for selected motor driver plus regulated5V,1,set,Coupang,https://www.coupang.com/np/search?q=24V%2010A%20SMPS,SEARCH_ONLY,Fuse earth enclosed terminals and AC work required
+CK-GR,Original grips,Original upper and lower geometry retained,2,assemblies,Upstream,CAD/TestMachine/OpenPull-assembly.step,UNVALIDATED_REFERENCE,Not load rated; metal upgrade may be needed
+AD,Grip and cell adapters,Steel pins and M8-M12 conversion proposal,1,set,Domestic,,DRAWING_PENDING,Verify actual grip and cell interfaces
+HW,Frame fasteners,Matching slot nuts bolts brackets and washers,1,lot,Domestic,https://www.yjprofile.co.kr/goods/goods_list.php?cateCd=002,QUANTITY_PENDING,Final joint design needed before exact quantities
+FT,Levelling feet,Matched feet and anchor hardware,4,pcs,Domestic,,SELECTION_PENDING,Bench anchoring and stability pending
+PC,Guards,4mm PC envelope with hinges latches and drive cover,1,set,Coupang,https://www.coupang.com/np/search?q=polycarbonate%204mm,SEARCH_ONLY,Containment performance not validated
+ES,Emergency stop,NC e-stop contactor fuse and manual reset design,1,set,Coupang,https://www.coupang.com/np/search?q=%EB%B9%84%EC%83%81%EC%A0%95%EC%A7%80%20NC,SEARCH_ONLY,Power removal alone does not prevent backdrive
+LS,Limit switches,NC end limits with positive mounts,2,pcs,Domestic,,SELECTION_PENDING,Needs independent hard stop and verified wiring
+FB,Fall protection,Mechanical capture brake or counterbalance,1,set,Domestic,,UNRESOLVED_DO_NOT_POWER,Required before powered commissioning
+EL,Electrical enclosure,Earth fuse terminals wiring strain relief,1,set,Domestic,,SELECTION_PENDING,Enclosure space is shown in CAD

@@ -1,0 +1,17 @@
+name: Profile design consistency
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  release-pairing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4, verified 2026-10-24
+        with:
+          fetch-depth: 0
+      - name: Check versions, hashes, CAD containers and preserved upstream
+        run: python3 profile/check_release.py
+      # Actual solid/travel checks require FreeCAD; VALIDATION.json records the
+      # checked local model. This workflow does not establish a load rating.
